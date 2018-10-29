@@ -4,8 +4,9 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
+import SearchScreen from '../screens/SearchScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import DetailsScreen from '../screens/DetailsScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -16,25 +17,27 @@ HomeStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
-      }
+      name={Platform.OS === 'ios' ? `ios-home${focused ? '' : '-outline'}` : 'md-home'}
     />
   ),
 };
 
-const LinksStack = createStackNavigator({
-  Links: LinksScreen,
+const SearchStack = createStackNavigator({
+  Search: {
+    screen: SearchScreen,
+    navigationOptions: () => ({
+      title: 'Search',
+    }),
+  },
+  Details: { screen: DetailsScreen },
 });
 
-LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
+SearchStack.navigationOptions = {
+  tabBarLabel: 'Search',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-link'}
+      name={Platform.OS === 'ios' ? `ios-search${focused ? '' : '-outline'}` : 'md-search'}
     />
   ),
 };
@@ -48,13 +51,13 @@ SettingsStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-options'}
+      name={Platform.OS === 'ios' ? `ios-heart${focused ? '' : '-outline'}` : 'md-heart'}
     />
   ),
 };
 
 export default createBottomTabNavigator({
   HomeStack,
-  LinksStack,
+  SearchStack,
   SettingsStack,
 });
