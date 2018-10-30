@@ -60,8 +60,6 @@ class componentName extends React.Component {
   };
 
   onPress = (item) => {
-    console.log('onpressed');
-    console.log(this.props.navigation.navigate);
     this.props.navigation.navigate('Details', item);
   };
 
