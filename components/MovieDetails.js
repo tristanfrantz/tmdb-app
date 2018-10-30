@@ -13,8 +13,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   contentContainer: {
-    paddingTop: 30,
-    paddingBottom: 20,
+    padding: 15,
   },
   movieContainer: {
     flexDirection: 'row',
