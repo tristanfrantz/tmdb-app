@@ -100,9 +100,13 @@ class componentName extends React.Component {
       });
   };
 
+<<<<<<< HEAD
   onPress = item => {
     console.log('onpressed');
     console.log(this.props.navigation.navigate);
+=======
+  onPress = (item) => {
+>>>>>>> 165a2aee6bc677838af9026abc67e85db20785b3
     this.props.navigation.navigate('Details', item);
   };
 
