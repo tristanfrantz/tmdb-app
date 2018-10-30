@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
+import { addToWatchlist, removeFromWatchlist } from '../actions/movies';
 
 class MovieDetails extends React.Component {
   constructor(props) {
@@ -9,28 +11,19 @@ class MovieDetails extends React.Component {
     };
   }
 
-  componentDidMount() {
-    console.log(this.props);
-    const apiKey = '61930aa1';
-    const { imdbID } = this.props.navigation.state.params;
-
-    fetch(`http://omdbapi.com/?apikey=${apiKey}&i=${imdbID}`)
-      .then(res => res.json())
-      .then(res => this.setState({ details: res }))
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
   render() {
     const { details } = this.state;
+    const { imdbID } = this.props.navigation.state.params;
     return (
       <View>
         <Text>{details.Title}</Text>
         <Text>{details.Runtime}</Text>
+        <TouchableOpacity onPress={() => this.props.dispatch(addToWatchlist(imdbID))}>
+          <Text>Add to fav!</Text>
+        </TouchableOpacity>
       </View>
     );
   }
 }
-
-export default MovieDetails;
+const mapStateToProps = state => ({ todos: state.todos });
+export default connect(mapStateToProps)(MovieDetails);
