@@ -14,3 +14,5 @@ const persistedReducer = persistReducer(persistConfig, movies);
 
 export const store = createStore(persistedReducer, applyMiddleware(logger, thunk));
 export const persistor = persistStore(store);
+// to clean the store
+// export const persistor = persistStore(store).purge();

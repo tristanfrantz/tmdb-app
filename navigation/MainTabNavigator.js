@@ -7,6 +7,7 @@ import HomeScreen from '../screens/HomeScreen';
 import SearchScreen from '../screens/SearchScreen';
 import WatchlistScreen from '../screens/WatchlistScreen';
 import DetailsScreen from '../screens/DetailsScreen';
+import PlotScreen from '../screens/PlotScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -29,7 +30,18 @@ const SearchStack = createStackNavigator({
       title: 'Search',
     }),
   },
-  Details: { screen: DetailsScreen },
+  Details: {
+    screen: DetailsScreen,
+    navigationOptions: () => ({
+      title: 'Details',
+    }),
+  },
+  Plot: {
+    screen: PlotScreen,
+    navigationOptions: () => ({
+      title: 'Plot',
+    }),
+  },
 });
 
 SearchStack.navigationOptions = {
