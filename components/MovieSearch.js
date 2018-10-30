@@ -78,8 +78,8 @@ class componentName extends React.Component {
     };
   }
 
-  search = input => {
-    const apiKey = '61930aa1';
+  search = (input) => {
+    const apiKey = '14cfd31';
     let stateType = this.state.type;
     console.log('search function: ');
     console.log(stateType);
@@ -89,32 +89,21 @@ class componentName extends React.Component {
 
     fetch(`http://omdbapi.com/?apikey=${apiKey}&s=${input}&type=${stateType}`)
       .then(res => res.json())
-      .then(res =>
-        this.setState({
-          results: res.Search.map((c, i) => ({ ...c, key: `${i}` })),
-        })
-      )
-      .catch(err => {
+      .then(res => this.setState({
+        results: res.Search.map((c, i) => ({ ...c, key: `${i}` })),
+      }))
+      .catch((err) => {
         console.log(err);
         this.setState({ results: [] });
       });
   };
 
-<<<<<<< HEAD
-  onPress = item => {
-    console.log('onpressed');
-    console.log(this.props.navigation.navigate);
-=======
   onPress = (item) => {
->>>>>>> 165a2aee6bc677838af9026abc67e85db20785b3
     this.props.navigation.navigate('Details', item);
   };
 
   renderItem = ({ item }) => (
-    <TouchableOpacity
-      style={styles.movieContainer}
-      onPress={() => this.onPress(item)}
-    >
+    <TouchableOpacity style={styles.movieContainer} onPress={() => this.onPress(item)}>
       <Image style={styles.poster} source={{ uri: item.Poster }} />
       <View style={styles.details}>
         <Text style={styles.title}>{item.Title}</Text>
@@ -131,7 +120,7 @@ class componentName extends React.Component {
         <View style={styles.searchFieldContainer}>
           <TextInput
             style={styles.searchTextInput}
-            onChangeText={text => {
+            onChangeText={(text) => {
               this.search(text);
               this.setState({ text });
             }}
