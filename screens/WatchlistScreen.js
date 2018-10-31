@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  View, Text, ScrollView, FlatList,
-} from 'react-native';
+import { ScrollView, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import MovieListItem from '../components/MovieListItem';
 
