@@ -5,6 +5,9 @@ import {
 import {
   AppLoading, Asset, Font, Icon,
 } from 'expo';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './reduxStore';
 import AppNavigator from './navigation/AppNavigator';
 
 const styles = StyleSheet.create({
@@ -56,10 +59,14 @@ export default class App extends React.Component {
       );
     }
     return (
-      <View style={styles.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        <AppNavigator />
-      </View>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <View style={styles.container}>
+            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+            <AppNavigator />
+          </View>
+        </PersistGate>
+      </Provider>
     );
   }
 }

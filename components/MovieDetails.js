@@ -100,7 +100,7 @@ class MovieDetails extends React.Component {
             </View>
           </View>
         </View>
-        <AddWishlistButton />
+        <AddWishlistButton imdbId={item.imdbID} />
 
         <TouchableOpacity
           style={styles.plotContainer}
