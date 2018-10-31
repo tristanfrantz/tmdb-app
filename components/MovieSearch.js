@@ -79,7 +79,7 @@ class componentName extends React.Component {
   }
 
   search = (input) => {
-    const apiKey = '61930aa1';
+    const apiKey = '14cfd31';
     let stateType = this.state.type;
     console.log('search function: ');
     console.log(stateType);

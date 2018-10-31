@@ -1,4 +1,4 @@
-const apiKey = '61930aa1';
+const apiKey = '14cfd31';
 
 export const removeFromWatchlist = _imdbId => ({
   type: 'REMOVE_FROM_WATCHLIST',

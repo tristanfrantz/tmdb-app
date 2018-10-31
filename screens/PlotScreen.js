@@ -29,7 +29,7 @@ export default class PlotScreen extends React.Component {
   }
 
   componentDidMount() {
-    const apiKey = '61930aa1';
+    const apiKey = '14cfd31';
     const { imdbID } = this.props.navigation.state.params;
 
     fetch(`http://omdbapi.com/?apikey=${apiKey}&i=${imdbID}&plot=full`)

@@ -1,17 +1,19 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import {
-  StyleSheet, TouchableOpacity, View, Text, Image,
+  StyleSheet, TouchableOpacity, ScrollView, View, Text, Image,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { addToWatchlist, removeFromWatchlist } from '../actions/movies';
 import ImdbRating from './ImdbRating';
 import AddWishlistButton from './AddWishlistButton';
+import DetailsPanel from './DetailsPanel';
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: '#fff',
-    padding: 8,
+  },
+  contentContainer: {
+    padding: 15,
   },
   movieContainer: {
     flexDirection: 'row',
@@ -68,7 +70,7 @@ class MovieDetails extends React.Component {
   }
 
   componentDidMount() {
-    const apiKey = '61930aa1';
+    const apiKey = '14cfd31';
     const { imdbID } = this.props.navigation.state.params;
 
     fetch(`http://omdbapi.com/?apikey=${apiKey}&i=${imdbID}`)
@@ -80,7 +82,7 @@ class MovieDetails extends React.Component {
   render() {
     const { item } = this.state;
     return (
-      <View styles={styles.container}>
+      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <View style={styles.movieContainer}>
           <Image style={styles.poster} source={{ uri: item.Poster }} />
           <View style={styles.titleContainer}>
@@ -98,7 +100,7 @@ class MovieDetails extends React.Component {
             </View>
           </View>
         </View>
-        <AddWishlistButton />
+        <AddWishlistButton imdbId={item.imdbID} />
 
         <TouchableOpacity
           style={styles.plotContainer}
@@ -111,9 +113,14 @@ class MovieDetails extends React.Component {
             <Icon size={22} name="angle-right" />
           </View>
         </TouchableOpacity>
-      </View>
+
+        <DetailsPanel title="Actors" content={item.Actors} />
+        <DetailsPanel title="Directors" content={item.Directors} />
+        <DetailsPanel title="Writers" content={item.Writers} />
+        <DetailsPanel title="Awards" content={item.Awards} />
+      </ScrollView>
     );
   }
 }
-const mapStateToProps = state => ({ todos: state.todos });
-export default connect(mapStateToProps)(MovieDetails);
+
+export default MovieDetails;
