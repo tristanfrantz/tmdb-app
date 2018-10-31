@@ -4,10 +4,6 @@ import { connect } from 'react-redux';
 import MovieListItem from '../components/MovieListItem';
 
 class WatchlistScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Watchlist',
-  };
-
   constructor(props) {
     super(props);
     this.state = {};
@@ -17,7 +13,12 @@ class WatchlistScreen extends React.Component {
     const { movies } = this.props;
     return (
       <ScrollView>
-        <FlatList data={movies} renderItem={({ item }) => <MovieListItem movie={item.details} />} />
+        <FlatList
+          data={movies}
+          renderItem={({ item }) => (
+            <MovieListItem movie={item.details} navigation={this.props.navigation} />
+          )}
+        />
       </ScrollView>
     );
   }

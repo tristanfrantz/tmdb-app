@@ -55,7 +55,24 @@ SearchStack.navigationOptions = {
 };
 
 const WatchlistStack = createStackNavigator({
-  Watchlist: WatchlistScreen,
+  Watchlist: {
+    screen: WatchlistScreen,
+    navigationOptions: () => ({
+      title: 'Watchlist',
+    }),
+  },
+  Details: {
+    screen: DetailsScreen,
+    navigationOptions: () => ({
+      title: 'Details',
+    }),
+  },
+  Plot: {
+    screen: PlotScreen,
+    navigationOptions: () => ({
+      title: 'Plot',
+    }),
+  },
 });
 
 WatchlistStack.navigationOptions = {

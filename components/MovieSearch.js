@@ -1,27 +1,14 @@
 import React from 'react';
 import {
-  StyleSheet,
-  ScrollView,
-  FlatList,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  Picker,
+  StyleSheet, ScrollView, FlatList, View, TextInput, Picker,
 } from 'react-native';
-import AddWishlistButton from './AddWishlistButton';
+import MovieListItem from './MovieListItem';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
     padding: 8,
-  },
-  movieContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    paddingBottom: 16,
   },
   searchFieldContainer: {
     flexDirection: 'row',
@@ -51,28 +38,6 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: 'lightgray',
     marginRight: 10,
-  },
-  poster: {
-    height: 150,
-    width: 100,
-  },
-  details: {
-    flex: 1,
-    paddingLeft: 8,
-  },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 20,
-  },
-  text: {
-    fontSize: 16,
-  },
-  watchlistBtn: {
-    width: '100%',
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',
-    bottom: 0,
   },
 });
 
@@ -106,23 +71,6 @@ class componentName extends React.Component {
       });
   };
 
-  onPress = (item) => {
-    this.props.navigation.navigate('Details', item);
-  };
-
-  renderItem = ({ item }) => (
-    <TouchableOpacity style={styles.movieContainer} onPress={() => this.onPress(item)}>
-      <Image style={styles.poster} source={{ uri: item.Poster }} />
-      <View style={styles.details}>
-        <Text style={styles.title}>{item.Title}</Text>
-        <Text style={styles.text}>{item.Year}</Text>
-        <View style={styles.watchlistBtn}>
-          <AddWishlistButton imdbId={item.imdbID} />
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
-
   render() {
     const { results } = this.state;
 
@@ -155,7 +103,12 @@ class componentName extends React.Component {
           </View>
         </View>
         <ScrollView>
-          <FlatList data={results} renderItem={this.renderItem} />
+          <FlatList
+            data={results}
+            renderItem={({ item }) => (
+              <MovieListItem movie={item} navigation={this.props.navigation} />
+            )}
+          />
         </ScrollView>
       </View>
     );
