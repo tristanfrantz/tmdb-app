@@ -2,19 +2,7 @@ import React from 'react';
 import { StyleSheet, Text } from 'react-native';
 import Panel from 'react-native-panel';
 
-const styles = StyleSheet.create({
-  contentContainerStyle: {
-    paddingTop: 30,
-    paddingBottom: 20,
-  },
-  container: {
-    flex: 1,
-    backgroundColor: '#eee',
-  },
-  myDescription: {
-    padding: 10,
-  },
-});
+const styles = StyleSheet.create({});
 
 class DetailsPanel extends React.Component {
   constructor(props) {

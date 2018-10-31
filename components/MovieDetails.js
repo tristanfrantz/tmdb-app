@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   contentContainer: {
-    padding: 8,
+    padding: 5,
   },
   movieContainer: {
     flexDirection: 'row',
@@ -115,8 +115,8 @@ class MovieDetails extends React.Component {
         </TouchableOpacity>
 
         <DetailsPanel title="Actors" content={item.Actors} />
-        <DetailsPanel title="Directors" content={item.Directors} />
-        <DetailsPanel title="Writers" content={item.Writers} />
+        <DetailsPanel title="Directors" content={item.Director} />
+        <DetailsPanel title="Writers" content={item.Writer} />
         <DetailsPanel title="Awards" content={item.Awards} />
       </ScrollView>
     );
