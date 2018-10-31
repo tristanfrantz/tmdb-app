@@ -57,7 +57,7 @@ class MovieListItem extends Component {
           <Text style={styles.title}>{movie.Title}</Text>
           <Text style={styles.text}>{movie.Year}</Text>
           <View style={styles.watchlistBtn}>
-            <AddWishlistButton imdbId={movie.imdbID} />
+            <AddWishlistButton movie={movie} />
           </View>
         </View>
       </TouchableOpacity>
