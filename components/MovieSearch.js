@@ -9,7 +9,7 @@ import {
   Image,
 } from 'react-native';
 import AddWishlistButton from './AddWishlistButton';
-import { SearchBar } from 'react-native-elements';
+import { SearchBar, Icon } from 'react-native-elements';
 import { TagSelect } from 'react-native-tag-select';
 
 const styles = StyleSheet.create({
@@ -64,6 +64,7 @@ class componentName extends React.Component {
 
   search = () => {
     const apiKey = '14cfd31';
+    const input = this.state.text;
     let type = '';
     if (this.state.moviesFilter && !this.state.seriesFilter) {
       type = 'movie';
@@ -71,9 +72,7 @@ class componentName extends React.Component {
       type = 'series';
     }
 
-    fetch(
-      `http://omdbapi.com/?apikey=${apiKey}&s=${this.state.text}&type=${type}`
-    )
+    fetch(`http://omdbapi.com/?apikey=${apiKey}&s=${input}&type=${type}`)
       .then(res => res.json())
       .then(res =>
         this.setState({
@@ -143,6 +142,8 @@ class componentName extends React.Component {
               this.onChangeText(text);
             }}
             placeholder="Search"
+            clearButtonMode="while-editing"
+            clearIcon={<Icon type="fontAwesome" name="times-circle-o" />}
           />
           <TagSelect
             data={[{ id: 1, label: 'Movies' }, { id: 2, label: 'Series' }]}
