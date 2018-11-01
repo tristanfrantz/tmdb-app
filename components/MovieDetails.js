@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
+import { Bubbles } from 'react-native-loader';
 import ImdbRating from './ImdbRating';
 import AddWishlistButton from './AddWishlistButton';
 import DetailsPanel from './DetailsPanel';
@@ -66,6 +67,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: 'grey',
   },
+  loading: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 class MovieDetails extends React.Component {
@@ -100,7 +106,9 @@ class MovieDetails extends React.Component {
     return (
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         {loading ? (
-          <ActivityIndicator size="large" color="#0000ff" />
+          <View style={styles.loading}>
+            <Bubbles size={15} color="rgba(39, 40, 41, 0.3)" />
+          </View>
         ) : (
           <View>
             <View style={styles.movieContainer}>
