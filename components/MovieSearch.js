@@ -11,6 +11,8 @@ import {
   Picker,
 } from 'react-native';
 import AddWishlistButton from './AddWishlistButton';
+import { SearchBar } from 'react-native-elements';
+import { TagSelect } from 'react-native-tag-select';
 
 const styles = StyleSheet.create({
   container: {
@@ -24,7 +26,6 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
   },
   searchFieldContainer: {
-    flexDirection: 'row',
     paddingTop: 12,
     paddingBottom: 12,
   },
@@ -81,37 +82,45 @@ class componentName extends React.Component {
     super(props);
     this.state = {
       results: [],
-      type: 'all',
       text: '',
+      moviesFilter: false,
+      seriesFilter: false,
     };
   }
 
-  search = (input) => {
+  search = () => {
     const apiKey = '14cfd31';
-    let stateType = this.state.type;
-    console.log('search function: ');
-    console.log(stateType);
-    if (stateType === 'all') {
-      stateType = '';
+    let type = '';
+    if (this.state.moviesFilter && !this.state.seriesFilter) {
+      type = 'movie';
+    } else if (this.state.seriesFilter && !this.state.moviesFilter) {
+      type = 'series';
     }
 
-    fetch(`http://omdbapi.com/?apikey=${apiKey}&s=${input}&type=${stateType}`)
+    fetch(
+      `http://omdbapi.com/?apikey=${apiKey}&s=${this.state.text}&type=${type}`
+    )
       .then(res => res.json())
-      .then(res => this.setState({
-        results: res.Search.map((c, i) => ({ ...c, key: `${i}` })),
-      }))
-      .catch((err) => {
+      .then(res =>
+        this.setState({
+          results: res.Search.map((c, i) => ({ ...c, key: `${i}` })),
+        })
+      )
+      .catch(err => {
         console.log(err);
         this.setState({ results: [] });
       });
   };
 
-  onPress = (item) => {
+  onPress = item => {
     this.props.navigation.navigate('Details', item);
   };
 
   renderItem = ({ item }) => (
-    <TouchableOpacity style={styles.movieContainer} onPress={() => this.onPress(item)}>
+    <TouchableOpacity
+      style={styles.movieContainer}
+      onPress={() => this.onPress(item)}
+    >
       <Image style={styles.poster} source={{ uri: item.Poster }} />
       <View style={styles.details}>
         <Text style={styles.title}>{item.Title}</Text>
@@ -129,30 +138,30 @@ class componentName extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.searchFieldContainer}>
-          <TextInput
-            style={styles.searchTextInput}
-            onChangeText={(text) => {
-              this.search(text);
-              this.setState({ text });
+          <SearchBar
+            lightTheme
+            round
+            onChangeText={text => {
+              this.setState({ text }, () => {
+                this.search();
+              });
+            }}
+            placeholder="Search"
+          />
+          <TagSelect
+            data={[{ id: 1, label: 'Movies' }, { id: 2, label: 'Series' }]}
+            onItemPress={item => {
+              if (item.id === 1) {
+                this.setState({ moviesFilter: !this.moviesFilter }, () => {
+                  this.search();
+                });
+              } else if (item.id === 2) {
+                this.setState({ seriesFilter: !this.seriesFilter }, () => {
+                  this.search();
+                });
+              }
             }}
           />
-          <View style={styles.pickerContainer}>
-            <Picker
-              selectedValue={this.state.type}
-              mode="dropdown"
-              style={styles.searchPicker}
-              onValueChange={(itemValue, itemIndex) => {
-                this.setState({ type: itemValue }, () => {
-                  this.search(this.state.text);
-                });
-              }}
-            >
-              <Picker.Item label="All" value="all" />
-              <Picker.Item label="Movies" value="movie" />
-              <Picker.Item label="Series" value="series" />
-              <Picker.Item label="Episodes" value="episode" />
-            </Picker>
-          </View>
         </View>
         <ScrollView>
           <FlatList data={results} renderItem={this.renderItem} />
