@@ -96,6 +96,12 @@ class componentName extends React.Component {
     } else if (this.state.seriesFilter && !this.state.moviesFilter) {
       type = 'series';
     }
+    console.log('Type: ');
+    console.log(type);
+    console.log('Movies Filter: ');
+    console.log(this.state.moviesFilter);
+    console.log('Series Filter: ');
+    console.log(this.state.seriesFilter);
 
     fetch(
       `http://omdbapi.com/?apikey=${apiKey}&s=${this.state.text}&type=${type}`
@@ -152,13 +158,19 @@ class componentName extends React.Component {
             data={[{ id: 1, label: 'Movies' }, { id: 2, label: 'Series' }]}
             onItemPress={item => {
               if (item.id === 1) {
-                this.setState({ moviesFilter: !this.moviesFilter }, () => {
-                  this.search();
-                });
+                this.setState(
+                  prevState => ({ moviesFilter: !prevState.moviesFilter }),
+                  () => {
+                    this.search();
+                  }
+                );
               } else if (item.id === 2) {
-                this.setState({ seriesFilter: !this.seriesFilter }, () => {
-                  this.search();
-                });
+                this.setState(
+                  prevState => ({ seriesFilter: !prevState.seriesFilter }),
+                  () => {
+                    this.search();
+                  }
+                );
               }
             }}
           />
