@@ -27,6 +27,13 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     paddingBottom: 12,
   },
+  filterButtons: {
+    borderRadius: 100,
+    width: 70,
+    height: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   poster: {
     height: 150,
     width: 100,
@@ -150,6 +157,8 @@ class componentName extends React.Component {
             onItemPress={item => {
               this.onItemPress(item);
             }}
+            containerStyle={{ paddingTop: 5 }}
+            itemStyle={styles.filterButtons}
           />
         </View>
         <ScrollView>
