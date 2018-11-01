@@ -10,7 +10,6 @@ import {
   Image,
   Picker,
 } from 'react-native';
-import AddWishlistButton from './AddWishlistButton';
 
 const styles = StyleSheet.create({
   container: {
@@ -67,13 +66,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
   },
-  watchlistBtn: {
-    width: '100%',
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',
-    bottom: 0,
-  },
 });
 
 class componentName extends React.Component {
@@ -116,9 +108,6 @@ class componentName extends React.Component {
       <View style={styles.details}>
         <Text style={styles.title}>{item.Title}</Text>
         <Text style={styles.text}>{item.Year}</Text>
-        <View style={styles.watchlistBtn}>
-          <AddWishlistButton imdbId={item.imdbID} />
-        </View>
       </View>
     </TouchableOpacity>
   );
