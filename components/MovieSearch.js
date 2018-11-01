@@ -5,10 +5,8 @@ import {
   FlatList,
   Text,
   View,
-  TextInput,
   TouchableOpacity,
   Image,
-  Picker,
 } from 'react-native';
 import AddWishlistButton from './AddWishlistButton';
 import { SearchBar } from 'react-native-elements';
@@ -28,30 +26,6 @@ const styles = StyleSheet.create({
   searchFieldContainer: {
     paddingTop: 12,
     paddingBottom: 12,
-  },
-  searchTextInput: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderTopLeftRadius: 10,
-    borderBottomLeftRadius: 10,
-    flex: 7,
-    paddingLeft: 10,
-  },
-  pickerContainer: {
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderTopRightRadius: 10,
-    borderBottomRightRadius: 10,
-    backgroundColor: 'lightgray',
-    height: 40,
-    flex: 3,
-  },
-  searchPicker: {
-    flex: 1,
-    height: 40,
-    backgroundColor: 'lightgray',
-    marginRight: 10,
   },
   poster: {
     height: 150,
@@ -96,12 +70,6 @@ class componentName extends React.Component {
     } else if (this.state.seriesFilter && !this.state.moviesFilter) {
       type = 'series';
     }
-    console.log('Type: ');
-    console.log(type);
-    console.log('Movies Filter: ');
-    console.log(this.state.moviesFilter);
-    console.log('Series Filter: ');
-    console.log(this.state.seriesFilter);
 
     fetch(
       `http://omdbapi.com/?apikey=${apiKey}&s=${this.state.text}&type=${type}`
@@ -120,6 +88,30 @@ class componentName extends React.Component {
 
   onPress = item => {
     this.props.navigation.navigate('Details', item);
+  };
+
+  onItemPress = item => {
+    if (item.id === 1) {
+      this.setState(
+        prevState => ({ moviesFilter: !prevState.moviesFilter }),
+        () => {
+          this.search();
+        }
+      );
+    } else if (item.id === 2) {
+      this.setState(
+        prevState => ({ seriesFilter: !prevState.seriesFilter }),
+        () => {
+          this.search();
+        }
+      );
+    }
+  };
+
+  onChangeText = text => {
+    this.setState({ text }, () => {
+      this.search();
+    });
   };
 
   renderItem = ({ item }) => (
@@ -148,30 +140,14 @@ class componentName extends React.Component {
             lightTheme
             round
             onChangeText={text => {
-              this.setState({ text }, () => {
-                this.search();
-              });
+              this.onChangeText(text);
             }}
             placeholder="Search"
           />
           <TagSelect
             data={[{ id: 1, label: 'Movies' }, { id: 2, label: 'Series' }]}
             onItemPress={item => {
-              if (item.id === 1) {
-                this.setState(
-                  prevState => ({ moviesFilter: !prevState.moviesFilter }),
-                  () => {
-                    this.search();
-                  }
-                );
-              } else if (item.id === 2) {
-                this.setState(
-                  prevState => ({ seriesFilter: !prevState.seriesFilter }),
-                  () => {
-                    this.search();
-                  }
-                );
-              }
+              this.onItemPress(item);
             }}
           />
         </View>
