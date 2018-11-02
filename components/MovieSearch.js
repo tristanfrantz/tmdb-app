@@ -1,43 +1,27 @@
 import React from 'react';
 import {
-  StyleSheet, ScrollView, FlatList, View, TextInput, Picker,
+  StyleSheet, ScrollView, FlatList, View,
 } from 'react-native';
+import { SearchBar, Icon } from 'react-native-elements';
+import { TagSelect } from 'react-native-tag-select';
 import MovieListItem from './MovieListItem';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    padding: 8,
+    paddingLeft: 8,
+    paddingRight: 8,
   },
   searchFieldContainer: {
-    flexDirection: 'row',
-    paddingTop: 12,
     paddingBottom: 12,
   },
-  searchTextInput: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderTopLeftRadius: 10,
-    borderBottomLeftRadius: 10,
-    flex: 7,
-    paddingLeft: 10,
-  },
-  pickerContainer: {
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderTopRightRadius: 10,
-    borderBottomRightRadius: 10,
-    backgroundColor: 'lightgray',
-    height: 40,
-    flex: 3,
-  },
-  searchPicker: {
-    flex: 1,
-    height: 40,
-    backgroundColor: 'lightgray',
-    marginRight: 10,
+  filterButtons: {
+    borderRadius: 100,
+    width: 70,
+    height: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   poster: {
     height: 150,
@@ -61,21 +45,23 @@ class componentName extends React.Component {
     super(props);
     this.state = {
       results: [],
-      type: 'all',
       text: '',
+      moviesFilter: false,
+      seriesFilter: false,
     };
   }
 
-  search = (input) => {
+  search = () => {
     const apiKey = '14cfd31';
-    let stateType = this.state.type;
-    console.log('search function: ');
-    console.log(stateType);
-    if (stateType === 'all') {
-      stateType = '';
+    const input = this.state.text;
+    let type = '';
+    if (this.state.moviesFilter && !this.state.seriesFilter) {
+      type = 'movie';
+    } else if (this.state.seriesFilter && !this.state.moviesFilter) {
+      type = 'series';
     }
 
-    fetch(`http://omdbapi.com/?apikey=${apiKey}&s=${input}&type=${stateType}`)
+    fetch(`http://omdbapi.com/?apikey=${apiKey}&s=${input}&type=${type}`)
       .then(res => res.json())
       .then(res => this.setState({
         results: res.Search.map((c, i) => ({ ...c, key: `${i}` })),
@@ -90,54 +76,61 @@ class componentName extends React.Component {
     this.props.navigation.navigate('Details', item);
   };
 
-  renderItem = ({ item }) => (
-    <TouchableOpacity style={styles.movieContainer} onPress={() => this.onPress(item)}>
-      <Image style={styles.poster} source={{ uri: item.Poster }} />
-      <View style={styles.details}>
-        <Text style={styles.title}>{item.Title}</Text>
-        <Text style={styles.text}>{item.Year}</Text>
-      </View>
-    </TouchableOpacity>
-  );
+  onTagPress = (item) => {
+    if (item.id === 1) {
+      this.setState(
+        prevState => ({ moviesFilter: !prevState.moviesFilter }),
+        () => {
+          this.search();
+        },
+      );
+    } else if (item.id === 2) {
+      this.setState(
+        prevState => ({ seriesFilter: !prevState.seriesFilter }),
+        () => {
+          this.search();
+        },
+      );
+    }
+  };
+
+  onChangeText = (text) => {
+    this.setState({ text }, () => {
+      this.search();
+    });
+  };
+
+  renderItem = ({ item }) => <MovieListItem movie={item} navigation={this.props.navigation} />;
 
   render() {
     const { results } = this.state;
-
+    const searcPlaceholder = 'Search movies, series or episodes...';
+    console.log(results);
     return (
       <View style={styles.container}>
         <View style={styles.searchFieldContainer}>
-          <TextInput
-            style={styles.searchTextInput}
+          <SearchBar
+            lightTheme
+            containerStyle={{ backgroundColor: 'white' }}
+            inputContainerStyle={{ height: 40 }}
+            round
             onChangeText={(text) => {
-              this.search(text);
-              this.setState({ text });
+              this.onChangeText(text);
             }}
+            placeholder={searcPlaceholder}
+            clearButtonMode="while-editing"
           />
-          <View style={styles.pickerContainer}>
-            <Picker
-              selectedValue={this.state.type}
-              mode="dropdown"
-              style={styles.searchPicker}
-              onValueChange={(itemValue, itemIndex) => {
-                this.setState({ type: itemValue }, () => {
-                  this.search(this.state.text);
-                });
-              }}
-            >
-              <Picker.Item label="All" value="all" />
-              <Picker.Item label="Movies" value="movie" />
-              <Picker.Item label="Series" value="series" />
-              <Picker.Item label="Episodes" value="episode" />
-            </Picker>
-          </View>
+          <TagSelect
+            data={[{ id: 1, label: 'Movies' }, { id: 2, label: 'Series' }]}
+            onItemPress={(item) => {
+              this.onTagPress(item);
+            }}
+            containerStyle={{ paddingTop: 5 }}
+            itemStyle={styles.filterButtons}
+          />
         </View>
         <ScrollView>
-          <FlatList
-            data={results}
-            renderItem={({ item }) => (
-              <MovieListItem movie={item} navigation={this.props.navigation} />
-            )}
-          />
+          <FlatList data={results} renderItem={this.renderItem} />
         </ScrollView>
       </View>
     );
