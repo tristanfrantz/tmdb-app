@@ -11,11 +11,6 @@ const styles = StyleSheet.create({
   },
   ratingContainer: {
     flexDirection: 'row',
-    paddingLeft: 5,
-  },
-  imdbLogo: {
-    width: 40,
-    height: 20,
   },
   ratingText: {
     fontSize: 16,
@@ -50,8 +45,8 @@ class YourRating extends React.Component {
             </View>
           ) : (
             <View style={styles.ratingContainer}>
-              <Icon name="ios-star-outline" size={23} color="#6f7277" />
-              <Text style={styles.ratingText}> Rate this</Text>
+              <Icon name="ios-star-outline" size={25} color="#6f7277" />
+              <Text style={{ fontSize: 14, textAlignVertical: 'center' }}> RATE THIS</Text>
             </View>
           )}
         </TouchableOpacity>

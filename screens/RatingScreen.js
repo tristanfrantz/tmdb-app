@@ -1,6 +1,12 @@
 import React from 'react';
 import {
-  StyleSheet, View, Platform, Text, TouchableOpacity, Image,
+  StyleSheet,
+  View,
+  Platform,
+  Text,
+  TouchableOpacity,
+  Image,
+  ImageBackground,
 } from 'react-native';
 import StarRating from 'react-native-star-rating';
 import { connect } from 'react-redux';
@@ -12,10 +18,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#fff',
-    padding: 10,
   },
   rateBtn: {
-    marginVertical: '5%',
+    marginTop: '5%',
     width: '90%',
     height: 40,
     padding: 10,
@@ -29,13 +34,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   poster: {
-    marginTop: '10%',
+    marginTop: '5%',
     height: 240,
     width: 160,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  counter: {
+    fontSize: 130,
+    textAlignVertical: 'center',
+    color: '#3d5f99',
   },
   title: {
     marginVertical: '5%',
-    fontSize: 30,
+    fontSize: 25,
     textAlign: 'center',
   },
 });
@@ -80,11 +92,29 @@ class RatingScreen extends React.Component {
     this.props.navigation.dispatch(popAction);
   }
 
+  onRemoveRating(imdbID) {
+    this.props.dispatch(removeRating(imdbID));
+
+    const popAction = StackActions.pop({ n: 1 });
+    this.props.navigation.dispatch(popAction);
+  }
+
   render() {
     const { ratingItem } = this.props.navigation.state.params;
     return (
-      <View style={styles.container}>
-        <Image style={styles.poster} source={{ uri: ratingItem.Poster }} />
+      <ImageBackground
+        style={[styles.container, { width: '100%', height: '100%' }]}
+        blurRadius={4}
+        opacity={0.5}
+        source={{ uri: ratingItem.Poster }}
+      >
+        {this.state.starCount === 0 ? (
+          <Image style={styles.poster} source={{ uri: ratingItem.Poster }} />
+        ) : (
+          <View style={styles.poster}>
+            <Text style={styles.counter}>{this.state.starCount}</Text>
+          </View>
+        )}
         <Text style={styles.title}>{`How would you rate ${ratingItem.Title}?`}</Text>
         <StarRating
           disabled={false}
@@ -104,7 +134,15 @@ class RatingScreen extends React.Component {
         >
           <Text style={styles.btnText}>RATE</Text>
         </TouchableOpacity>
-      </View>
+        {ratingItem.YourRating !== 0 && (
+          <TouchableOpacity
+            style={[styles.rateBtn, { backgroundColor: '#3c3f42' }]}
+            onPress={() => this.onRemoveRating(ratingItem.imdbID)}
+          >
+            <Text style={styles.btnText}>REMOVE RATING</Text>
+          </TouchableOpacity>
+        )}
+      </ImageBackground>
     );
   }
 }
