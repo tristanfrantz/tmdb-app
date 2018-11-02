@@ -23,15 +23,16 @@ const styles = StyleSheet.create({
     marginTop: '5%',
     width: '90%',
     height: 40,
-    padding: 10,
     borderRadius: 10,
     backgroundColor: '#0081e6',
+    alignItems: 'center',
   },
   btnText: {
     color: 'white',
     fontWeight: 'bold',
     fontSize: 16,
-    textAlign: 'center',
+    textAlignVertical: 'center',
+    paddingTop: 9,
   },
   poster: {
     marginTop: '5%',
@@ -119,13 +120,13 @@ class RatingScreen extends React.Component {
         <StarRating
           disabled={false}
           emptyStar="ios-star-outline"
+          emptyStarColor="#302c2c"
           fullStar="ios-star"
-          halfStar="ios-star-half"
+          fullStarColor="#3d5f99"
           iconSet="Ionicons"
           maxStars={10}
           rating={this.state.starCount}
           selectedStar={rating => this.onStarRatingPress(rating)}
-          fullStarColor="#3d5f99"
           starSize={30}
         />
         <TouchableOpacity

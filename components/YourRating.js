@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
   },
   ratingContainer: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   ratingText: {
     fontSize: 16,
