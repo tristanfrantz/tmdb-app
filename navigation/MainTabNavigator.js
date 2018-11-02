@@ -8,6 +8,7 @@ import SearchScreen from '../screens/SearchScreen';
 import WatchlistScreen from '../screens/WatchlistScreen';
 import DetailsScreen from '../screens/DetailsScreen';
 import PlotScreen from '../screens/PlotScreen';
+import RatingScreen from '../screens/RatingScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -28,6 +29,14 @@ const SearchStack = createStackNavigator({
     screen: SearchScreen,
     navigationOptions: () => ({
       title: 'Search',
+      headerTitleStyle: {
+        ...Platform.select({
+          android: {
+            marginLeft: 'auto',
+            marginRight: 'auto',
+          },
+        }),
+      },
     }),
   },
   Details: {
@@ -40,6 +49,12 @@ const SearchStack = createStackNavigator({
     screen: PlotScreen,
     navigationOptions: () => ({
       title: 'Plot',
+    }),
+  },
+  Rating: {
+    screen: RatingScreen,
+    navigationOptions: () => ({
+      title: 'Rating',
     }),
   },
 });
@@ -59,6 +74,14 @@ const WatchlistStack = createStackNavigator({
     screen: WatchlistScreen,
     navigationOptions: () => ({
       title: 'Watchlist',
+      headerTitleStyle: {
+        ...Platform.select({
+          android: {
+            marginLeft: 'auto',
+            marginRight: 'auto',
+          },
+        }),
+      },
     }),
   },
   Details: {
@@ -71,6 +94,12 @@ const WatchlistStack = createStackNavigator({
     screen: PlotScreen,
     navigationOptions: () => ({
       title: 'Plot',
+    }),
+  },
+  Rating: {
+    screen: RatingScreen,
+    navigationOptions: () => ({
+      title: 'Rating',
     }),
   },
 });
