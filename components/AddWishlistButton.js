@@ -18,10 +18,6 @@ const styles = StyleSheet.create({
   removeFromWatchlistBtn: {
     backgroundColor: 'gray',
   },
-  buttonText: {
-    fontSize: 16,
-    textAlign: 'center',
-  },
   addIcon: {
     color: 'white',
     fontSize: 16,

@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  StyleSheet, ScrollView, View, Text,
+  StyleSheet, ScrollView, View, Text, Platform,
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -21,6 +21,19 @@ const styles = StyleSheet.create({
 });
 
 export default class PlotScreen extends React.Component {
+  static navigationOptions = {
+    ...Platform.select({
+      android: {
+        headerTitleStyle: {
+          flex: 1,
+          textAlign: 'center',
+          alignSelf: 'center',
+        },
+        headerRight: <View />,
+      },
+    }),
+  };
+
   constructor(props) {
     super(props);
     this.state = {

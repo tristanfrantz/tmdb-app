@@ -15,3 +15,18 @@ export const addToWatchlist = _movie => async (dispatch) => {
   }
   dispatch({ type: 'ADD_TO_WATCHLIST', payload: { movie: theMovie } });
 };
+
+export const addRating = (_Rating, _imdbID) => ({
+  type: 'ADD_RATING',
+  payload: { Rating: _Rating, imdbID: _imdbID },
+});
+
+export const updateRating = (_Rating, _imdbID) => ({
+  type: 'UPDATE_RATING',
+  payload: { Rating: _Rating, imdbID: _imdbID },
+});
+
+export const removeRating = _imdbID => ({
+  type: 'REMOVE_RATING',
+  payload: { imdbID: _imdbID },
+});
