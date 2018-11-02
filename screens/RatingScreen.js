@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     color: '#3d5f99',
   },
   title: {
-    marginVertical: '5%',
+    margin: '5%',
     fontSize: 25,
     textAlign: 'center',
   },
@@ -82,6 +82,9 @@ class RatingScreen extends React.Component {
 
   onSubmitRating(imdbID) {
     const { starCount } = this.state;
+    if (starCount === 0) {
+      return;
+    }
     const { YourRating } = this.props.navigation.state.params.ratingItem;
 
     if (YourRating === 0) {
