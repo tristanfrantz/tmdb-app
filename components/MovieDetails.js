@@ -1,16 +1,12 @@
 import React from 'react';
 import {
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-  View,
-  Text,
-  Image,
+  StyleSheet, TouchableOpacity, ScrollView, View, Text, Image,
 } from 'react-native';
-import { Bubbles } from 'react-native-loader';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
+import { Bubbles } from 'react-native-loader';
 import ImdbRating from './ImdbRating';
+import YourRating from './YourRating';
 import AddWishlistButton from './AddWishlistButton';
 import DetailsPanel from './DetailsPanel';
 
@@ -20,8 +16,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   contentContainer: {
-    paddingLeft: 5,
-    paddingRight: 5,
+    padding: 5,
   },
   movieContainer: {
     flexDirection: 'row',
@@ -102,6 +97,19 @@ class MovieDetails extends React.Component {
   render() {
     const movie = this.state.item;
     const { loading } = this.state;
+    const { navigation } = this.props;
+    let oldRating = 0;
+    if (!this.props.ratedMovies.filter(m => m.key === movie.imdbID)[0]) {
+      oldRating = 0;
+    } else {
+      oldRating = this.props.ratedMovies.filter(m => m.key === movie.imdbID)[0].rating;
+    }
+    const ratingItem = {
+      imdbID: movie.imdbID,
+      Title: movie.Title,
+      Poster: movie.Poster,
+      YourRating: oldRating,
+    };
 
     return (
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
@@ -120,6 +128,7 @@ class MovieDetails extends React.Component {
                 </Text>
                 <View style={styles.detailsContainer}>
                   <ImdbRating rating={movie.imdbRating} votes={movie.imdbVotes} />
+                  <YourRating navigation={navigation} ratingItem={ratingItem} />
                   <Text style={styles.text}>
                     {'Genre: '}
                     <Text style={styles.shadowText}>{movie.Genre}</Text>
@@ -132,7 +141,7 @@ class MovieDetails extends React.Component {
 
             <TouchableOpacity
               style={styles.plotContainer}
-              onPress={() => this.props.navigation.navigate('Plot', movie)}
+              onPress={() => navigation.navigate('Plot', movie)}
             >
               <View style={styles.plotTextContainer}>
                 <Text>{movie.Plot}</Text>
@@ -153,5 +162,5 @@ class MovieDetails extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({ movies: state.watchlist });
+const mapStateToProps = state => ({ movies: state.watchlist, ratedMovies: state.ratedMovies });
 export default connect(mapStateToProps)(MovieDetails);

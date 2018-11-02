@@ -2,7 +2,7 @@ import React from 'react';
 import {
   StyleSheet, ScrollView, FlatList, View,
 } from 'react-native';
-import { SearchBar, Icon } from 'react-native-elements';
+import { SearchBar } from 'react-native-elements';
 import { TagSelect } from 'react-native-tag-select';
 import MovieListItem from './MovieListItem';
 
@@ -14,14 +14,13 @@ const styles = StyleSheet.create({
     paddingRight: 8,
   },
   searchFieldContainer: {
-    paddingBottom: 12,
+    paddingBottom: 5,
   },
   filterButtons: {
-    borderRadius: 100,
-    width: 70,
-    height: 25,
+    borderRadius: 75,
     justifyContent: 'center',
     alignItems: 'center',
+    width: 100,
   },
   poster: {
     height: 150,
@@ -104,20 +103,16 @@ class componentName extends React.Component {
 
   render() {
     const { results } = this.state;
-    const searcPlaceholder = 'Search movies, series or episodes...';
-    console.log(results);
+    const searchPlaceholder = 'Search movies, series or episodes...';
     return (
       <View style={styles.container}>
         <View style={styles.searchFieldContainer}>
           <SearchBar
             lightTheme
             containerStyle={{ backgroundColor: 'white' }}
-            inputContainerStyle={{ height: 40 }}
             round
-            onChangeText={(text) => {
-              this.onChangeText(text);
-            }}
-            placeholder={searcPlaceholder}
+            onChangeText={text => this.onChangeText(text)}
+            placeholder={searchPlaceholder}
             clearButtonMode="while-editing"
           />
           <TagSelect
