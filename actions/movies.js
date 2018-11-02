@@ -1,12 +1,17 @@
 const apiKey = '14cfd31';
 
-export const removeFromWatchlist = _imdbId => ({
+export const removeFromWatchlist = _imdbID => ({
   type: 'REMOVE_FROM_WATCHLIST',
-  payload: { imdbId: _imdbId },
+  payload: { imdbID: _imdbID },
 });
 
-export const addToWatchlist = _imdbId => async (dispatch) => {
-  const response = await fetch(`http://omdbapi.com/?apikey=${apiKey}&i=${_imdbId}`).catch(err => console.log(err));
-  const json = await response.json();
-  dispatch({ type: 'ADD_TO_WATCHLIST', payload: { imbdId: _imdbId, details: json } });
+export const addToWatchlist = _movie => async (dispatch) => {
+  let theMovie = _movie;
+  if (Object.keys(_movie).length < 10) {
+    const response = await fetch(`http://omdbapi.com/?apikey=${apiKey}&i=${_movie.imdbID}`).catch(
+      err => console.log(err),
+    );
+    theMovie = await response.json();
+  }
+  dispatch({ type: 'ADD_TO_WATCHLIST', payload: { movie: theMovie } });
 };

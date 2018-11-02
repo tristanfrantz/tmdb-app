@@ -36,14 +36,14 @@ class AddWishlistButton extends React.Component {
   }
 
   render() {
-    const movie = this.props.movies.filter(m => m.key === this.props.imdbId)[0];
+    const movie = this.props.movies.filter(m => m.key === this.props.movie.imdbID)[0];
 
     return (
       <View>
         {!movie ? (
           <TouchableOpacity
             style={[styles.button, styles.addToWatchlistBtn]}
-            onPress={() => this.props.dispatch(addToWatchlist(this.props.imdbId))}
+            onPress={() => this.props.dispatch(addToWatchlist(this.props.movie))}
           >
             <Icon name="plus" style={styles.addIcon}>
               <Text style={styles.text}> ADD TO WATCHLIST</Text>
@@ -52,7 +52,7 @@ class AddWishlistButton extends React.Component {
         ) : (
           <TouchableOpacity
             style={[styles.button, styles.removeFromWatchlistBtn]}
-            onPress={() => this.props.dispatch(removeFromWatchlist(this.props.imdbId))}
+            onPress={() => this.props.dispatch(removeFromWatchlist(movie.key))}
           >
             <Icon name="check" style={styles.addIcon}>
               <Text style={styles.text}> ADDED TO WATCHLIST</Text>

@@ -1,26 +1,14 @@
 import React from 'react';
 import {
-  StyleSheet,
-  ScrollView,
-  FlatList,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  Picker,
+  StyleSheet, ScrollView, FlatList, View, TextInput, Picker,
 } from 'react-native';
+import MovieListItem from './MovieListItem';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
     padding: 8,
-  },
-  movieContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    paddingBottom: 16,
   },
   searchFieldContainer: {
     flexDirection: 'row',
@@ -144,7 +132,12 @@ class componentName extends React.Component {
           </View>
         </View>
         <ScrollView>
-          <FlatList data={results} renderItem={this.renderItem} />
+          <FlatList
+            data={results}
+            renderItem={({ item }) => (
+              <MovieListItem movie={item} navigation={this.props.navigation} />
+            )}
+          />
         </ScrollView>
       </View>
     );

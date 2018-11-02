@@ -10,15 +10,15 @@ const watchlist = (state = initialState, action) => {
         watchlist: [
           ...state.watchlist,
           {
-            details: action.payload.details,
-            key: action.payload.imbdId,
+            details: action.payload.movie,
+            key: action.payload.movie.imdbID,
           },
         ],
       };
     case 'REMOVE_FROM_WATCHLIST':
       return {
         ...state,
-        watchlist: state.watchlist.filter(movie => movie.key !== action.payload.imdbId),
+        watchlist: state.watchlist.filter(movie => movie.key !== action.payload.imdbID),
       };
     default:
       return state;
