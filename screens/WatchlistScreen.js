@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, FlatList, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import MovieListItem from '../components/MovieListItem';
+import WatchlistItem from '../components/WatchlistItem';
 
 const styles = StyleSheet.create({
   container: {
@@ -26,8 +26,9 @@ class WatchlistScreen extends React.Component {
         <FlatList
           data={movies}
           renderItem={({ item }) => (
-            <MovieListItem movie={item.details} navigation={this.props.navigation} />
+            <WatchlistItem movie={item.details} navigation={this.props.navigation} />
           )}
+          keyExtractor={item => `${item.details.id}`}
         />
       </ScrollView>
     );

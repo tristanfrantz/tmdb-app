@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   StyleSheet, View, Text, TouchableOpacity, Image,
 } from 'react-native';
-import AddWishlistButton from './AddWishlistButton';
 
 const styles = StyleSheet.create({
   container: {
@@ -12,11 +11,10 @@ const styles = StyleSheet.create({
   movieContainer: {
     flex: 1,
     flexDirection: 'row',
-    paddingBottom: 16,
   },
   poster: {
-    height: 150,
-    width: 100,
+    height: 100,
+    width: 65,
   },
   details: {
     flex: 1,
@@ -36,6 +34,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     bottom: 0,
   },
+  shadowText: {
+    fontSize: 14,
+    color: 'grey',
+  },
 });
 
 class MovieListItem extends Component {
@@ -44,24 +46,62 @@ class MovieListItem extends Component {
     this.state = {};
   }
 
-  onPress = (item) => {
-    this.props.navigation.navigate('Details', item);
+  onMoviePress = (item) => {
+    this.props.navigation.push('Details', item);
+  };
+
+  onPersonPress = (item) => {
+    this.props.navigation.push('Profile', item);
   };
 
   render() {
-    const { movie } = this.props;
-    return (
-      <TouchableOpacity style={styles.movieContainer} onPress={() => this.onPress(movie)}>
-        <Image style={styles.poster} source={{ uri: movie.Poster }} />
-        <View style={styles.details}>
-          <Text style={styles.title}>{movie.Title}</Text>
-          <Text style={styles.text}>{movie.Year}</Text>
-          <View style={styles.watchlistBtn}>
-            <AddWishlistButton movie={movie} />
+    const { item } = this.props;
+
+    if (item.media_type === 'movie') {
+      return (
+        <TouchableOpacity style={styles.movieContainer} onPress={() => this.onMoviePress(item)}>
+          <Image
+            style={styles.poster}
+            source={{ uri: `https://image.tmdb.org/t/p/w500/${item.poster_path}` }}
+          />
+          <View style={styles.details}>
+            <Text style={styles.title}>{item.title}</Text>
+            <Text style={styles.text}>{item.release_date}</Text>
+            <Text style={styles.shadowText}>Movie</Text>
           </View>
-        </View>
-      </TouchableOpacity>
-    );
+        </TouchableOpacity>
+      );
+    }
+    if (item.media_type === 'tv') {
+      return (
+        <TouchableOpacity style={styles.movieContainer} onPress={() => this.onPress(item)}>
+          <Image
+            style={styles.poster}
+            source={{ uri: `https://image.tmdb.org/t/p/w500/${item.poster_path}` }}
+          />
+          <View style={styles.details}>
+            <Text style={styles.title}>{item.name}</Text>
+            <Text style={styles.text}>{item.first_air_date}</Text>
+            <Text style={styles.shadowText}>Series</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    }
+    if (item.media_type === 'person') {
+      return (
+        <TouchableOpacity style={styles.movieContainer} onPress={() => this.onPersonPress(item)}>
+          <Image
+            style={styles.poster}
+            source={{ uri: `https://image.tmdb.org/t/p/w500/${item.profile_path}` }}
+          />
+          <View style={styles.details}>
+            <Text style={styles.title}>{item.name}</Text>
+            <Text style={styles.text}>{item.first_air_date}</Text>
+            <Text style={styles.shadowText}>Actor</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    }
   }
 }
 

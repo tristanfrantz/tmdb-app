@@ -35,12 +35,12 @@ class YourRating extends React.Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={() => this.props.navigation.navigate('Rating', { ratingItem })}>
-          {ratingItem.YourRating !== 0 ? (
+          {ratingItem.yourRating !== 0 ? (
             <View style={styles.ratingContainer}>
               <Icon name="ios-star" size={23} color="#3d5f99" />
               <Text style={styles.ratingText}>
                 {' '}
-                {ratingItem.YourRating}
+                {ratingItem.yourRating}
               </Text>
               <Text style={styles.votesText}>/10</Text>
             </View>

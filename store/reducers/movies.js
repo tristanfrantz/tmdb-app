@@ -12,14 +12,14 @@ const watchlist = (state = initialState, action) => {
           ...state.watchlist,
           {
             details: action.payload.movie,
-            key: action.payload.movie.imdbID,
+            key: action.payload.movie.id,
           },
         ],
       };
     case 'REMOVE_FROM_WATCHLIST':
       return {
         ...state,
-        watchlist: state.watchlist.filter(movie => movie.key !== action.payload.imdbID),
+        watchlist: state.watchlist.filter(movie => movie.key !== action.payload.id),
       };
     case 'ADD_RATING':
       return {
@@ -28,7 +28,7 @@ const watchlist = (state = initialState, action) => {
           ...state.ratedMovies,
           {
             rating: action.payload.Rating,
-            key: action.payload.imdbID,
+            key: action.payload.id,
           },
         ],
       };
@@ -36,13 +36,10 @@ const watchlist = (state = initialState, action) => {
       return {
         ...state,
         ratedMovies: state.ratedMovies.map((rating) => {
-          console.log(rating.key);
-          console.log(action.payload.imdbID);
-          if (rating.key === action.payload.imdbID) {
-            console.log('FOUND MATCH');
+          if (rating.key === action.payload.id) {
             return {
               rating: action.payload.Rating,
-              key: action.payload.imdbID,
+              key: action.payload.id,
             };
           }
           return rating;
@@ -51,7 +48,7 @@ const watchlist = (state = initialState, action) => {
     case 'REMOVE_RATING':
       return {
         ...state,
-        ratedMovies: state.ratedMovies.filter(rating => rating.key !== action.payload.imdbID),
+        ratedMovies: state.ratedMovies.filter(rating => rating.key !== action.payload.id),
       };
     default:
       return state;

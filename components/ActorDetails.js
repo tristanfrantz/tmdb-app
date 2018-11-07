@@ -3,12 +3,8 @@ import {
   StyleSheet, TouchableOpacity, ScrollView, View, Text, Image,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { connect } from 'react-redux';
 import { Bubbles } from 'react-native-loader';
-import ImdbRating from './ImdbRating';
-import YourRating from './YourRating';
-import AddWishlistButton from './AddWishlistButton';
-import DetailsPanel from './DetailsPanel';
+import ProfileDetailsPanel from './ProfileDetailsPanel';
 
 const styles = StyleSheet.create({
   container: {
@@ -69,11 +65,11 @@ const styles = StyleSheet.create({
   },
 });
 
-class MovieDetails extends React.Component {
+class ActorDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      movie: {},
+      actor: {},
       loading: true,
       error: false,
     };
@@ -84,9 +80,9 @@ class MovieDetails extends React.Component {
     const apiKey = '698a64988eda32cea2480262c47df2da';
 
     try {
-      const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-US&append_to_response=credits`);
+      const response = await fetch(`https://api.themoviedb.org/3/person/${id}?api_key=${apiKey}&language=en-US&append_to_response=movie_credits`);
       const json = await response.json();
-      this.setState({ movie: json });
+      this.setState({ actor: json });
       this.setState({ loading: false });
     } catch (e) {
       this.setState({ error: true });
@@ -94,20 +90,8 @@ class MovieDetails extends React.Component {
   }
 
   render() {
-    const { movie, loading, error } = this.state;
+    const { actor, loading, error } = this.state;
     const { navigation } = this.props;
-    let oldRating = 0;
-    if (!this.props.ratedMovies.filter(m => m.key === movie.id)[0]) {
-      oldRating = 0;
-    } else {
-      oldRating = this.props.ratedMovies.filter(m => m.key === movie.id)[0].rating;
-    }
-    const ratingItem = {
-      id: movie.id,
-      title: movie.title,
-      poster: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
-      yourRating: oldRating,
-    };
 
     if (error) {
       return (
@@ -131,44 +115,42 @@ class MovieDetails extends React.Component {
           <View style={styles.movieContainer}>
             <Image
               style={styles.poster}
-              source={{ uri: `https://image.tmdb.org/t/p/w500/${movie.poster_path}` }}
+              source={{ uri: `https://image.tmdb.org/t/p/w500/${actor.profile_path}` }}
             />
             <View style={styles.titleContainer}>
               <Text style={styles.titleText}>
-                {movie.title}
-                <Text style={styles.year}>{` (${movie.release_date})`}</Text>
+                {actor.name}
+                <Text style={styles.year}>{` (${actor.release_date})`}</Text>
               </Text>
               <View style={styles.detailsContainer}>
-                <ImdbRating rating={movie.vote_average} votes={movie.vote_count} />
-                <YourRating navigation={navigation} ratingItem={ratingItem} />
                 <Text style={styles.text}>
                   {'Genre: '}
-                  <Text style={styles.shadowText}>{movie.Genre}</Text>
+                  <Text style={styles.shadowText}>{actor.Genre}</Text>
                 </Text>
-                <Text style={styles.shadowText}>{`Runtime ${movie.runtime}`}</Text>
+                <Text style={styles.shadowText}>{`Runtime ${actor.runtime}`}</Text>
               </View>
             </View>
           </View>
-          <AddWishlistButton movie={movie} />
 
           <TouchableOpacity
             style={styles.plotContainer}
-            onPress={() => navigation.navigate('Plot', movie)}
+            onPress={() => navigation.navigate('Bio', actor)}
           >
             <View style={styles.plotTextContainer}>
-              <Text>{movie.overview}</Text>
+              <Text>{actor.biography}</Text>
             </View>
             <View style={styles.plotArrow}>
               <Icon size={22} name="angle-right" />
             </View>
           </TouchableOpacity>
 
-          <DetailsPanel navigation={navigation} title="Cast" people={movie.credits.cast} />
+          <ProfileDetailsPanel navigation={navigation} title="Movies" people={actor.movie_credits.cast} />
+
+
         </View>
       </ScrollView>
     );
   }
 }
 
-const mapStateToProps = state => ({ movies: state.watchlist, ratedMovies: state.ratedMovies });
-export default connect(mapStateToProps)(MovieDetails);
+export default ActorDetails;

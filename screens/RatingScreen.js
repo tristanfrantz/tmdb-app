@@ -11,7 +11,7 @@ import {
 import StarRating from 'react-native-star-rating';
 import { connect } from 'react-redux';
 import { StackActions } from 'react-navigation';
-import { addRating, removeRating, updateRating } from '../actions/movies';
+import { addRating, removeRating, updateRating } from '../store/actions/movies';
 
 const styles = StyleSheet.create({
   container: {
@@ -70,7 +70,7 @@ class RatingScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      starCount: this.props.navigation.state.params.ratingItem.YourRating,
+      starCount: this.props.navigation.state.params.ratingItem.yourRating,
     };
   }
 
@@ -80,24 +80,24 @@ class RatingScreen extends React.Component {
     });
   }
 
-  onSubmitRating(imdbID) {
+  onSubmitRating(id) {
     const { starCount } = this.state;
     if (starCount === 0) {
       return;
     }
-    const { YourRating } = this.props.navigation.state.params.ratingItem;
+    const { yourRating } = this.props.navigation.state.params.ratingItem;
 
-    if (YourRating === 0) {
-      this.props.dispatch(addRating(starCount, imdbID));
-    } else if (starCount !== YourRating && YourRating !== 0) {
-      this.props.dispatch(updateRating(starCount, imdbID));
+    if (yourRating === 0) {
+      this.props.dispatch(addRating(starCount, id));
+    } else if (starCount !== yourRating && yourRating !== 0) {
+      this.props.dispatch(updateRating(starCount, id));
     }
     const popAction = StackActions.pop({ n: 1 });
     this.props.navigation.dispatch(popAction);
   }
 
-  onRemoveRating(imdbID) {
-    this.props.dispatch(removeRating(imdbID));
+  onRemoveRating(id) {
+    this.props.dispatch(removeRating(id));
 
     const popAction = StackActions.pop({ n: 1 });
     this.props.navigation.dispatch(popAction);
@@ -110,16 +110,16 @@ class RatingScreen extends React.Component {
         style={[styles.container, { width: '100%', height: '100%' }]}
         blurRadius={4}
         opacity={0.5}
-        source={{ uri: ratingItem.Poster }}
+        source={{ uri: ratingItem.poster }}
       >
         {this.state.starCount === 0 ? (
-          <Image style={styles.poster} source={{ uri: ratingItem.Poster }} />
+          <Image style={styles.poster} source={{ uri: ratingItem.poster }} />
         ) : (
           <View style={styles.poster}>
             <Text style={styles.counter}>{this.state.starCount}</Text>
           </View>
         )}
-        <Text style={styles.title}>{`How would you rate ${ratingItem.Title}?`}</Text>
+        <Text style={styles.title}>{`How would you rate ${ratingItem.title}?`}</Text>
         <StarRating
           disabled={false}
           emptyStar="ios-star-outline"
@@ -132,16 +132,13 @@ class RatingScreen extends React.Component {
           selectedStar={rating => this.onStarRatingPress(rating)}
           starSize={30}
         />
-        <TouchableOpacity
-          style={styles.rateBtn}
-          onPress={() => this.onSubmitRating(ratingItem.imdbID)}
-        >
+        <TouchableOpacity style={styles.rateBtn} onPress={() => this.onSubmitRating(ratingItem.id)}>
           <Text style={styles.btnText}>RATE</Text>
         </TouchableOpacity>
-        {ratingItem.YourRating !== 0 && (
+        {ratingItem.yourRating !== 0 && (
           <TouchableOpacity
             style={[styles.rateBtn, { backgroundColor: '#3c3f42' }]}
-            onPress={() => this.onRemoveRating(ratingItem.imdbID)}
+            onPress={() => this.onRemoveRating(ratingItem.id)}
           >
             <Text style={styles.btnText}>REMOVE RATING</Text>
           </TouchableOpacity>

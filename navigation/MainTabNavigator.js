@@ -7,6 +7,7 @@ import HomeScreen from '../screens/HomeScreen';
 import SearchScreen from '../screens/SearchScreen';
 import WatchlistScreen from '../screens/WatchlistScreen';
 import DetailsScreen from '../screens/DetailsScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 import PlotScreen from '../screens/PlotScreen';
 import RatingScreen from '../screens/RatingScreen';
 
@@ -42,7 +43,15 @@ const SearchStack = createStackNavigator({
   Details: {
     screen: DetailsScreen,
     navigationOptions: () => ({
-      title: 'Details',
+      title: 'Movie',
+      headerBackTitle: 'Back',
+    }),
+  },
+  Profile: {
+    screen: ProfileScreen,
+    navigationOptions: () => ({
+      title: 'Profile',
+      headerBackTitle: 'Back',
     }),
   },
   Plot: {
@@ -87,7 +96,15 @@ const WatchlistStack = createStackNavigator({
   Details: {
     screen: DetailsScreen,
     navigationOptions: () => ({
-      title: 'Details',
+      title: 'Movie',
+      headerBackTitle: 'Back',
+    }),
+  },
+  Profile: {
+    screen: ProfileScreen,
+    navigationOptions: () => ({
+      title: 'Profile',
+      headerBackTitle: 'Back',
     }),
   },
   Plot: {

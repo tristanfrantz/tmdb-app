@@ -5,6 +5,7 @@ import {
 import { SearchBar } from 'react-native-elements';
 import { TagSelect } from 'react-native-tag-select';
 import MovieListItem from './MovieListItem';
+import SearchListItemSeperator from './SearchListItemSeperator';
 
 const styles = StyleSheet.create({
   container: {
@@ -51,7 +52,7 @@ class componentName extends React.Component {
   }
 
   search = () => {
-    const apiKey = '14cfd31';
+    const apiKey = '698a64988eda32cea2480262c47df2da';
     const input = this.state.text;
     let type = '';
     if (this.state.moviesFilter && !this.state.seriesFilter) {
@@ -60,10 +61,12 @@ class componentName extends React.Component {
       type = 'series';
     }
 
-    fetch(`http://omdbapi.com/?apikey=${apiKey}&s=${input}&type=${type}`)
+    fetch(
+      `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=en-US&page=1&include_adult=false&query=${input}`,
+    )
       .then(res => res.json())
       .then(res => this.setState({
-        results: res.Search.map((c, i) => ({ ...c, key: `${i}` })),
+        results: res.results.map((c, i) => ({ ...c, key: `${i}` })),
       }))
       .catch((err) => {
         console.log(err);
@@ -99,10 +102,11 @@ class componentName extends React.Component {
     });
   };
 
-  renderItem = ({ item }) => <MovieListItem movie={item} navigation={this.props.navigation} />;
+  renderItem = ({ item }) => <MovieListItem item={item} navigation={this.props.navigation} />;
 
   render() {
     const { results } = this.state;
+
     const searchPlaceholder = 'Search movies, series or episodes...';
     return (
       <View style={styles.container}>
@@ -115,6 +119,8 @@ class componentName extends React.Component {
             placeholder={searchPlaceholder}
             clearButtonMode="while-editing"
           />
+        </View>
+        <ScrollView>
           <TagSelect
             data={[{ id: 1, label: 'Movies' }, { id: 2, label: 'Series' }]}
             onItemPress={(item) => {
@@ -123,9 +129,11 @@ class componentName extends React.Component {
             containerStyle={{ paddingTop: 5 }}
             itemStyle={styles.filterButtons}
           />
-        </View>
-        <ScrollView>
-          <FlatList data={results} renderItem={this.renderItem} />
+          <FlatList
+            data={results}
+            renderItem={this.renderItem}
+            ItemSeparatorComponent={() => <SearchListItemSeperator />}
+          />
         </ScrollView>
       </View>
     );

@@ -4,7 +4,7 @@ import {
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
-import { addToWatchlist, removeFromWatchlist } from '../actions/movies';
+import { addToWatchlist, removeFromWatchlist } from '../store/actions/movies';
 
 const styles = StyleSheet.create({
   button: {
@@ -32,7 +32,7 @@ class AddWishlistButton extends React.Component {
   }
 
   render() {
-    const movie = this.props.movies.filter(m => m.key === this.props.movie.imdbID)[0];
+    const movie = this.props.movies.filter(m => m.key === this.props.movie.id)[0];
 
     return (
       <View>
