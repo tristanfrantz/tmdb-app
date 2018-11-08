@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {
   StyleSheet, View, Text, TouchableOpacity, Image,
 } from 'react-native';
+import { connect } from 'react-redux';
+import { addRecentSearch } from '../store/actions/media';
 
 const MEDIA_TYPES = {
   MOVIE: 'movie',
@@ -52,16 +54,19 @@ class MovieListItem extends Component {
     this.state = {};
   }
 
-  onMoviePress = (item) => {
-    this.props.navigation.push('Details', item);
-  };
-
   onSeriesPress = (item) => {
     this.props.navigation.push('Series', item);
+    this.props.dispatch(addRecentSearch(item.name));
   };
 
   onPersonPress = (item) => {
     this.props.navigation.push('Profile', item);
+    this.props.dispatch(addRecentSearch(item.name));
+  };
+
+  onMoviePress = (item) => {
+    this.props.navigation.push('Details', item);
+    this.props.dispatch(addRecentSearch(item.title));
   };
 
   render() {
@@ -115,4 +120,4 @@ class MovieListItem extends Component {
   }
 }
 
-export default MovieListItem;
+export default connect()(MovieListItem);

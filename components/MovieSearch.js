@@ -1,11 +1,13 @@
 import React from 'react';
 import {
-  StyleSheet, ScrollView, FlatList, View,
+  StyleSheet, ScrollView, FlatList, View, Text, TouchableOpacity,
 } from 'react-native';
 import { SearchBar } from 'react-native-elements';
-import { TagSelect } from 'react-native-tag-select';
+import { connect } from 'react-redux';
+import Icon from 'react-native-vector-icons/Ionicons';
 import MovieListItem from './MovieListItem';
 import SearchListItemSeperator from './SearchListItemSeperator';
+import { addRecentSearch, clearRecentSearch } from '../store/actions/media';
 
 const styles = StyleSheet.create({
   container: {
@@ -35,6 +37,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20,
   },
+  recentSearch: {
+    height: 35,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginHorizontal: 15,
+  },
 });
 
 class MovieSearch extends React.Component {
@@ -43,7 +52,6 @@ class MovieSearch extends React.Component {
     this.state = {
       results: [],
       input: '',
-      filter: '',
       seriesFilter: false,
       moviesFilter: false,
     };
@@ -51,8 +59,7 @@ class MovieSearch extends React.Component {
 
   search = () => {
     const apiKey = '698a64988eda32cea2480262c47df2da';
-    const { input, filter } = this.state;
-
+    const { input } = this.state;
     fetch(
       `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=en-US&page=1&include_adult=false&query=${input}`,
     )
@@ -96,44 +103,69 @@ class MovieSearch extends React.Component {
 
   renderItem = ({ item }) => <MovieListItem item={item} navigation={this.props.navigation} />;
 
-  render() {
-    const { results } = this.state;
+  renderRecentSearchItem = ({ item }) => (
+    <TouchableOpacity
+      style={styles.recentSearch}
+      onPress={() => this.onChangeText(item.searchString)}
+    >
+      <Text style={{ fontSize: 15 }}>{item.searchString}</Text>
+      <Icon name="ios-arrow-forward" size={25} color="#6f7277" />
+    </TouchableOpacity>
+  );
 
-    const searchPlaceholder = 'Search movies, series or actors...';
+  render() {
+    const { results, input } = this.state;
+    const { recentSearch } = this.props;
+
     return (
       <View style={styles.container}>
         <View style={styles.searchFieldContainer}>
           <SearchBar
+            value={input}
             lightTheme
             containerStyle={{ backgroundColor: 'white' }}
             round
-            onChangeText={input => this.onChangeText(input)}
-            placeholder={searchPlaceholder}
+            onChangeText={i => this.onChangeText(i)}
+            placeholder="Search movies, series or actors..."
             clearButtonMode="while-editing"
+            onSubmitEditing={() => {
+              this.props.dispatch(addRecentSearch(input));
+            }}
           />
         </View>
-        <ScrollView>
-          <TagSelect
-            data={[
-              { id: 1, label: 'Movies' },
-              { id: 2, label: 'Series' },
-              { id: 3, label: 'Actors' },
-            ]}
-            onItemPress={(item) => {
-              this.onTagPress(item);
-            }}
-            containerStyle={{ paddingTop: 5 }}
-            itemStyle={styles.filterButtons}
-          />
-          <FlatList
-            data={results}
-            renderItem={this.renderItem}
-            ItemSeparatorComponent={() => <SearchListItemSeperator />}
-          />
-        </ScrollView>
+        {recentSearch.length > 0
+          && input.length === 0 && (
+            <View>
+              <View style={styles.recentSearch}>
+                <Text style={{ fontSize: 20 }}>Recent Searches</Text>
+                <TouchableOpacity onPress={() => this.props.dispatch(clearRecentSearch())}>
+                  <Text>Clear</Text>
+                </TouchableOpacity>
+              </View>
+              <SearchListItemSeperator />
+            </View>
+        )}
+        {input.length === 0 ? (
+          <ScrollView>
+            <FlatList
+              data={recentSearch}
+              renderItem={this.renderRecentSearchItem}
+              ItemSeparatorComponent={() => <SearchListItemSeperator />}
+            />
+          </ScrollView>
+        ) : (
+          <ScrollView>
+            <FlatList
+              data={results}
+              renderItem={this.renderItem}
+              ItemSeparatorComponent={() => <SearchListItemSeperator />}
+            />
+          </ScrollView>
+        )}
       </View>
     );
   }
 }
 
-export default MovieSearch;
+const mapStateToProps = state => ({ recentSearch: state.recentSearch });
+export default connect(mapStateToProps)(MovieSearch);
