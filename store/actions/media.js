@@ -25,7 +25,7 @@ export const removeRating = _id => ({
 
 export const addRecentSearch = _searchString => ({
   type: 'ADD_RECENT_SEARCH',
-  payload: { searchString: _searchString },
+  payload: { searchString: _searchString.toLowerCase() },
 });
 
 export const clearRecentSearch = () => ({

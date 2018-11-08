@@ -68,7 +68,7 @@ const watchlist = (state = initialState, action) => {
         searchCounter: state.searchCounter + 1,
         recentSearch: [
           {
-            searchString: action.payload.searchString.toLowerCase(),
+            searchString: action.payload.searchString,
             key: `${state.searchCounter}`,
           },
           ...state.recentSearch.filter(media => media.searchString !== action.payload.searchString),
