@@ -11,6 +11,7 @@ import {
 import { SearchBar } from 'react-native-elements';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { Bubbles } from 'react-native-loader';
 import MovieListItem from './MovieListItem';
 import SearchListItemSeperator from './SearchListItemSeperator';
 import { addRecentSearch, clearRecentSearch } from '../store/actions/media';
@@ -50,6 +51,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: 15,
   },
+  loading: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 class MovieSearch extends React.Component {
@@ -60,24 +66,10 @@ class MovieSearch extends React.Component {
       input: '',
       seriesFilter: false,
       moviesFilter: false,
+      loading: false,
+      error: false,
     };
   }
-
-  search = () => {
-    const apiKey = '698a64988eda32cea2480262c47df2da';
-    const { input } = this.state;
-    fetch(
-      `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=en-US&page=1&include_adult=false&query=${input}`,
-    )
-      .then(res => res.json())
-      .then(res => this.setState({
-        results: res.results.map((c, i) => ({ ...c, key: `${i}` })),
-      }))
-      .catch((err) => {
-        console.log(err);
-        this.setState({ results: [] });
-      });
-  };
 
   onPress = (item) => {
     this.props.navigation.navigate('Details', item);
@@ -102,10 +94,31 @@ class MovieSearch extends React.Component {
   };
 
   onChangeText = (input) => {
-    this.setState({ input }, () => {
+    this.setState({ error: false, input }, () => {
       this.search();
     });
   };
+
+  async search() {
+    const apiKey = '698a64988eda32cea2480262c47df2da';
+    const { input } = this.state;
+
+    try {
+      this.setState({ loading: true });
+      const response = await fetch(
+        `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=en-US&page=1&include_adult=false&query=${input}`,
+      );
+      const json = await response.json();
+      if (json.total_results === 0) {
+        this.setState({ error: true });
+      }
+      this.setState({ results: json.results.map((c, i) => ({ ...c, key: `${i}` })) });
+    } catch (e) {
+      console.log(e);
+      this.setState({ results: [] });
+    }
+    this.setState({ loading: false });
+  }
 
   renderItem = ({ item }) => <MovieListItem item={item} navigation={this.props.navigation} />;
 
@@ -120,7 +133,9 @@ class MovieSearch extends React.Component {
   );
 
   render() {
-    const { results, input } = this.state;
+    const {
+      results, input, loading, error,
+    } = this.state;
     const { recentSearch } = this.props;
 
     return (
@@ -131,6 +146,7 @@ class MovieSearch extends React.Component {
             lightTheme
             containerStyle={{ backgroundColor: 'white' }}
             round
+            showLoading={loading}
             onChangeText={i => this.onChangeText(i)}
             placeholder="Search movies, series or actors..."
             clearButtonMode="while-editing"
@@ -144,6 +160,11 @@ class MovieSearch extends React.Component {
             })}
           />
         </View>
+        {error && (
+          <View>
+            <Text>{`Nothing was found matching ${input} :(`}</Text>
+          </View>
+        )}
         {recentSearch.length > 0
           && input.length === 0 && (
             <View>
@@ -156,6 +177,7 @@ class MovieSearch extends React.Component {
               <SearchListItemSeperator />
             </View>
         )}
+
         {input.length === 0 ? (
           <ScrollView>
             <FlatList
@@ -172,6 +194,11 @@ class MovieSearch extends React.Component {
               ItemSeparatorComponent={() => <SearchListItemSeperator />}
             />
           </ScrollView>
+        )}
+        {loading && (
+          <View style={styles.loading}>
+            <Bubbles size={15} color="rgba(39, 40, 41, 0.3)" />
+          </View>
         )}
       </View>
     );
