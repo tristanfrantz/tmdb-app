@@ -35,9 +35,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20,
   },
-  text: {
-    fontSize: 16,
-  },
 });
 
 class MovieSearch extends React.Component {
@@ -45,21 +42,16 @@ class MovieSearch extends React.Component {
     super(props);
     this.state = {
       results: [],
-      text: '',
-      moviesFilter: false,
+      input: '',
+      filter: '',
       seriesFilter: false,
+      moviesFilter: false,
     };
   }
 
   search = () => {
     const apiKey = '698a64988eda32cea2480262c47df2da';
-    const input = this.state.text;
-    let type = '';
-    if (this.state.moviesFilter && !this.state.seriesFilter) {
-      type = 'movie';
-    } else if (this.state.seriesFilter && !this.state.moviesFilter) {
-      type = 'series';
-    }
+    const { input, filter } = this.state;
 
     fetch(
       `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=en-US&page=1&include_adult=false&query=${input}`,
@@ -81,7 +73,7 @@ class MovieSearch extends React.Component {
   onTagPress = (item) => {
     if (item.id === 1) {
       this.setState(
-        prevState => ({ moviesFilter: !prevState.moviesFilter }),
+        prevState => ({ filter: !prevState.moviesFilter }),
         () => {
           this.search();
         },
@@ -96,8 +88,8 @@ class MovieSearch extends React.Component {
     }
   };
 
-  onChangeText = (text) => {
-    this.setState({ text }, () => {
+  onChangeText = (input) => {
+    this.setState({ input }, () => {
       this.search();
     });
   };
@@ -107,7 +99,7 @@ class MovieSearch extends React.Component {
   render() {
     const { results } = this.state;
 
-    const searchPlaceholder = 'Search movies, series or episodes...';
+    const searchPlaceholder = 'Search movies, series or actors...';
     return (
       <View style={styles.container}>
         <View style={styles.searchFieldContainer}>
@@ -115,14 +107,18 @@ class MovieSearch extends React.Component {
             lightTheme
             containerStyle={{ backgroundColor: 'white' }}
             round
-            onChangeText={text => this.onChangeText(text)}
+            onChangeText={input => this.onChangeText(input)}
             placeholder={searchPlaceholder}
             clearButtonMode="while-editing"
           />
         </View>
         <ScrollView>
           <TagSelect
-            data={[{ id: 1, label: 'Movies' }, { id: 2, label: 'Series' }]}
+            data={[
+              { id: 1, label: 'Movies' },
+              { id: 2, label: 'Series' },
+              { id: 3, label: 'Actors' },
+            ]}
             onItemPress={(item) => {
               this.onTagPress(item);
             }}
