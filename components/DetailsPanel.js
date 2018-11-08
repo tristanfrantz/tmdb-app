@@ -1,13 +1,8 @@
 import React from 'react';
 import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  Text,
-  FlatList,
-  ScrollView,
-  Image,
+  StyleSheet, View, TouchableOpacity, Text, FlatList, ScrollView,
 } from 'react-native';
+import UsefulImage from './UsefulImage';
 
 const styles = StyleSheet.create({
   container: {
@@ -59,10 +54,7 @@ class DetailsPanel extends React.Component {
 
   renderItem = ({ item }) => (
     <TouchableOpacity style={styles.mediaContainer} onPress={() => this.onPress(item)}>
-      <Image
-        style={styles.mediaImage}
-        source={{ uri: `https://image.tmdb.org/t/p/w500/${item.profile_path}` }}
-      />
+      <UsefulImage passedStyle={styles.mediaImage} imgPath={item.profile_path} />
       <Text style={styles.nameText}>{item.name}</Text>
       <Text style={styles.characterText}>{item.character}</Text>
     </TouchableOpacity>

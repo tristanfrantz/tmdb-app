@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet, View, Text, TouchableOpacity, Image,
+  StyleSheet, View, Text, TouchableOpacity,
 } from 'react-native';
 import AddWishlistButton from './AddWishlistButton';
+import UsefulImage from './UsefulImage';
 
 const styles = StyleSheet.create({
   container: {
@@ -62,10 +63,7 @@ class WatchlistItem extends Component {
     const type = media.type === 'movie' ? 'Movie' : 'Series';
     return (
       <TouchableOpacity style={styles.mediaContainer} onPress={() => this.onPress(media)}>
-        <Image
-          style={styles.poster}
-          source={{ uri: `https://image.tmdb.org/t/p/w500/${media.poster}` }}
-        />
+        <UsefulImage passedStyle={styles.poster} imgPath={media.poster} />
         <View style={styles.details}>
           <Text style={styles.title}>{media.title}</Text>
           <Text style={styles.text}>{media.date}</Text>
