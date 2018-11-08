@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   textContainer: {
     padding: 15,
   },
-  titleText: {
+  nameText: {
     fontWeight: '600',
     fontSize: 22,
   },
@@ -55,7 +55,7 @@ export default class PlotScreen extends React.Component {
 
     try {
       const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${id}?api_key=${tmdbApiKey}&language=en-US`,
+        `https://api.themoviedb.org/3/person/${id}/?api_key=${tmdbApiKey}&language=en-US`,
       );
       const json = await response.json();
       this.setState({ item: json });
@@ -71,7 +71,7 @@ export default class PlotScreen extends React.Component {
     if (error) {
       return (
         <View>
-          <Text>Plot was not found :(</Text>
+          <Text>Biography was not found :(</Text>
         </View>
       );
     }
@@ -84,12 +84,11 @@ export default class PlotScreen extends React.Component {
       );
     }
 
-    console.log(item);
     return (
       <ScrollView style={styles.container}>
         <View style={styles.textContainer}>
-          <Text style={styles.titleText}>{item.title}</Text>
-          <Text style={styles.text}>{item.overview}</Text>
+          <Text style={styles.nameText}>{item.name}</Text>
+          <Text style={styles.text}>{item.biography}</Text>
         </View>
       </ScrollView>
     );

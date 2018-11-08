@@ -69,11 +69,11 @@ const styles = StyleSheet.create({
   },
 });
 
-class MovieDetails extends React.Component {
+class SeriesDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      movie: {},
+      series: {},
       loading: true,
       error: false,
     };
@@ -82,19 +82,20 @@ class MovieDetails extends React.Component {
   async componentDidMount() {
     const { id } = this.props.navigation.state.params;
     const apiKey = '698a64988eda32cea2480262c47df2da';
-
     try {
-      const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-US&append_to_response=credits`);
+      const response = await fetch(
+        `https://api.themoviedb.org/3/tv/${id}?api_key=${apiKey}&language=en-US&append_to_response=credits`,
+      );
       const json = await response.json();
-      this.setState({ movie: json });
+      this.setState({ series: json });
       this.setState({ loading: false });
     } catch (e) {
       this.setState({ error: true });
     }
   }
 
-  getMovieGenres = (movie) => {
-    const genreString = movie.genres.reduce((acc, genre) => {
+  getGenres = (series) => {
+    const genreString = series.genres.reduce((acc, genre) => {
       const { name } = genre;
       if (name) {
         acc += `${name}, `;
@@ -108,22 +109,22 @@ class MovieDetails extends React.Component {
   };
 
   render() {
-    const { movie, loading, error } = this.state;
+    const { series, loading, error } = this.state;
     const { navigation } = this.props;
     let oldRating = 0;
-    if (!this.props.ratedMedia.filter(m => m.key === movie.id)[0]) {
+    if (!this.props.ratedMedia.filter(m => m.key === series.id)[0]) {
       oldRating = 0;
     } else {
-      oldRating = this.props.ratedMedia.filter(m => m.key === movie.id)[0].rating;
+      oldRating = this.props.ratedMedia.filter(m => m.key === series.id)[0].rating;
     }
     const ratingItem = {
-      id: movie.id,
-      title: movie.title,
-      poster: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
+      id: series.id,
+      title: series.name,
+      poster: `https://image.tmdb.org/t/p/w500/${series.poster_path}`,
       yourRating: oldRating,
     };
 
-    const genres = movie.genres ? this.getMovieGenres(movie) : 'N/A';
+    const genres = series.genres ? this.getGenres(series) : 'N/A';
 
     if (error) {
       return (
@@ -146,41 +147,37 @@ class MovieDetails extends React.Component {
         <View style={styles.movieContainer}>
           <Image
             style={styles.poster}
-            source={{ uri: `https://image.tmdb.org/t/p/w500/${movie.poster_path}` }}
+            source={{ uri: `https://image.tmdb.org/t/p/w500/${series.poster_path}` }}
           />
           <View style={styles.titleContainer}>
-            <Text style={styles.titleText}>
-              {movie.title}
-              <Text style={styles.year}>{movie.release_date ? ` (${movie.release_date})` : '' }</Text>
-            </Text>
+            <Text style={styles.titleText}>{series.name}</Text>
             <View style={styles.detailsContainer}>
-              <ImdbRating rating={movie.vote_average} votes={movie.vote_count} />
+              <ImdbRating rating={series.vote_average} votes={series.vote_count} />
               <YourRating navigation={navigation} ratingItem={ratingItem} />
               <Text style={styles.text}>
                 {'Genres: '}
                 <Text style={styles.shadowText}>{genres}</Text>
               </Text>
-              <Text style={styles.shadowText}>{`Runtime ${movie.runtime ? movie.runtime : 'N/A'}`}</Text>
             </View>
           </View>
         </View>
-        <AddWishlistButton media={movie} />
+        <AddWishlistButton media={series} />
         <TouchableOpacity
           style={styles.plotContainer}
-          onPress={() => navigation.push('Plot', movie)}
+          onPress={() => navigation.push('Plot', series)}
         >
           <View style={styles.plotTextContainer}>
-            <Text numberOfLines={4}>{movie.overview}</Text>
+            <Text numberOfLines={4}>{series.overview}</Text>
           </View>
           <View style={styles.plotArrow}>
             <Icon size={22} name="angle-right" />
           </View>
         </TouchableOpacity>
-        <DetailsPanel navigation={navigation} title="Cast" people={movie.credits.cast} />
+        <DetailsPanel navigation={navigation} title="Cast" people={series.credits.cast} />
       </ScrollView>
     );
   }
 }
 
 const mapStateToProps = state => ({ ratedMedia: state.ratedMedia });
-export default connect(mapStateToProps)(MovieDetails);
+export default connect(mapStateToProps)(SeriesDetails);

@@ -20,13 +20,13 @@ class WatchlistScreen extends React.Component {
   }
 
   render() {
-    const { movies } = this.props;
+    const { medias } = this.props;
     return (
       <ScrollView style={styles.container}>
         <FlatList
-          data={movies}
+          data={medias}
           renderItem={({ item }) => (
-            <WatchlistItem movie={item.details} navigation={this.props.navigation} />
+            <WatchlistItem media={item.details} navigation={this.props.navigation} />
           )}
           keyExtractor={item => `${item.details.id}`}
         />
@@ -34,5 +34,5 @@ class WatchlistScreen extends React.Component {
     );
   }
 }
-const mapStateToProps = state => ({ movies: state.watchlist });
+const mapStateToProps = state => ({ medias: state.watchlist });
 export default connect(mapStateToProps)(WatchlistScreen);

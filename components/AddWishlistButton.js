@@ -4,7 +4,7 @@ import {
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
-import { addToWatchlist, removeFromWatchlist } from '../store/actions/movies';
+import { addToWatchlist, removeFromWatchlist } from '../store/actions/media';
 
 const styles = StyleSheet.create({
   button: {
@@ -26,20 +26,15 @@ const styles = StyleSheet.create({
 });
 
 class AddWishlistButton extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
-    const movie = this.props.movies.filter(m => m.key === this.props.movie.id)[0];
+    const media = this.props.medias.filter(m => m.key === this.props.media.id)[0];
 
     return (
       <View>
-        {!movie ? (
+        {!media ? (
           <TouchableOpacity
             style={[styles.button, styles.addToWatchlistBtn]}
-            onPress={() => this.props.dispatch(addToWatchlist(this.props.movie))}
+            onPress={() => this.props.dispatch(addToWatchlist(this.props.media))}
           >
             <Icon name="plus" style={styles.addIcon}>
               <Text style={styles.text}> ADD TO WATCHLIST</Text>
@@ -48,7 +43,7 @@ class AddWishlistButton extends React.Component {
         ) : (
           <TouchableOpacity
             style={[styles.button, styles.removeFromWatchlistBtn]}
-            onPress={() => this.props.dispatch(removeFromWatchlist(movie.key))}
+            onPress={() => this.props.dispatch(removeFromWatchlist(media.key))}
           >
             <Icon name="check" style={styles.addIcon}>
               <Text style={styles.text}> ADDED TO WATCHLIST</Text>
@@ -60,5 +55,5 @@ class AddWishlistButton extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({ movies: state.watchlist });
+const mapStateToProps = state => ({ medias: state.watchlist });
 export default connect(mapStateToProps)(AddWishlistButton);

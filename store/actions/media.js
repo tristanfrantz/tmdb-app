@@ -1,23 +1,21 @@
-const apiKey = '14cfd31';
-
 export const removeFromWatchlist = _id => ({
   type: 'REMOVE_FROM_WATCHLIST',
   payload: { id: _id },
 });
 
-export const addToWatchlist = _movie => ({
+export const addToWatchlist = _media => ({
   type: 'ADD_TO_WATCHLIST',
-  payload: { movie: _movie },
+  payload: { media: _media },
 });
 
-export const addRating = (_Rating, _id) => ({
+export const addRating = (_rating, _id) => ({
   type: 'ADD_RATING',
-  payload: { Rating: _Rating, id: _id },
+  payload: { rating: _rating, id: _id },
 });
 
-export const updateRating = (_Rating, _id) => ({
+export const updateRating = (_rating, _id) => ({
   type: 'UPDATE_RATING',
-  payload: { Rating: _Rating, id: _id },
+  payload: { rating: _rating, id: _id },
 });
 
 export const removeRating = _id => ({

@@ -3,6 +3,12 @@ import {
   StyleSheet, View, Text, TouchableOpacity, Image,
 } from 'react-native';
 
+const MEDIA_TYPES = {
+  MOVIE: 'movie',
+  SERIES: 'tv',
+  PERSON: 'person',
+};
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
@@ -50,6 +56,10 @@ class MovieListItem extends Component {
     this.props.navigation.push('Details', item);
   };
 
+  onSeriesPress = (item) => {
+    this.props.navigation.push('Series', item);
+  };
+
   onPersonPress = (item) => {
     this.props.navigation.push('Profile', item);
   };
@@ -57,7 +67,7 @@ class MovieListItem extends Component {
   render() {
     const { item } = this.props;
 
-    if (item.media_type === 'movie') {
+    if (item.media_type === MEDIA_TYPES.MOVIE) {
       return (
         <TouchableOpacity style={styles.movieContainer} onPress={() => this.onMoviePress(item)}>
           <Image
@@ -72,9 +82,9 @@ class MovieListItem extends Component {
         </TouchableOpacity>
       );
     }
-    if (item.media_type === 'tv') {
+    if (item.media_type === MEDIA_TYPES.SERIES) {
       return (
-        <TouchableOpacity style={styles.movieContainer} onPress={() => this.onPress(item)}>
+        <TouchableOpacity style={styles.movieContainer} onPress={() => this.onSeriesPress(item)}>
           <Image
             style={styles.poster}
             source={{ uri: `https://image.tmdb.org/t/p/w500/${item.poster_path}` }}
@@ -87,7 +97,7 @@ class MovieListItem extends Component {
         </TouchableOpacity>
       );
     }
-    if (item.media_type === 'person') {
+    if (item.media_type === MEDIA_TYPES.PERSON) {
       return (
         <TouchableOpacity style={styles.movieContainer} onPress={() => this.onPersonPress(item)}>
           <Image

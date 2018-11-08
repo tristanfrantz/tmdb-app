@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Platform } from 'react-native';
-import MovieSearch from '../components/MovieSearch';
+import SeriesDetails from '../components/SeriesDetails';
 
 const styles = StyleSheet.create({
   container: {
@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class SeriesDetailsScreen extends React.Component {
+class SeriesScreen extends React.Component {
   static navigationOptions = {
     ...Platform.select({
       android: {
@@ -26,10 +26,10 @@ class SeriesDetailsScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <MovieSearch navigation={this.props.navigation} />
+        <SeriesDetails navigation={this.props.navigation} />
       </View>
     );
   }
 }
 
-export default SeriesDetailsScreen;
+export default SeriesScreen;

@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   contentContainer: {
-    padding: 5,
+    padding: 8,
   },
   movieContainer: {
     flexDirection: 'row',
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
   },
   titleText: {
-    fontWeight: 'bold',
+    fontWeight: '600',
     fontSize: 20,
   },
   year: {
@@ -80,7 +80,9 @@ class ActorDetails extends React.Component {
     const apiKey = '698a64988eda32cea2480262c47df2da';
 
     try {
-      const response = await fetch(`https://api.themoviedb.org/3/person/${id}?api_key=${apiKey}&language=en-US&append_to_response=movie_credits`);
+      const response = await fetch(
+        `https://api.themoviedb.org/3/person/${id}?api_key=${apiKey}&language=en-US&append_to_response=movie_credits`,
+      );
       const json = await response.json();
       this.setState({ actor: json });
       this.setState({ loading: false });
@@ -118,35 +120,46 @@ class ActorDetails extends React.Component {
               source={{ uri: `https://image.tmdb.org/t/p/w500/${actor.profile_path}` }}
             />
             <View style={styles.titleContainer}>
-              <Text style={styles.titleText}>
-                {actor.name}
-                <Text style={styles.year}>{` (${actor.release_date})`}</Text>
-              </Text>
+              <Text style={styles.titleText}>{actor.name}</Text>
               <View style={styles.detailsContainer}>
                 <Text style={styles.text}>
-                  {'Genre: '}
-                  <Text style={styles.shadowText}>{actor.Genre}</Text>
+                  {'Born: '}
+                  <Text style={styles.shadowText}>{actor.birthday ? actor.birthday : 'N/A' }</Text>
                 </Text>
-                <Text style={styles.shadowText}>{`Runtime ${actor.runtime}`}</Text>
+                <Text style={styles.text}>
+                  {'From: '}
+                  <Text style={styles.shadowText}>{actor.place_of_birth ? actor.place_of_birth : 'N/A' }</Text>
+                </Text>
+                <Text style={styles.text}>
+                  {'Died: '}
+                  <Text style={styles.shadowText}>{actor.deathday ? actor.deathday : 'N/A'}</Text>
+                </Text>
+                <Text style={styles.text}>
+                  {'Department: '}
+                  <Text style={styles.shadowText}>{actor.known_for_department ? actor.known_for_department : 'N/A'}</Text>
+                </Text>
+
               </View>
             </View>
           </View>
 
           <TouchableOpacity
             style={styles.plotContainer}
-            onPress={() => navigation.navigate('Bio', actor)}
+            onPress={() => navigation.push('Biography', actor)}
           >
             <View style={styles.plotTextContainer}>
-              <Text>{actor.biography}</Text>
+              <Text numberOfLines={4}>{actor.biography}</Text>
             </View>
             <View style={styles.plotArrow}>
               <Icon size={22} name="angle-right" />
             </View>
           </TouchableOpacity>
 
-          <ProfileDetailsPanel navigation={navigation} title="Movies" people={actor.movie_credits.cast} />
-
-
+          <ProfileDetailsPanel
+            navigation={navigation}
+            title="Known for"
+            credits={actor.movie_credits.cast}
+          />
         </View>
       </ScrollView>
     );

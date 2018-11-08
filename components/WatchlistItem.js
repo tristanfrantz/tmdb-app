@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 8,
   },
-  movieContainer: {
+  mediaContainer: {
     flex: 1,
     flexDirection: 'row',
     paddingBottom: 16,
@@ -36,6 +36,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     bottom: 0,
   },
+  shadowText: {
+    fontSize: 14,
+    color: 'grey',
+  },
 });
 
 class WatchlistItem extends Component {
@@ -44,23 +48,30 @@ class WatchlistItem extends Component {
     this.state = {};
   }
 
-  onPress = (item) => {
-    this.props.navigation.push('Details', item);
+  onPress = (media) => {
+    if (media.type === 'movie') {
+      this.props.navigation.push('Details', media);
+    }
+    if (media.type === 'tv') {
+      this.props.navigation.push('Series', media);
+    }
   };
 
   render() {
-    const { movie } = this.props;
+    const { media } = this.props;
+    const type = media.type === 'movie' ? 'Movie' : 'Series';
     return (
-      <TouchableOpacity style={styles.movieContainer} onPress={() => this.onPress(movie)}>
+      <TouchableOpacity style={styles.mediaContainer} onPress={() => this.onPress(media)}>
         <Image
           style={styles.poster}
-          source={{ uri: `https://image.tmdb.org/t/p/w500/${movie.poster_path}` }}
+          source={{ uri: `https://image.tmdb.org/t/p/w500/${media.poster}` }}
         />
         <View style={styles.details}>
-          <Text style={styles.title}>{movie.title}</Text>
-          <Text style={styles.text}>{movie.release_date}</Text>
+          <Text style={styles.title}>{media.title}</Text>
+          <Text style={styles.text}>{media.date}</Text>
+          <Text style={styles.shadowText}>{type}</Text>
           <View style={styles.watchlistBtn}>
-            <AddWishlistButton movie={movie} />
+            <AddWishlistButton media={media} />
           </View>
         </View>
       </TouchableOpacity>

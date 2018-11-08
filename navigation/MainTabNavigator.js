@@ -8,7 +8,9 @@ import SearchScreen from '../screens/SearchScreen';
 import WatchlistScreen from '../screens/WatchlistScreen';
 import DetailsScreen from '../screens/DetailsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import SeriesScreen from '../screens/SeriesScreen';
 import PlotScreen from '../screens/PlotScreen';
+import BiographyScreen from '../screens/BiographyScreen';
 import RatingScreen from '../screens/RatingScreen';
 
 const HomeStack = createStackNavigator({
@@ -54,10 +56,23 @@ const SearchStack = createStackNavigator({
       headerBackTitle: 'Back',
     }),
   },
+  Series: {
+    screen: SeriesScreen,
+    navigationOptions: () => ({
+      title: 'Series',
+      headerBackTitle: 'Back',
+    }),
+  },
   Plot: {
     screen: PlotScreen,
     navigationOptions: () => ({
       title: 'Plot',
+    }),
+  },
+  Biography: {
+    screen: BiographyScreen,
+    navigationOptions: () => ({
+      title: 'Biography',
     }),
   },
   Rating: {
@@ -100,6 +115,13 @@ const WatchlistStack = createStackNavigator({
       headerBackTitle: 'Back',
     }),
   },
+  Series: {
+    screen: SeriesScreen,
+    navigationOptions: () => ({
+      title: 'Series',
+      headerBackTitle: 'Back',
+    }),
+  },
   Profile: {
     screen: ProfileScreen,
     navigationOptions: () => ({
@@ -111,6 +133,12 @@ const WatchlistStack = createStackNavigator({
     screen: PlotScreen,
     navigationOptions: () => ({
       title: 'Plot',
+    }),
+  },
+  Biography: {
+    screen: BiographyScreen,
+    navigationOptions: () => ({
+      title: 'Biography',
     }),
   },
   Rating: {

@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class componentName extends React.Component {
+class MovieSearch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -140,4 +140,4 @@ class componentName extends React.Component {
   }
 }
 
-export default componentName;
+export default MovieSearch;
