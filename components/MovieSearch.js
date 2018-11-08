@@ -1,6 +1,12 @@
 import React from 'react';
 import {
-  StyleSheet, ScrollView, FlatList, View, Text, TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  FlatList,
+  View,
+  Text,
+  TouchableOpacity,
+  Platform,
 } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { connect } from 'react-redux';
@@ -131,6 +137,11 @@ class MovieSearch extends React.Component {
             onSubmitEditing={() => {
               this.props.dispatch(addRecentSearch(input));
             }}
+            {...Platform.select({
+              android: {
+                clearIcon: { color: '#86939e', name: 'cancel' },
+              },
+            })}
           />
         </View>
         {recentSearch.length > 0
