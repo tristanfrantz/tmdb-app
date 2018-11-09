@@ -40,71 +40,71 @@ HomeStack.navigationOptions = {
   ),
 };
 
-// const SearchStack = createStackNavigator({
-//   Search: {
-//     screen: SearchScreen,
-//     navigationOptions: () => ({
-//       header: null,
-//       headerTitleStyle: {
-//         ...Platform.select({
-//           android: {
-//             marginLeft: 'auto',
-//             marginRight: 'auto',
-//           },
-//         }),
-//       },
-//     }),
-//   },
-//   Details: {
-//     screen: DetailsScreen,
-//     navigationOptions: () => ({
-//       title: 'Movie',
-//       headerBackTitle: 'Back',
-//     }),
-//   },
-//   Profile: {
-//     screen: ProfileScreen,
-//     navigationOptions: () => ({
-//       title: 'Profile',
-//       headerBackTitle: 'Back',
-//     }),
-//   },
-//   Series: {
-//     screen: SeriesScreen,
-//     navigationOptions: () => ({
-//       title: 'Series',
-//       headerBackTitle: 'Back',
-//     }),
-//   },
-//   Plot: {
-//     screen: PlotScreen,
-//     navigationOptions: () => ({
-//       title: 'Plot',
-//     }),
-//   },
-//   Biography: {
-//     screen: BiographyScreen,
-//     navigationOptions: () => ({
-//       title: 'Biography',
-//     }),
-//   },
-//   Rating: {
-//     screen: RatingScreen,
-//     navigationOptions: () => ({
-//       title: 'Rating',
-//     }),
-//   },
-// });
+const SearchStack = createStackNavigator({
+  Search: {
+    screen: SearchScreen,
+    navigationOptions: () => ({
+      header: null,
+      headerTitleStyle: {
+        ...Platform.select({
+          android: {
+            marginLeft: 'auto',
+            marginRight: 'auto',
+          },
+        }),
+      },
+    }),
+  },
+  Details: {
+    screen: DetailsScreen,
+    navigationOptions: () => ({
+      title: 'Movie',
+      headerBackTitle: 'Back',
+    }),
+  },
+  Profile: {
+    screen: ProfileScreen,
+    navigationOptions: () => ({
+      title: 'Profile',
+      headerBackTitle: 'Back',
+    }),
+  },
+  Series: {
+    screen: SeriesScreen,
+    navigationOptions: () => ({
+      title: 'Series',
+      headerBackTitle: 'Back',
+    }),
+  },
+  Plot: {
+    screen: PlotScreen,
+    navigationOptions: () => ({
+      title: 'Plot',
+    }),
+  },
+  Biography: {
+    screen: BiographyScreen,
+    navigationOptions: () => ({
+      title: 'Biography',
+    }),
+  },
+  Rating: {
+    screen: RatingScreen,
+    navigationOptions: () => ({
+      title: 'Rating',
+    }),
+  },
+});
 
-// SearchStack.navigationOptions = {
-//   tabBarLabel: 'Search',
-//   tabBarIcon: ({ focused }) => (
-//     <TabBarIcon
-//       focused={focused}
-//       name={Platform.OS === 'ios' ? `ios-search${focused ? '' : '-outline'}` : 'md-search'}
-//     />
-//   ),
-// };
+SearchStack.navigationOptions = {
+  tabBarLabel: 'Search',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? `ios-search${focused ? '' : '-outline'}` : 'md-search'}
+    />
+  ),
+};
 
 const WatchlistStack = createStackNavigator({
   Watchlist: {
@@ -196,6 +196,6 @@ WatchlistStack.navigationOptions = {
 
 export default createBottomTabNavigator({
   HomeStack,
-  // SearchStack,
+  SearchStack,
   WatchlistStack,
 });

@@ -13,25 +13,28 @@ import { connect } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import { Bubbles } from 'react-native-loader';
 import { Constants } from 'expo';
-import { StackActions } from 'react-navigation';
 import MovieListItem from './MovieListItem';
 import SearchListItemSeperator from './SearchListItemSeperator';
 import { addRecentSearch, clearRecentSearch } from '../store/actions/media';
 
 const styles = StyleSheet.create({
-  container: {
-    paddingTop: Constants.statusBarHeight,
-    flex: 1,
-    backgroundColor: '#fff',
-    paddingLeft: 8,
-    paddingRight: 8,
-  },
   searchFieldContainer: {
+    paddingLeft: 8,
+    marginTop: Constants.statusBarHeight,
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
     flexDirection: 'row',
-    paddingBottom: 5,
+    backgroundColor: 'white',
+    borderBottomWidth: 1,
+    borderTopWidth: 1,
+    borderColor: '#c5c5c5',
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    paddingLeft: 8,
+    paddingRight: 8,
   },
   filterButtons: {
     borderRadius: 75,
@@ -139,11 +142,6 @@ class MovieSearch extends React.Component {
     </TouchableOpacity>
   );
 
-  goBack() {
-    const popAction = StackActions.pop({ n: 1 });
-    this.props.navigation.dispatch(popAction);
-  }
-
   render() {
     const {
       results, input, loading, error,
@@ -151,36 +149,33 @@ class MovieSearch extends React.Component {
     const { recentSearch } = this.props;
 
     return (
-      <View style={styles.container}>
+      <View style={{ flex: 1 }}>
         <View style={styles.searchFieldContainer}>
           <Ionicons
             {...Platform.select({
-              android: {
-                style: { paddingLeft: 10 },
-                name: 'md-arrow-back',
-                size: 24,
-              },
-              ios: {
-                name: 'ios-arrow-back',
-                color: '#007AFF',
-                size: 33,
-              },
+              android: { style: { paddingLeft: 10 } },
+              ios: { color: '#007AFF' },
             })}
-            onPress={() => this.goBack()}
+            name={Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-back'}
+            size={Platform.OS === 'ios' ? 33 : 24}
+            onPress={() => this.props.navigation.goBack(null)}
           />
           <SearchBar
             autoFocus
             value={input}
             lightTheme
-            containerStyle={{ backgroundColor: 'white', width: '90%' }}
+            containerStyle={{
+              backgroundColor: 'white',
+              width: '90%',
+              borderBottomColor: 'white',
+              borderTopColor: 'white',
+            }}
             round
             showLoading={loading}
             onChangeText={i => this.onChangeText(i)}
             placeholder="Search movies, series or actors..."
             clearButtonMode="while-editing"
-            onSubmitEditing={() => {
-              this.props.dispatch(addRecentSearch(input));
-            }}
+            onSubmitEditing={() => input !== '' && this.props.dispatch(addRecentSearch(input))}
             {...Platform.select({
               android: {
                 clearIcon: { color: '#86939e', name: 'cancel' },
@@ -188,46 +183,48 @@ class MovieSearch extends React.Component {
             })}
           />
         </View>
-        {error && (
-          <View>
-            <Text>{`Nothing was found matching ${input} :(`}</Text>
-          </View>
-        )}
-        {recentSearch.length > 0
-          && input.length === 0 && (
+        <View style={styles.container}>
+          {error && (
             <View>
-              <View style={styles.recentSearch}>
-                <Text style={{ fontSize: 20 }}>Recent Searches</Text>
-                <TouchableOpacity onPress={() => this.props.dispatch(clearRecentSearch())}>
-                  <Text>Clear</Text>
-                </TouchableOpacity>
-              </View>
-              <SearchListItemSeperator />
+              <Text>{`Nothing was found matching ${input} :(`}</Text>
             </View>
-        )}
+          )}
+          {recentSearch.length > 0
+            && input.length === 0 && (
+              <View>
+                <View style={styles.recentSearch}>
+                  <Text style={{ fontSize: 20 }}>Recent Searches</Text>
+                  <TouchableOpacity onPress={() => this.props.dispatch(clearRecentSearch())}>
+                    <Text>Clear</Text>
+                  </TouchableOpacity>
+                </View>
+                <SearchListItemSeperator />
+              </View>
+          )}
 
-        {input.length === 0 ? (
-          <ScrollView>
-            <FlatList
-              data={recentSearch}
-              renderItem={this.renderRecentSearchItem}
-              ItemSeparatorComponent={() => <SearchListItemSeperator />}
-            />
-          </ScrollView>
-        ) : (
-          <ScrollView>
-            <FlatList
-              data={results}
-              renderItem={this.renderItem}
-              ItemSeparatorComponent={() => <SearchListItemSeperator />}
-            />
-          </ScrollView>
-        )}
-        {loading && (
-          <View style={styles.loading}>
-            <Bubbles size={15} color="rgba(39, 40, 41, 0.3)" />
-          </View>
-        )}
+          {input.length === 0 ? (
+            <ScrollView>
+              <FlatList
+                data={recentSearch}
+                renderItem={this.renderRecentSearchItem}
+                ItemSeparatorComponent={() => <SearchListItemSeperator />}
+              />
+            </ScrollView>
+          ) : (
+            <ScrollView>
+              <FlatList
+                data={results}
+                renderItem={this.renderItem}
+                ItemSeparatorComponent={() => <SearchListItemSeperator />}
+              />
+            </ScrollView>
+          )}
+          {loading && (
+            <View style={styles.loading}>
+              <Bubbles size={15} color="rgba(39, 40, 41, 0.3)" />
+            </View>
+          )}
+        </View>
       </View>
     );
   }
