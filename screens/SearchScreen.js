@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class SeriesDetailsScreen extends React.Component {
+class SearchScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
@@ -19,4 +19,4 @@ class SeriesDetailsScreen extends React.Component {
   }
 }
 
-export default SeriesDetailsScreen;
+export default SearchScreen;

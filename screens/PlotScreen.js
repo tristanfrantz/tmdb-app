@@ -4,6 +4,12 @@ import {
 } from 'react-native';
 import { Bubbles } from 'react-native-loader';
 
+const MEDIA_TYPES = {
+  MOVIE: 'movie',
+  SERIES: 'tv',
+  PERSON: 'person',
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -51,11 +57,17 @@ export default class PlotScreen extends React.Component {
 
   async componentDidMount() {
     const tmdbApiKey = '698a64988eda32cea2480262c47df2da';
+    const { item } = this.state;
     const { id } = this.props.navigation.state.params;
+    let type = MEDIA_TYPES.MOVIE;
+
+    if (item) {
+      type = item.title ? MEDIA_TYPES.MOVIE : MEDIA_TYPES.SERIES;
+    }
 
     try {
       const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${id}?api_key=${tmdbApiKey}&language=en-US`,
+        `https://api.themoviedb.org/3/${type}/${id}?api_key=${tmdbApiKey}&language=en-US`,
       );
       const json = await response.json();
       this.setState({ item: json });
@@ -67,11 +79,12 @@ export default class PlotScreen extends React.Component {
 
   render() {
     const { item, loading, error } = this.state;
+    const title = item.title ? item.title : item.name;
 
     if (error) {
       return (
         <View>
-          <Text>Plot was not found :(</Text>
+          <Text>Oh no spaghettios! plot was not found </Text>
         </View>
       );
     }
@@ -84,11 +97,10 @@ export default class PlotScreen extends React.Component {
       );
     }
 
-    console.log(item);
     return (
       <ScrollView style={styles.container}>
         <View style={styles.textContainer}>
-          <Text style={styles.titleText}>{item.title}</Text>
+          <Text style={styles.titleText}>{title}</Text>
           <Text style={styles.text}>{item.overview}</Text>
         </View>
       </ScrollView>

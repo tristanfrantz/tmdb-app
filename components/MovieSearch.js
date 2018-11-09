@@ -71,8 +71,6 @@ class MovieSearch extends React.Component {
     this.state = {
       results: [],
       input: '',
-      seriesFilter: false,
-      moviesFilter: false,
       loading: false,
       error: false,
     };
@@ -80,24 +78,6 @@ class MovieSearch extends React.Component {
 
   onPress = (item) => {
     this.props.navigation.navigate('Details', item);
-  };
-
-  onTagPress = (item) => {
-    if (item.id === 1) {
-      this.setState(
-        prevState => ({ filter: !prevState.moviesFilter }),
-        () => {
-          this.search();
-        },
-      );
-    } else if (item.id === 2) {
-      this.setState(
-        prevState => ({ seriesFilter: !prevState.seriesFilter }),
-        () => {
-          this.search();
-        },
-      );
-    }
   };
 
   onChangeText = (input) => {
@@ -109,9 +89,8 @@ class MovieSearch extends React.Component {
   async search() {
     const apiKey = '698a64988eda32cea2480262c47df2da';
     const { input } = this.state;
-
+    this.setState({ loading: true });
     try {
-      this.setState({ loading: true });
       const response = await fetch(
         `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=en-US&page=1&include_adult=false&query=${input}`,
       );
@@ -190,7 +169,7 @@ class MovieSearch extends React.Component {
         </View>
         {error && (
           <View>
-            <Text>{`Nothing was found matching ${input} :(`}</Text>
+            <Text>{`No results for ${input}`}</Text>
           </View>
         )}
         {recentSearch.length > 0
@@ -205,7 +184,6 @@ class MovieSearch extends React.Component {
               <SearchListItemSeperator />
             </View>
         )}
-
         {input.length === 0 ? (
           <ScrollView>
             <FlatList
