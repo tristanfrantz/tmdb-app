@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  StyleSheet, ScrollView, FlatList, View,
-} from 'react-native';
+import { StyleSheet, ScrollView, FlatList, View } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { TagSelect } from 'react-native-tag-select';
 import MovieListItem from './MovieListItem';
@@ -54,47 +52,51 @@ class MovieSearch extends React.Component {
     const { input, filter } = this.state;
 
     fetch(
-      `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=en-US&page=1&include_adult=false&query=${input}`,
+      `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=en-US&page=1&include_adult=false&query=${input}`
     )
       .then(res => res.json())
-      .then(res => this.setState({
-        results: res.results.map((c, i) => ({ ...c, key: `${i}` })),
-      }))
-      .catch((err) => {
+      .then(res =>
+        this.setState({
+          results: res.results.map((c, i) => ({ ...c, key: `${i}` })),
+        })
+      )
+      .catch(err => {
         console.log(err);
         this.setState({ results: [] });
       });
   };
 
-  onPress = (item) => {
+  onPress = item => {
     this.props.navigation.navigate('Details', item);
   };
 
-  onTagPress = (item) => {
+  onTagPress = item => {
     if (item.id === 1) {
       this.setState(
         prevState => ({ filter: !prevState.moviesFilter }),
         () => {
           this.search();
-        },
+        }
       );
     } else if (item.id === 2) {
       this.setState(
         prevState => ({ seriesFilter: !prevState.seriesFilter }),
         () => {
           this.search();
-        },
+        }
       );
     }
   };
 
-  onChangeText = (input) => {
+  onChangeText = input => {
     this.setState({ input }, () => {
       this.search();
     });
   };
 
-  renderItem = ({ item }) => <MovieListItem item={item} navigation={this.props.navigation} />;
+  renderItem = ({ item }) => (
+    <MovieListItem item={item} navigation={this.props.navigation} />
+  );
 
   render() {
     const { results } = this.state;
@@ -107,6 +109,8 @@ class MovieSearch extends React.Component {
             lightTheme
             containerStyle={{ backgroundColor: 'white' }}
             round
+            platform="android"
+            cancelIcon
             onChangeText={input => this.onChangeText(input)}
             placeholder={searchPlaceholder}
             clearButtonMode="while-editing"
@@ -119,7 +123,7 @@ class MovieSearch extends React.Component {
               { id: 2, label: 'Series' },
               { id: 3, label: 'Actors' },
             ]}
-            onItemPress={(item) => {
+            onItemPress={item => {
               this.onTagPress(item);
             }}
             containerStyle={{ paddingTop: 5 }}

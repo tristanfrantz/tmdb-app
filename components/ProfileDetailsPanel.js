@@ -12,8 +12,6 @@ import {
 const styles = StyleSheet.create({
   container: {
     marginTop: 10,
-    borderTopColor: 'lightgrey',
-    borderTopWidth: 0.5,
   },
   toggleContainer: {
     paddingTop: 10,
@@ -53,12 +51,15 @@ const styles = StyleSheet.create({
 });
 
 class DetailsPanel extends React.Component {
-  onPress = (item) => {
+  onPress = item => {
     this.props.navigation.push('Details', item);
   };
 
   renderItem = ({ item }) => (
-    <TouchableOpacity style={styles.mediaContainer} onPress={() => this.onPress(item)}>
+    <TouchableOpacity
+      style={styles.mediaContainer}
+      onPress={() => this.onPress(item)}
+    >
       <Image
         style={styles.mediaImage}
         source={{ uri: `https://image.tmdb.org/t/p/w500/${item.poster_path}` }}
@@ -76,7 +77,11 @@ class DetailsPanel extends React.Component {
       <View style={styles.container}>
         <Text style={styles.titleText}>{title}</Text>
         <ScrollView horizontal>
-          <FlatList horizontal data={creditsList} renderItem={this.renderItem} />
+          <FlatList
+            horizontal
+            data={creditsList}
+            renderItem={this.renderItem}
+          />
         </ScrollView>
       </View>
     );

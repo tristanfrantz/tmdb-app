@@ -1,6 +1,11 @@
 import React from 'react';
 import {
-  StyleSheet, TouchableOpacity, ScrollView, View, Text, Image,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  View,
+  Text,
+  Image,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
@@ -9,6 +14,7 @@ import ImdbRating from './ImdbRating';
 import YourRating from './YourRating';
 import AddWishlistButton from './AddWishlistButton';
 import DetailsPanel from './DetailsPanel';
+import SeasonsButton from './SeasonsButton';
 
 const styles = StyleSheet.create({
   container: {
@@ -84,7 +90,7 @@ class SeriesDetails extends React.Component {
     const apiKey = '698a64988eda32cea2480262c47df2da';
     try {
       const response = await fetch(
-        `https://api.themoviedb.org/3/tv/${id}?api_key=${apiKey}&language=en-US&append_to_response=credits`,
+        `https://api.themoviedb.org/3/tv/${id}?api_key=${apiKey}&language=en-US&append_to_response=credits`
       );
       const json = await response.json();
       this.setState({ series: json });
@@ -94,7 +100,7 @@ class SeriesDetails extends React.Component {
     }
   }
 
-  getGenres = (series) => {
+  getGenres = series => {
     const genreString = series.genres.reduce((acc, genre) => {
       const { name } = genre;
       if (name) {
@@ -115,7 +121,8 @@ class SeriesDetails extends React.Component {
     if (!this.props.ratedMedia.filter(m => m.key === series.id)[0]) {
       oldRating = 0;
     } else {
-      oldRating = this.props.ratedMedia.filter(m => m.key === series.id)[0].rating;
+      oldRating = this.props.ratedMedia.filter(m => m.key === series.id)[0]
+        .rating;
     }
     const ratingItem = {
       id: series.id,
@@ -143,16 +150,24 @@ class SeriesDetails extends React.Component {
     }
 
     return (
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.contentContainer}
+      >
         <View style={styles.movieContainer}>
           <Image
             style={styles.poster}
-            source={{ uri: `https://image.tmdb.org/t/p/w500/${series.poster_path}` }}
+            source={{
+              uri: `https://image.tmdb.org/t/p/w500/${series.poster_path}`,
+            }}
           />
           <View style={styles.titleContainer}>
             <Text style={styles.titleText}>{series.name}</Text>
             <View style={styles.detailsContainer}>
-              <ImdbRating rating={series.vote_average} votes={series.vote_count} />
+              <ImdbRating
+                rating={series.vote_average}
+                votes={series.vote_count}
+              />
               <YourRating navigation={navigation} ratingItem={ratingItem} />
               <Text style={styles.text}>
                 {'Genres: '}
@@ -173,7 +188,12 @@ class SeriesDetails extends React.Component {
             <Icon size={22} name="angle-right" />
           </View>
         </TouchableOpacity>
-        <DetailsPanel navigation={navigation} title="Cast" people={series.credits.cast} />
+        <SeasonsButton />
+        <DetailsPanel
+          navigation={navigation}
+          title="Cast"
+          people={series.credits.cast}
+        />
       </ScrollView>
     );
   }

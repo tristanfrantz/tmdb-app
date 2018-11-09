@@ -12,8 +12,6 @@ import {
 const styles = StyleSheet.create({
   container: {
     marginTop: 10,
-    borderTopColor: 'lightgrey',
-    borderTopWidth: 0.5,
   },
   toggleContainer: {
     paddingTop: 10,
@@ -53,12 +51,15 @@ const styles = StyleSheet.create({
 });
 
 class DetailsPanel extends React.Component {
-  onPress = (item) => {
+  onPress = item => {
     this.props.navigation.push('Profile', item);
   };
 
   renderItem = ({ item }) => (
-    <TouchableOpacity style={styles.mediaContainer} onPress={() => this.onPress(item)}>
+    <TouchableOpacity
+      style={styles.mediaContainer}
+      onPress={() => this.onPress(item)}
+    >
       <Image
         style={styles.mediaImage}
         source={{ uri: `https://image.tmdb.org/t/p/w500/${item.profile_path}` }}
