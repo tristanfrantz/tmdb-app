@@ -188,7 +188,7 @@ class SeriesDetails extends React.Component {
             <Icon size={22} name="angle-right" />
           </View>
         </TouchableOpacity>
-        <SeasonsButton />
+        <SeasonsButton navigation={navigation} seasons={series.seasons} />
         <DetailsPanel
           navigation={navigation}
           title="Cast"

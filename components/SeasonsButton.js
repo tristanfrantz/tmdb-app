@@ -30,8 +30,14 @@ const styles = StyleSheet.create({
 
 class SeasonsButton extends React.Component {
   render() {
+    const { navigation, seasons } = this.props;
     return (
-      <TouchableOpacity style={styles.button} onPress={() => {}}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          navigation.push('Seasons', seasons);
+        }}
+      >
         <Text style={styles.text}>Seasons</Text>
         <View style={styles.plotArrow}>
           <Icon size={22} name="angle-right" />

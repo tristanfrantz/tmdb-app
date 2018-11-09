@@ -1,6 +1,9 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import {
+  createStackNavigator,
+  createBottomTabNavigator,
+} from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
@@ -12,6 +15,7 @@ import SeriesScreen from '../screens/SeriesScreen';
 import PlotScreen from '../screens/PlotScreen';
 import BiographyScreen from '../screens/BiographyScreen';
 import RatingScreen from '../screens/RatingScreen';
+import SeasonsScreen from '../screens/SeasonsScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -22,7 +26,11 @@ HomeStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? `ios-home${focused ? '' : '-outline'}` : 'md-home'}
+      name={
+        Platform.OS === 'ios'
+          ? `ios-home${focused ? '' : '-outline'}`
+          : 'md-home'
+      }
     />
   ),
 };
@@ -81,6 +89,12 @@ const SearchStack = createStackNavigator({
       title: 'Rating',
     }),
   },
+  Seasons: {
+    screen: SeasonsScreen,
+    navigationOptions: () => ({
+      title: 'Seasons',
+    }),
+  },
 });
 
 SearchStack.navigationOptions = {
@@ -88,7 +102,11 @@ SearchStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? `ios-search${focused ? '' : '-outline'}` : 'md-search'}
+      name={
+        Platform.OS === 'ios'
+          ? `ios-search${focused ? '' : '-outline'}`
+          : 'md-search'
+      }
     />
   ),
 };
@@ -154,7 +172,11 @@ WatchlistStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? `ios-heart${focused ? '' : '-outline'}` : 'md-heart'}
+      name={
+        Platform.OS === 'ios'
+          ? `ios-heart${focused ? '' : '-outline'}`
+          : 'md-heart'
+      }
     />
   ),
 };
