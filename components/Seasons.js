@@ -1,6 +1,12 @@
 import React from 'react';
 import { StyleSheet, View, Text, FlatList, Image } from 'react-native';
 import { Bubbles } from 'react-native-loader';
+import {
+  Collapse,
+  CollapseHeader,
+  CollapseBody,
+} from 'accordion-collapse-react-native';
+import { Col } from 'native-base';
 
 const styles = StyleSheet.create({
   container: {
@@ -50,18 +56,25 @@ class Seasons extends React.Component {
 
   renderItem = ({ item }) => {
     return (
-      <View style={styles.listItemContainer}>
-        <Image
-          style={styles.poster}
-          source={{
-            uri: `https://image.tmdb.org/t/p/w500/${item.poster_path}`,
-          }}
-        />
-        <View style={styles.textContainer}>
-          <Text style={styles.textTitle}>{item.name}</Text>
-          <Text>episodes: {item.episode_count}</Text>
-        </View>
-      </View>
+      <Collapse>
+        <CollapseHeader>
+          <View style={styles.listItemContainer}>
+            <Image
+              style={styles.poster}
+              source={{
+                uri: `https://image.tmdb.org/t/p/w500/${item.poster_path}`,
+              }}
+            />
+            <View style={styles.textContainer}>
+              <Text style={styles.textTitle}>{item.name}</Text>
+              <Text>episodes: {item.episode_count}</Text>
+            </View>
+          </View>
+        </CollapseHeader>
+        <CollapseBody>
+          <Text>Episodes</Text>
+        </CollapseBody>
+      </Collapse>
     );
   };
 
