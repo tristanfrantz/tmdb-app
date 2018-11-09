@@ -10,20 +10,27 @@ import {
 } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { connect } from 'react-redux';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@expo/vector-icons';
 import { Bubbles } from 'react-native-loader';
+import { Constants } from 'expo';
+import { StackActions } from 'react-navigation';
 import MovieListItem from './MovieListItem';
 import SearchListItemSeperator from './SearchListItemSeperator';
 import { addRecentSearch, clearRecentSearch } from '../store/actions/media';
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: Constants.statusBarHeight,
     flex: 1,
     backgroundColor: '#fff',
     paddingLeft: 8,
     paddingRight: 8,
   },
   searchFieldContainer: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+    flexDirection: 'row',
     paddingBottom: 5,
   },
   filterButtons: {
@@ -128,9 +135,14 @@ class MovieSearch extends React.Component {
       onPress={() => this.onChangeText(item.searchString)}
     >
       <Text style={{ fontSize: 15 }}>{item.searchString}</Text>
-      <Icon name="ios-arrow-forward" size={25} color="#6f7277" />
+      <Ionicons name="ios-arrow-forward" size={25} color="#6f7277" />
     </TouchableOpacity>
   );
+
+  goBack() {
+    const popAction = StackActions.pop({ n: 1 });
+    this.props.navigation.dispatch(popAction);
+  }
 
   render() {
     const {
@@ -141,10 +153,26 @@ class MovieSearch extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.searchFieldContainer}>
+          <Ionicons
+            {...Platform.select({
+              android: {
+                style: { paddingLeft: 10 },
+                name: 'md-arrow-back',
+                size: 24,
+              },
+              ios: {
+                name: 'ios-arrow-back',
+                color: '#007AFF',
+                size: 33,
+              },
+            })}
+            onPress={() => this.goBack()}
+          />
           <SearchBar
+            autoFocus
             value={input}
             lightTheme
-            containerStyle={{ backgroundColor: 'white' }}
+            containerStyle={{ backgroundColor: 'white', width: '90%' }}
             round
             showLoading={loading}
             onChangeText={i => this.onChangeText(i)}
