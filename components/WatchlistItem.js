@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
   details: {
     flex: 1,
-    paddingLeft: 8,
+    paddingLeft: 18,
   },
   title: {
     fontWeight: 'bold',
@@ -69,7 +69,10 @@ class WatchlistItem extends Component {
           <Text style={styles.text}>{media.date}</Text>
           <Text style={styles.shadowText}>{type}</Text>
           <View style={styles.watchlistBtn}>
-            <AddWishlistButton media={media} />
+            <AddWishlistButton
+              media={media}
+              extraInfo={{ whatType: 1, style: { backgroundColor: '#bc142a' } }}
+            />
           </View>
         </View>
       </TouchableOpacity>

@@ -159,7 +159,10 @@ class SeriesDetails extends React.Component {
             </View>
           </View>
         </View>
-        <AddWishlistButton media={series} />
+        <AddWishlistButton
+          media={series}
+          extraInfo={{ whatType: 0, style: { backgroundColor: 'gray' } }}
+        />
         <TouchableOpacity
           style={styles.plotContainer}
           onPress={() => navigation.push('Plot', series)}

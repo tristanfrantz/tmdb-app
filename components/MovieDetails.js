@@ -85,7 +85,9 @@ class MovieDetails extends React.Component {
     const apiKey = '698a64988eda32cea2480262c47df2da';
 
     try {
-      const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-US&append_to_response=credits`);
+      const response = await fetch(
+        `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-US&append_to_response=credits`,
+      );
       const json = await response.json();
       this.setState({ movie: json });
       this.setState({ loading: false });
@@ -141,6 +143,14 @@ class MovieDetails extends React.Component {
         </View>
       );
     }
+    let runTime = movie.runtime;
+    if (runTime > 60) {
+      runTime = `Runtime ${Math.floor(runTime / 60)} h ${runTime % 60}min`;
+    } else if (runTime) {
+      runTime = `Runtime ${runTime % 60}min`;
+    } else {
+      runTime = 'N/A';
+    }
 
     return (
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
@@ -149,7 +159,9 @@ class MovieDetails extends React.Component {
           <View style={styles.titleContainer}>
             <Text style={styles.titleText}>
               {movie.title}
-              <Text style={styles.year}>{movie.release_date ? ` (${movie.release_date})` : '' }</Text>
+              <Text style={styles.year}>
+                {movie.release_date ? ` (${movie.release_date})` : ''}
+              </Text>
             </Text>
             <View style={styles.detailsContainer}>
               <ImdbRating rating={movie.vote_average} votes={movie.vote_count} />
@@ -158,11 +170,14 @@ class MovieDetails extends React.Component {
                 {'Genres: '}
                 <Text style={styles.shadowText}>{genres}</Text>
               </Text>
-              <Text style={styles.shadowText}>{`Runtime ${movie.runtime ? movie.runtime : 'N/A'}`}</Text>
+              <Text style={styles.shadowText}>{runTime}</Text>
             </View>
           </View>
         </View>
-        <AddWishlistButton media={movie} />
+        <AddWishlistButton
+          media={movie}
+          extraInfo={{ whatType: 0, style: { backgroundColor: 'gray' } }}
+        />
         <TouchableOpacity
           style={styles.plotContainer}
           onPress={() => navigation.push('Plot', movie)}
