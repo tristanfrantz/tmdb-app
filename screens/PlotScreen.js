@@ -84,7 +84,6 @@ export default class PlotScreen extends React.Component {
       );
     }
 
-    console.log(item);
     return (
       <ScrollView style={styles.container}>
         <View style={styles.textContainer}>
