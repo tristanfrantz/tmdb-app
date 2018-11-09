@@ -61,8 +61,10 @@ class DetailsPanel extends React.Component {
   renderItem = ({ item }) => (
     <TouchableOpacity style={styles.mediaContainer} onPress={() => this.onPress(item)}>
       <UsefulImage passedStyle={styles.mediaImage} imgPath={item.poster_path} />
-      <Text style={styles.movieTitleText}>{item.title}</Text>
-      <Text style={styles.dateText}>{item.release_date}</Text>
+      <Text style={styles.movieTitleText}>{item.title ? item.title : item.name}</Text>
+      <Text style={styles.dateText}>
+        {item.release_date ? item.release_date : item.first_air_date}
+      </Text>
     </TouchableOpacity>
   );
 

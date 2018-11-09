@@ -82,7 +82,7 @@ class ActorDetails extends React.Component {
 
     try {
       const response = await fetch(
-        `https://api.themoviedb.org/3/person/${id}?api_key=${apiKey}&language=en-US&append_to_response=movie_credits`,
+        `https://api.themoviedb.org/3/person/${id}?api_key=${apiKey}&language=en-US&append_to_response=combined_credits`,
       );
       const json = await response.json();
       this.setState({ actor: json });
@@ -159,7 +159,7 @@ class ActorDetails extends React.Component {
           <ProfileDetailsPanel
             navigation={navigation}
             title="Known for"
-            credits={actor.movie_credits.cast}
+            credits={actor.combined_credits.cast}
           />
         </View>
       </ScrollView>
