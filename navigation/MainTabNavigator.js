@@ -12,9 +12,68 @@ import SeriesScreen from '../screens/SeriesScreen';
 import PlotScreen from '../screens/PlotScreen';
 import BiographyScreen from '../screens/BiographyScreen';
 import RatingScreen from '../screens/RatingScreen';
+import CategoryScreen from '../screens/CategoryScreen';
 
 const HomeStack = createStackNavigator({
-  Home: HomeScreen,
+  Home: {
+    screen: HomeScreen,
+    navigationOptions: () => ({
+      title: 'Home',
+      headerTitleStyle: {
+        ...Platform.select({
+          android: {
+            marginLeft: 'auto',
+            marginRight: 'auto',
+          },
+        }),
+      },
+    }),
+  },
+  Details: {
+    screen: DetailsScreen,
+    navigationOptions: () => ({
+      title: 'Movie',
+      headerBackTitle: 'Back',
+    }),
+  },
+  Profile: {
+    screen: ProfileScreen,
+    navigationOptions: () => ({
+      title: 'Profile',
+      headerBackTitle: 'Back',
+    }),
+  },
+  Series: {
+    screen: SeriesScreen,
+    navigationOptions: () => ({
+      title: 'Series',
+      headerBackTitle: 'Back',
+    }),
+  },
+  Plot: {
+    screen: PlotScreen,
+    navigationOptions: () => ({
+      title: 'Plot',
+    }),
+  },
+  Biography: {
+    screen: BiographyScreen,
+    navigationOptions: () => ({
+      title: 'Biography',
+    }),
+  },
+  Rating: {
+    screen: RatingScreen,
+    navigationOptions: () => ({
+      title: 'Rating',
+    }),
+  },
+  Category: {
+    screen: CategoryScreen,
+    navigationOptions: () => ({
+      headerBackTitle: 'Back',
+    }),
+  },
 });
 
 HomeStack.navigationOptions = {
@@ -159,8 +218,10 @@ WatchlistStack.navigationOptions = {
   ),
 };
 
-export default createBottomTabNavigator({
+const MainTabNavigator = createBottomTabNavigator({
   HomeStack,
   SearchStack,
   WatchlistStack,
 });
+
+export default MainTabNavigator;
