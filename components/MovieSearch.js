@@ -1,18 +1,36 @@
 import React from 'react';
-import { StyleSheet, ScrollView, FlatList, View } from 'react-native';
+import {
+  StyleSheet,
+  ScrollView,
+  FlatList,
+  View,
+  Text,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
 import { SearchBar } from 'react-native-elements';
-import { TagSelect } from 'react-native-tag-select';
+import { connect } from 'react-redux';
+import { Ionicons } from '@expo/vector-icons';
+import { Bubbles } from 'react-native-loader';
+import { Constants } from 'expo';
+import { StackActions } from 'react-navigation';
 import MovieListItem from './MovieListItem';
 import SearchListItemSeperator from './SearchListItemSeperator';
+import { addRecentSearch, clearRecentSearch } from '../store/actions/media';
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: Constants.statusBarHeight,
     flex: 1,
     backgroundColor: '#fff',
     paddingLeft: 8,
     paddingRight: 8,
   },
   searchFieldContainer: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+    flexDirection: 'row',
     paddingBottom: 5,
   },
   filterButtons: {
@@ -33,6 +51,18 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20,
   },
+  recentSearch: {
+    height: 35,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginHorizontal: 15,
+  },
+  loading: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 class MovieSearch extends React.Component {
@@ -41,103 +71,145 @@ class MovieSearch extends React.Component {
     this.state = {
       results: [],
       input: '',
-      filter: '',
-      seriesFilter: false,
-      moviesFilter: false,
+      loading: false,
+      error: false,
     };
   }
 
-  search = () => {
-    const apiKey = '698a64988eda32cea2480262c47df2da';
-    const { input, filter } = this.state;
-
-    fetch(
-      `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=en-US&page=1&include_adult=false&query=${input}`
-    )
-      .then(res => res.json())
-      .then(res =>
-        this.setState({
-          results: res.results.map((c, i) => ({ ...c, key: `${i}` })),
-        })
-      )
-      .catch(err => {
-        console.log(err);
-        this.setState({ results: [] });
-      });
-  };
-
-  onPress = item => {
+  onPress = (item) => {
     this.props.navigation.navigate('Details', item);
   };
 
-  onTagPress = item => {
-    if (item.id === 1) {
-      this.setState(
-        prevState => ({ filter: !prevState.moviesFilter }),
-        () => {
-          this.search();
-        }
-      );
-    } else if (item.id === 2) {
-      this.setState(
-        prevState => ({ seriesFilter: !prevState.seriesFilter }),
-        () => {
-          this.search();
-        }
-      );
-    }
-  };
-
-  onChangeText = input => {
-    this.setState({ input }, () => {
+  onChangeText = (input) => {
+    this.setState({ error: false, input }, () => {
       this.search();
     });
   };
 
-  renderItem = ({ item }) => (
-    <MovieListItem item={item} navigation={this.props.navigation} />
+  async search() {
+    const apiKey = '698a64988eda32cea2480262c47df2da';
+    const { input } = this.state;
+    this.setState({ loading: true });
+    try {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=en-US&page=1&include_adult=false&query=${input}`,
+      );
+      const json = await response.json();
+      if (json.total_results === 0) {
+        this.setState({ error: true });
+      }
+      this.setState({ results: json.results.map((c, i) => ({ ...c, key: `${i}` })) });
+    } catch (e) {
+      console.log(e);
+      this.setState({ results: [] });
+    }
+    this.setState({ loading: false });
+  }
+
+  renderItem = ({ item }) => <MovieListItem item={item} navigation={this.props.navigation} />;
+
+  renderRecentSearchItem = ({ item }) => (
+    <TouchableOpacity
+      style={styles.recentSearch}
+      onPress={() => this.onChangeText(item.searchString)}
+    >
+      <Text style={{ fontSize: 15 }}>{item.searchString}</Text>
+      <Ionicons name="ios-arrow-forward" size={25} color="#6f7277" />
+    </TouchableOpacity>
   );
 
-  render() {
-    const { results } = this.state;
+  goBack() {
+    const popAction = StackActions.pop({ n: 1 });
+    this.props.navigation.dispatch(popAction);
+  }
 
-    const searchPlaceholder = 'Search movies, series or actors...';
+  render() {
+    const {
+      results, input, loading, error,
+    } = this.state;
+    const { recentSearch } = this.props;
+
     return (
       <View style={styles.container}>
         <View style={styles.searchFieldContainer}>
+          <Ionicons
+            {...Platform.select({
+              android: {
+                style: { paddingLeft: 10 },
+                name: 'md-arrow-back',
+                size: 24,
+              },
+              ios: {
+                name: 'ios-arrow-back',
+                color: '#007AFF',
+                size: 33,
+              },
+            })}
+            onPress={() => this.goBack()}
+          />
           <SearchBar
+            autoFocus
+            value={input}
             lightTheme
-            containerStyle={{ backgroundColor: 'white' }}
+            containerStyle={{ backgroundColor: 'white', width: '90%' }}
             round
-            platform="android"
-            cancelIcon
-            onChangeText={input => this.onChangeText(input)}
-            placeholder={searchPlaceholder}
+            showLoading={loading}
+            onChangeText={i => this.onChangeText(i)}
+            placeholder="Search movies, series or actors..."
             clearButtonMode="while-editing"
+            onSubmitEditing={() => {
+              this.props.dispatch(addRecentSearch(input));
+            }}
+            {...Platform.select({
+              android: {
+                clearIcon: { color: '#86939e', name: 'cancel' },
+              },
+            })}
           />
         </View>
-        <ScrollView>
-          <TagSelect
-            data={[
-              { id: 1, label: 'Movies' },
-              { id: 2, label: 'Series' },
-              { id: 3, label: 'Actors' },
-            ]}
-            onItemPress={item => {
-              this.onTagPress(item);
-            }}
-            containerStyle={{ paddingTop: 5 }}
-            itemStyle={styles.filterButtons}
-          />
-          <FlatList
-            data={results}
-            renderItem={this.renderItem}
-            ItemSeparatorComponent={() => <SearchListItemSeperator />}
-          />
-        </ScrollView>
+        {error && (
+          <View>
+            <Text>{`No results for ${input}`}</Text>
+          </View>
+        )}
+        {recentSearch.length > 0
+          && input.length === 0 && (
+            <View>
+              <View style={styles.recentSearch}>
+                <Text style={{ fontSize: 20 }}>Recent Searches</Text>
+                <TouchableOpacity onPress={() => this.props.dispatch(clearRecentSearch())}>
+                  <Text>Clear</Text>
+                </TouchableOpacity>
+              </View>
+              <SearchListItemSeperator />
+            </View>
+        )}
+        {input.length === 0 ? (
+          <ScrollView>
+            <FlatList
+              data={recentSearch}
+              renderItem={this.renderRecentSearchItem}
+              ItemSeparatorComponent={() => <SearchListItemSeperator />}
+            />
+          </ScrollView>
+        ) : (
+          <ScrollView>
+            <FlatList
+              data={results}
+              renderItem={this.renderItem}
+              ItemSeparatorComponent={() => <SearchListItemSeperator />}
+            />
+          </ScrollView>
+        )}
+        {loading && (
+          <View style={styles.loading}>
+            <Bubbles size={15} color="rgba(39, 40, 41, 0.3)" />
+          </View>
+        )}
       </View>
     );
   }
 }
 
-export default MovieSearch;
+const mapStateToProps = state => ({ recentSearch: state.recentSearch });
+export default connect(mapStateToProps)(MovieSearch);

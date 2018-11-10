@@ -1,10 +1,12 @@
 import React from 'react';
-import { Platform } from 'react-native';
+import { Platform, View, StyleSheet } from 'react-native';
 import {
   createStackNavigator,
   createBottomTabNavigator,
+  NavigationActions,
 } from 'react-navigation';
 
+import { SearchBar } from 'react-native-elements';
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import SearchScreen from '../screens/SearchScreen';
@@ -16,9 +18,108 @@ import PlotScreen from '../screens/PlotScreen';
 import BiographyScreen from '../screens/BiographyScreen';
 import RatingScreen from '../screens/RatingScreen';
 import SeasonsScreen from '../screens/SeasonsScreen';
+import CategoryScreen from '../screens/CategoryScreen';
+
+const styles = StyleSheet.create({
+  header: {
+    // paddingTop: Constants.statusBarHeight,
+    backgroundColor: '#e1e8ee',
+    width: '100%',
+  },
+});
 
 const HomeStack = createStackNavigator({
-  Home: HomeScreen,
+  Home: {
+    screen: HomeScreen,
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: (
+        <View style={styles.header}>
+          <SearchBar
+            lightTheme
+            onFocus={() => {
+              navigation.dispatch(NavigationActions.navigate({ routeName: 'Search' }));
+              this.searchFocus.blur();
+            }}
+            containerStyle={{ backgroundColor: 'white' }}
+            round
+            placeholder="Search movies, series or actors..."
+            ref={(s) => {
+              this.searchFocus = s;
+            }}
+          />
+        </View>
+      ),
+      title: 'Home',
+      headerTitleStyle: {
+        ...Platform.select({
+          android: {
+            marginLeft: 'auto',
+            marginRight: 'auto',
+          },
+        }),
+      },
+    }),
+  },
+  Search: {
+    screen: SearchScreen,
+    navigationOptions: () => ({
+      header: null,
+      headerTitleStyle: {
+        ...Platform.select({
+          android: {
+            marginLeft: 'auto',
+            marginRight: 'auto',
+          },
+        }),
+      },
+      headerBackTitle: 'Back',
+    }),
+  },
+  Details: {
+    screen: DetailsScreen,
+    navigationOptions: () => ({
+      title: 'Movie',
+      headerBackTitle: 'Back',
+    }),
+  },
+  Profile: {
+    screen: ProfileScreen,
+    navigationOptions: () => ({
+      title: 'Profile',
+      headerBackTitle: 'Back',
+    }),
+  },
+  Series: {
+    screen: SeriesScreen,
+    navigationOptions: () => ({
+      title: 'Series',
+      headerBackTitle: 'Back',
+    }),
+  },
+  Plot: {
+    screen: PlotScreen,
+    navigationOptions: () => ({
+      title: 'Plot',
+    }),
+  },
+  Biography: {
+    screen: BiographyScreen,
+    navigationOptions: () => ({
+      title: 'Biography',
+    }),
+  },
+  Rating: {
+    screen: RatingScreen,
+    navigationOptions: () => ({
+      title: 'Rating',
+    }),
+  },
+  Category: {
+    screen: CategoryScreen,
+    navigationOptions: () => ({
+      headerBackTitle: 'Back',
+    }),
+  },
 });
 
 HomeStack.navigationOptions = {
@@ -39,7 +140,7 @@ const SearchStack = createStackNavigator({
   Search: {
     screen: SearchScreen,
     navigationOptions: () => ({
-      title: 'Search',
+      header: null,
       headerTitleStyle: {
         ...Platform.select({
           android: {
@@ -114,8 +215,30 @@ SearchStack.navigationOptions = {
 const WatchlistStack = createStackNavigator({
   Watchlist: {
     screen: WatchlistScreen,
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: (
+        <View style={styles.header}>
+          <SearchBar
+            lightTheme
+            onFocus={() => {
+              navigation.dispatch(NavigationActions.navigate({ routeName: 'Search' }));
+              this.searchFocus.blur();
+            }}
+            containerStyle={{ backgroundColor: 'white' }}
+            round
+            placeholder="Search movies, series or actors..."
+            ref={(s) => {
+              this.searchFocus = s;
+            }}
+          />
+        </View>
+      ),
+    }),
+  },
+  Search: {
+    screen: SearchScreen,
     navigationOptions: () => ({
-      title: 'Watchlist',
+      header: null,
       headerTitleStyle: {
         ...Platform.select({
           android: {
@@ -181,8 +304,10 @@ WatchlistStack.navigationOptions = {
   ),
 };
 
-export default createBottomTabNavigator({
+const MainTabNavigator = createBottomTabNavigator({
   HomeStack,
   SearchStack,
   WatchlistStack,
 });
+
+export default MainTabNavigator;

@@ -7,138 +7,131 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Dimensions,
 } from 'react-native';
-import { WebBrowser } from 'expo';
+import HomeCarousel from '../components/HomeCarousel';
+
+const { height: viewportHeight } = Dimensions.get('window');
+
+const hp = (percentage) => {
+  const value = (percentage * viewportHeight) / 100;
+  return Math.round(value);
+};
+const carouselHeight = viewportHeight * 0.45;
+const boxesHeight = viewportHeight * 0.5;
+
+const CATEGORY_TYPES = {
+  POPULAR_MOVIES: 'Popular Movies',
+  POPULAR_SERIES: 'Popular Series',
+  TOP_MOVIES: 'Top Rated Movies',
+  TOP_SERIES: 'Top Rated Series',
+  UPCOMING_MOVIES: 'Upcoming Movies',
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
   },
-  developmentModeText: {
-    marginBottom: 20,
-    color: 'rgba(0,0,0,0.4)',
-    fontSize: 14,
-    lineHeight: 19,
+  contentContainer: {},
+  carouselContainer: {
+    height: carouselHeight,
+  },
+  boxesContainer: {
+    height: boxesHeight,
+    margin: 10,
+  },
+  rowContainer: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  colContainer: {
+    flex: 1,
+    margin: 5,
+    padding: 5,
+    borderRadius: 10,
+    backgroundColor: '#323232', // ff9682
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  tileText: {
+    fontSize: 21,
+    color: '#fff',
+    fontWeight: '600',
     textAlign: 'center',
-  },
-  contentContainer: {
-    paddingTop: 30,
-  },
-  welcomeContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
-  },
-  getStartedContainer: {
-    alignItems: 'center',
-    marginHorizontal: 50,
-  },
-  homeScreenFilename: {
-    marginVertical: 7,
-  },
-  codeHighlightText: {
-    color: 'rgba(96,100,109, 0.8)',
-  },
-  codeHighlightContainer: {
-    backgroundColor: 'rgba(0,0,0,0.05)',
-    borderRadius: 3,
-    paddingHorizontal: 4,
-  },
-  getStartedText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
-    textAlign: 'center',
-  },
-  tabBarInfoContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    ...Platform.select({
-      ios: {
-        shadowColor: 'black',
-        shadowOffset: { height: -3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3,
-      },
-      android: {
-        elevation: 20,
-      },
-    }),
-    alignItems: 'center',
-    backgroundColor: '#fbfbfb',
-    paddingVertical: 20,
-  },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    textAlign: 'center',
-  },
-  navigationFilename: {
-    marginTop: 5,
-  },
-  helpContainer: {
-    marginTop: 15,
-    alignItems: 'center',
-  },
-  helpLink: {
-    paddingVertical: 15,
-  },
-  helpLinkText: {
-    fontSize: 14,
-    color: '#2e78b7',
   },
 });
 
 export default class HomeScreen extends React.Component {
-  static navigationOptions = {
-    header: null,
-  };
-
-  _maybeRenderDevelopmentModeWarning() {
-    if (__DEV__) {
-      const learnMoreButton = (
-        <Text onPress={this._handleLearnMorePress} style={styles.helpLinkText}>
-          Learn more
-        </Text>
-      );
-
-      return (
-        <Text style={styles.developmentModeText}>
-          Development mode is enabled, your app will be slower but you can use useful development
-          tools.
-          {' '}
-          {learnMoreButton}
-        </Text>
-      );
-    }
-    return (
-      <Text style={styles.developmentModeText}>
-        You are not in development mode, your app will run at full speed.
-      </Text>
-    );
+  constructor(props) {
+    super(props);
+    this.state = {
+      results: [],
+    };
   }
 
-  _handleLearnMorePress = () => {
-    WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
-  };
+  componentDidMount() {
+    const apiKey = '698a64988eda32cea2480262c47df2da';
 
-  _handleHelpPress = () => {
-    WebBrowser.openBrowserAsync(
-      'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes',
-    );
+    fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=en-US`)
+      .then(res => res.json())
+      .then(res => this.setState({
+        results: res.results.map((c, i) => ({ ...c, key: `${i}` })),
+      }))
+      .catch((err) => {
+        console.error(err);
+        this.setState({ results: [] });
+      });
+  }
+
+  onPress = (category) => {
+    this.props.navigation.navigate('Category', category);
   };
 
   render() {
-    return <View style={styles.container} />;
+    return (
+      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+        <View style={styles.carouselContainer}>
+          <HomeCarousel navigation={this.props.navigation} data={this.state.results} />
+        </View>
+        <View style={styles.boxesContainer}>
+          <View style={styles.rowContainer}>
+            <TouchableOpacity
+              style={styles.colContainer}
+              onPress={() => this.onPress(CATEGORY_TYPES.UPCOMING_MOVIES)}
+            >
+              <Text style={styles.tileText}>{CATEGORY_TYPES.UPCOMING_MOVIES}</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.rowContainer}>
+            <TouchableOpacity
+              style={styles.colContainer}
+              onPress={() => this.onPress(CATEGORY_TYPES.POPULAR_MOVIES)}
+            >
+              <Text style={styles.tileText}>{CATEGORY_TYPES.POPULAR_MOVIES}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.colContainer}
+              onPress={() => this.onPress(CATEGORY_TYPES.POPULAR_SERIES)}
+            >
+              <Text style={styles.tileText}>{CATEGORY_TYPES.POPULAR_SERIES}</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.rowContainer}>
+            <TouchableOpacity
+              style={styles.colContainer}
+              onPress={() => this.onPress(CATEGORY_TYPES.TOP_MOVIES)}
+            >
+              <Text style={styles.tileText}>{CATEGORY_TYPES.TOP_MOVIES}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.colContainer}
+              onPress={() => this.onPress(CATEGORY_TYPES.TOP_SERIES)}
+            >
+              <Text style={styles.tileText}>{CATEGORY_TYPES.TOP_SERIES}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
+    );
   }
 }

@@ -6,8 +6,8 @@ import {
   Text,
   FlatList,
   ScrollView,
-  Image,
 } from 'react-native';
+import UsefulImage from './UsefulImage';
 
 const styles = StyleSheet.create({
   container: {
@@ -60,12 +60,13 @@ class DetailsPanel extends React.Component {
       style={styles.mediaContainer}
       onPress={() => this.onPress(item)}
     >
-      <Image
-        style={styles.mediaImage}
-        source={{ uri: `https://image.tmdb.org/t/p/w500/${item.poster_path}` }}
-      />
-      <Text style={styles.movieTitleText}>{item.title}</Text>
-      <Text style={styles.dateText}>{item.release_date}</Text>
+      <UsefulImage passedStyle={styles.mediaImage} imgPath={item.poster_path} />
+      <Text style={styles.movieTitleText}>
+        {item.title ? item.title : item.name}
+      </Text>
+      <Text style={styles.dateText}>
+        {item.release_date ? item.release_date : item.first_air_date}
+      </Text>
     </TouchableOpacity>
   );
 

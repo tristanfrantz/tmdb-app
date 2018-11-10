@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Platform } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import MovieSearch from '../components/MovieSearch';
 
 const styles = StyleSheet.create({
@@ -9,20 +9,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class SeriesDetailsScreen extends React.Component {
-  static navigationOptions = {
-    ...Platform.select({
-      android: {
-        headerTitleStyle: {
-          flex: 1,
-          textAlign: 'center',
-          alignSelf: 'center',
-        },
-        headerRight: <View />,
-      },
-    }),
-  };
-
+class SearchScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
@@ -32,4 +19,4 @@ class SeriesDetailsScreen extends React.Component {
   }
 }
 
-export default SeriesDetailsScreen;
+export default SearchScreen;

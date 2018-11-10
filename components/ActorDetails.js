@@ -1,10 +1,11 @@
 import React from 'react';
 import {
-  StyleSheet, TouchableOpacity, ScrollView, View, Text, Image,
+  StyleSheet, TouchableOpacity, ScrollView, View, Text,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Bubbles } from 'react-native-loader';
 import ProfileDetailsPanel from './ProfileDetailsPanel';
+import UsefulImage from './UsefulImage';
 
 const styles = StyleSheet.create({
   container: {
@@ -81,7 +82,7 @@ class ActorDetails extends React.Component {
 
     try {
       const response = await fetch(
-        `https://api.themoviedb.org/3/person/${id}?api_key=${apiKey}&language=en-US&append_to_response=movie_credits`,
+        `https://api.themoviedb.org/3/person/${id}?api_key=${apiKey}&language=en-US&append_to_response=combined_credits`,
       );
       const json = await response.json();
       this.setState({ actor: json });
@@ -115,20 +116,19 @@ class ActorDetails extends React.Component {
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <View>
           <View style={styles.movieContainer}>
-            <Image
-              style={styles.poster}
-              source={{ uri: `https://image.tmdb.org/t/p/w500/${actor.profile_path}` }}
-            />
+            <UsefulImage passedStyle={styles.poster} imgPath={actor.profile_path} />
             <View style={styles.titleContainer}>
               <Text style={styles.titleText}>{actor.name}</Text>
               <View style={styles.detailsContainer}>
                 <Text style={styles.text}>
                   {'Born: '}
-                  <Text style={styles.shadowText}>{actor.birthday ? actor.birthday : 'N/A' }</Text>
+                  <Text style={styles.shadowText}>{actor.birthday ? actor.birthday : 'N/A'}</Text>
                 </Text>
                 <Text style={styles.text}>
                   {'From: '}
-                  <Text style={styles.shadowText}>{actor.place_of_birth ? actor.place_of_birth : 'N/A' }</Text>
+                  <Text style={styles.shadowText}>
+                    {actor.place_of_birth ? actor.place_of_birth : 'N/A'}
+                  </Text>
                 </Text>
                 <Text style={styles.text}>
                   {'Died: '}
@@ -136,9 +136,10 @@ class ActorDetails extends React.Component {
                 </Text>
                 <Text style={styles.text}>
                   {'Department: '}
-                  <Text style={styles.shadowText}>{actor.known_for_department ? actor.known_for_department : 'N/A'}</Text>
+                  <Text style={styles.shadowText}>
+                    {actor.known_for_department ? actor.known_for_department : 'N/A'}
+                  </Text>
                 </Text>
-
               </View>
             </View>
           </View>
@@ -158,7 +159,7 @@ class ActorDetails extends React.Component {
           <ProfileDetailsPanel
             navigation={navigation}
             title="Known for"
-            credits={actor.movie_credits.cast}
+            credits={actor.combined_credits.cast}
           />
         </View>
       </ScrollView>

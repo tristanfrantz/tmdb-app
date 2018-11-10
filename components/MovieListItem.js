@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import {
   StyleSheet, View, Text, TouchableOpacity, Image,
 } from 'react-native';
+import { connect } from 'react-redux';
+import { addRecentSearch } from '../store/actions/media';
+import UsefulImage from './UsefulImage';
 
 const MEDIA_TYPES = {
   MOVIE: 'movie',
@@ -52,28 +55,31 @@ class MovieListItem extends Component {
     this.state = {};
   }
 
-  onMoviePress = (item) => {
-    this.props.navigation.push('Details', item);
-  };
-
   onSeriesPress = (item) => {
     this.props.navigation.push('Series', item);
+    this.props.dispatch(addRecentSearch(item.name));
   };
 
   onPersonPress = (item) => {
     this.props.navigation.push('Profile', item);
+    this.props.dispatch(addRecentSearch(item.name));
   };
+
+  onMoviePress = (item) => {
+    this.props.navigation.push('Details', item);
+    this.props.dispatch(addRecentSearch(item.title));
+  };
+
+  renderRandomImage = () => <Image style={styles.poster} source={{ uri: '../../bragi' }} />;
+
+  renderItem = ({ item }) => <MovieListItem item={item} navigation={this.props.navigation} />;
 
   render() {
     const { item } = this.props;
-
     if (item.media_type === MEDIA_TYPES.MOVIE) {
       return (
         <TouchableOpacity style={styles.movieContainer} onPress={() => this.onMoviePress(item)}>
-          <Image
-            style={styles.poster}
-            source={{ uri: `https://image.tmdb.org/t/p/w500/${item.poster_path}` }}
-          />
+          <UsefulImage passedStyle={styles.poster} imgPath={item.poster_path} />
           <View style={styles.details}>
             <Text style={styles.title}>{item.title}</Text>
             <Text style={styles.text}>{item.release_date}</Text>
@@ -85,10 +91,7 @@ class MovieListItem extends Component {
     if (item.media_type === MEDIA_TYPES.SERIES) {
       return (
         <TouchableOpacity style={styles.movieContainer} onPress={() => this.onSeriesPress(item)}>
-          <Image
-            style={styles.poster}
-            source={{ uri: `https://image.tmdb.org/t/p/w500/${item.poster_path}` }}
-          />
+          <UsefulImage passedStyle={styles.poster} imgPath={item.poster_path} />
           <View style={styles.details}>
             <Text style={styles.title}>{item.name}</Text>
             <Text style={styles.text}>{item.first_air_date}</Text>
@@ -97,22 +100,18 @@ class MovieListItem extends Component {
         </TouchableOpacity>
       );
     }
-    if (item.media_type === MEDIA_TYPES.PERSON) {
-      return (
-        <TouchableOpacity style={styles.movieContainer} onPress={() => this.onPersonPress(item)}>
-          <Image
-            style={styles.poster}
-            source={{ uri: `https://image.tmdb.org/t/p/w500/${item.profile_path}` }}
-          />
-          <View style={styles.details}>
-            <Text style={styles.title}>{item.name}</Text>
-            <Text style={styles.text}>{item.first_air_date}</Text>
-            <Text style={styles.shadowText}>Actor</Text>
-          </View>
-        </TouchableOpacity>
-      );
-    }
+    // else (item.media_type === MEDIA_TYPES.PERSON) {
+    return (
+      <TouchableOpacity style={styles.movieContainer} onPress={() => this.onPersonPress(item)}>
+        <UsefulImage passedStyle={styles.poster} imgPath={item.profile_path} />
+        <View style={styles.details}>
+          <Text style={styles.title}>{item.name}</Text>
+          <Text style={styles.text}>{item.first_air_date}</Text>
+          <Text style={styles.shadowText}>Actor</Text>
+        </View>
+      </TouchableOpacity>
+    );
   }
 }
 
-export default MovieListItem;
+export default connect()(MovieListItem);

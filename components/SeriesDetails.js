@@ -5,7 +5,6 @@ import {
   ScrollView,
   View,
   Text,
-  Image,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
@@ -15,6 +14,7 @@ import YourRating from './YourRating';
 import AddWishlistButton from './AddWishlistButton';
 import DetailsPanel from './DetailsPanel';
 import SeasonsButton from './SeasonsButton';
+import UsefulImage from './UsefulImage';
 
 const styles = StyleSheet.create({
   container: {
@@ -155,11 +155,9 @@ class SeriesDetails extends React.Component {
         contentContainerStyle={styles.contentContainer}
       >
         <View style={styles.movieContainer}>
-          <Image
-            style={styles.poster}
-            source={{
-              uri: `https://image.tmdb.org/t/p/w500/${series.poster_path}`,
-            }}
+          <UsefulImage
+            passedStyle={styles.poster}
+            imgPath={series.poster_path}
           />
           <View style={styles.titleContainer}>
             <Text style={styles.titleText}>{series.name}</Text>
@@ -176,7 +174,10 @@ class SeriesDetails extends React.Component {
             </View>
           </View>
         </View>
-        <AddWishlistButton media={series} />
+        <AddWishlistButton
+          media={series}
+          extraInfo={{ whatType: 0, style: { backgroundColor: 'gray' } }}
+        />
         <TouchableOpacity
           style={styles.plotContainer}
           onPress={() => navigation.push('Plot', series)}

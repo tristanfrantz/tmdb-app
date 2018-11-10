@@ -38,9 +38,15 @@ class ImdbRating extends React.Component {
     return (
       <View style={styles.container}>
         <Image style={styles.imdbLogo} source={imdbLogoPath} />
-        <View style={styles.ratingContainer}>
-          <Text style={styles.ratingText}>{rating}</Text>
-          <Text style={styles.votesText}>{`/10 | ${votes}`}</Text>
+        <View>
+          {rating !== 0 ? (
+            <View style={styles.ratingContainer}>
+              <Text style={styles.ratingText}>{rating}</Text>
+              <Text style={styles.votesText}>{`/10 | ${votes}`}</Text>
+            </View>
+          ) : (
+            <Text style={[styles.votesText, { paddingLeft: 5 }]}>N/A</Text>
+          )}
         </View>
       </View>
     );
