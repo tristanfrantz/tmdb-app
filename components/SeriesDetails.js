@@ -1,8 +1,7 @@
 import React from 'react';
 import {
-  StyleSheet, TouchableOpacity, ScrollView, View, Text,
+  StyleSheet, ScrollView, View, Text,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 import Loading from './Loading';
 import Error from './Error';
@@ -99,12 +98,13 @@ class SeriesDetails extends React.Component {
   }
 
   getGenres = (series) => {
+    let a;
     const genreString = series.genres.reduce((acc, genre) => {
       const { name } = genre;
       if (name) {
-        acc += `${name}, `;
+        a = `${acc}${name}, `;
       }
-      return acc;
+      return a;
     }, '');
     if (genreString === '') {
       return 'N/A';
