@@ -11,7 +11,8 @@ import {
 import { SearchBar } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
-import { Bubbles } from 'react-native-loader';
+import Loading from './Loading';
+import Error from './Error';
 import SearchListItem from './SearchListItem';
 import ListItemSeperator from './ListItemSeperator';
 import { addRecentSearch, clearRecentSearch } from '../store/actions/media';
@@ -141,9 +142,7 @@ class Search extends React.Component {
           })}
         />
         {error && (
-          <View>
-            <Text>{`No results for ${input}`}</Text>
-          </View>
+          <Error message="No results." />
         )}
         {recentSearch.length > 0
           && input.length === 0 && (
@@ -175,9 +174,7 @@ class Search extends React.Component {
           </ScrollView>
         )}
         {loading && (
-          <View style={styles.loading}>
-            <Bubbles size={15} color="rgba(39, 40, 41, 0.3)" />
-          </View>
+          <Loading />
         )}
       </View>
     );

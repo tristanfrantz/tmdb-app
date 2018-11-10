@@ -2,7 +2,8 @@ import React from 'react';
 import {
   StyleSheet, ScrollView, View, Text, Platform,
 } from 'react-native';
-import { Bubbles } from 'react-native-loader';
+import Loading from '../components/Loading';
+import Error from '../components/Error';
 
 const MEDIA_TYPES = {
   MOVIE: 'movie',
@@ -77,19 +78,11 @@ export default class PlotScreen extends React.Component {
     const title = item.title ? item.title : item.name;
 
     if (error) {
-      return (
-        <View>
-          <Text>Oh no spaghettios! plot was not found </Text>
-        </View>
-      );
+      return <Error message="The plot could not be found." />;
     }
 
     if (loading) {
-      return (
-        <View style={styles.loading}>
-          <Bubbles size={15} color="rgba(39, 40, 41, 0.3)" />
-        </View>
-      );
+      return <Loading />;
     }
 
     return (

@@ -4,7 +4,8 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
-import { Bubbles } from 'react-native-loader';
+import Loading from './Loading';
+import Error from './Error';
 import TmdbRating from './TmdbRating';
 import UserRating from './UserRating';
 import AddWatchlistButton from './AddWatchlistButton';
@@ -129,19 +130,11 @@ class MovieDetails extends React.Component {
     const genres = movie.genres ? this.getMovieGenres(movie) : 'N/A';
 
     if (error) {
-      return (
-        <View>
-          <Text>Movie was not found :(</Text>
-        </View>
-      );
+      return <Error message="The movie could not be found." />;
     }
 
     if (loading) {
-      return (
-        <View style={styles.loading}>
-          <Bubbles size={15} color="rgba(39, 40, 41, 0.3)" />
-        </View>
-      );
+      return <Loading />;
     }
     let runTime = movie.runtime;
     if (runTime > 60) {

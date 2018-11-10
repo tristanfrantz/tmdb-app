@@ -2,7 +2,8 @@ import React from 'react';
 import {
   StyleSheet, ScrollView, View, Text, Platform,
 } from 'react-native';
-import { Bubbles } from 'react-native-loader';
+import Loading from '../components/Loading';
+import Error from '../components/Error';
 
 const styles = StyleSheet.create({
   container: {
@@ -69,19 +70,11 @@ export default class PlotScreen extends React.Component {
     const { item, loading, error } = this.state;
 
     if (error) {
-      return (
-        <View>
-          <Text>Biography was not found :(</Text>
-        </View>
-      );
+      return <Error message="Biography could not be found." />;
     }
 
     if (loading) {
-      return (
-        <View style={styles.loading}>
-          <Bubbles size={15} color="rgba(39, 40, 41, 0.3)" />
-        </View>
-      );
+      return <Loading />;
     }
 
     return (

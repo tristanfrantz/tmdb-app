@@ -1,8 +1,7 @@
 import React from 'react';
-import {
-  StyleSheet, View, ScrollView, FlatList, Text,
-} from 'react-native';
-import { Bubbles } from 'react-native-loader';
+import { StyleSheet, ScrollView, FlatList } from 'react-native';
+import Loading from './Loading';
+import Error from './Error';
 import ListItemSeperator from './ListItemSeperator';
 import CategoryListItem from './CategoryListItem';
 
@@ -84,19 +83,11 @@ class CategoryList extends React.Component {
     const { results, error, loading } = this.state;
 
     if (error) {
-      return (
-        <View>
-          <Text>Oh no spaghettios! something went terribly wrong</Text>
-        </View>
-      );
+      return <Error />;
     }
 
     if (loading) {
-      return (
-        <View style={styles.loading}>
-          <Bubbles size={15} color="rgba(39, 40, 41, 0.3)" />
-        </View>
-      );
+      return <Loading />;
     }
 
     return (

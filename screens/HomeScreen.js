@@ -9,7 +9,7 @@ import {
   View,
   Dimensions,
 } from 'react-native';
-import HomeCarousel from '../components/HomeCarousel';
+import MediaCarousel from '../components/MediaCarousel';
 
 const { height: viewportHeight } = Dimensions.get('window');
 
@@ -91,7 +91,7 @@ export default class HomeScreen extends React.Component {
     return (
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <View style={styles.carouselContainer}>
-          <HomeCarousel navigation={this.props.navigation} data={this.state.results} />
+          <MediaCarousel navigation={this.props.navigation} data={this.state.results} />
         </View>
         <View style={styles.boxesContainer}>
           <View style={styles.rowContainer}>

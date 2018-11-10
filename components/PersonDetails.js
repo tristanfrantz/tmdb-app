@@ -3,7 +3,8 @@ import {
   StyleSheet, TouchableOpacity, ScrollView, View, Text,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Bubbles } from 'react-native-loader';
+import Loading from './Loading';
+import Error from './Error';
 import ProfileCreditsPanel from './ProfilePanel';
 import UsefulImage from './UsefulImage';
 
@@ -96,22 +97,14 @@ class PersonDetails extends React.Component {
     const { actor, loading, error } = this.state;
     const { navigation } = this.props;
 
+
     if (error) {
-      return (
-        <View>
-          <Text>Movie was not found :(</Text>
-        </View>
-      );
+      return <Error message="The person could not be found." />;
     }
 
     if (loading) {
-      return (
-        <View style={styles.loading}>
-          <Bubbles size={15} color="rgba(39, 40, 41, 0.3)" />
-        </View>
-      );
+      return <Loading />;
     }
-
     return (
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <View>

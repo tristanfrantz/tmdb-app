@@ -3,19 +3,12 @@ import {
   View, Text, Image, TouchableOpacity, StyleSheet, Dimensions,
 } from 'react-native';
 
-export const colors = {
-  black: '#1a1917',
-  gray: '#888888',
-  background1: '#B721FF',
-  background2: '#21D4FD',
-};
-
 const { width: viewportWidth } = Dimensions.get('window');
 
-function wp(percentage) {
+const wp = (percentage) => {
   const value = (percentage * viewportWidth) / 100;
   return Math.round(value);
-}
+};
 const itemHorizontalMargin = wp(0.5);
 
 const styles = StyleSheet.create({
@@ -35,10 +28,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     flex: 1,
-    backgroundColor: 'white',
-  },
-  imageContainerEven: {
-    backgroundColor: '#1a1917',
+    backgroundColor: '#323232',
   },
   image: {
     ...StyleSheet.absoluteFillObject,
@@ -50,36 +40,25 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 20,
     paddingHorizontal: 16,
-    backgroundColor: 'white',
-  },
-  textContainerEven: {
     backgroundColor: '#1a1917',
   },
   title: {
-    color: '#1a1917',
     fontSize: 13,
     fontWeight: 'bold',
     letterSpacing: 0.5,
-  },
-  titleEven: {
     color: 'white',
   },
   subtitle: {
     marginTop: 6,
-    color: colors.gray,
+    color: 'rgba(255, 255, 255, 0.7)',
     fontSize: 12,
     fontStyle: 'italic',
-  },
-  subtitleEven: {
-    color: 'rgba(255, 255, 255, 0.7)',
   },
 });
 
 export default class SliderEntry extends React.Component {
   render() {
-    const {
-      data: { title, backdrop_path },
-    } = this.props;
+    const { title, backdrop_path } = this.props.data;
 
     const uppercaseTitle = title ? (
       <Text style={[styles.title, styles.titleEven]} numberOfLines={2}>

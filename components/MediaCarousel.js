@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
-import { Bubbles } from 'react-native-loader';
 import SliderEntry from './SliderEntry';
+import Loading from './Loading';
 
 const { width: viewportWidth } = Dimensions.get('window');
 
@@ -33,19 +33,16 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class HomeCarousel extends Component {
+export default class MediaCarousel extends Component {
   renderItem({ item }) {
     return <SliderEntry navigation={this.props.navigation} data={item} />;
   }
 
   render() {
     const { data } = this.props;
+    // Loading
     if (!Array.isArray(data) || !data.length) {
-      return (
-        <View style={styles.loading}>
-          <Bubbles size={15} color="rgba(39, 40, 41, 0.3)" />
-        </View>
-      );
+      return <Loading />;
     }
     return (
       <View style={styles.container}>
