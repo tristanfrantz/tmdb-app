@@ -20,16 +20,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: itemHorizontalMargin,
   },
-  shadow: {
-    position: 'absolute',
-    top: 0,
-    left: itemHorizontalMargin,
-    right: itemHorizontalMargin,
-    bottom: 18,
-    shadowColor: '#1a1917',
-    shadowOpacity: 0.25,
-    shadowOffset: { width: 0, height: 10 },
-  },
   imageContainer: {
     flex: 1,
     backgroundColor: '#323232',
@@ -77,22 +67,19 @@ export default class SliderEntry extends React.Component {
     );
 
     return (
-      <View style={styles.container}>
-        <TouchableOpacity
-          activeOpacity={0.6}
-          style={styles.slideInnerContainer}
-          onPress={() => this.onPress(this.props.data)}
-        >
-          <View style={styles.shadow} />
-          <View style={[styles.imageContainer, styles.imageContainerEven]}>
-            <Image
-              source={{ uri: `https://image.tmdb.org/t/p/w500/${backdrop_path}` }}
-              style={styles.image}
-            />
-          </View>
-          <View style={[styles.textContainer, styles.textContainerEven]}>{uppercaseTitle}</View>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity
+        activeOpacity={0.6}
+        style={styles.slideInnerContainer}
+        onPress={() => this.onPress(this.props.data)}
+      >
+        <View style={[styles.imageContainer, styles.imageContainerEven]}>
+          <Image
+            source={{ uri: `https://image.tmdb.org/t/p/w500/${backdrop_path}` }}
+            style={styles.image}
+          />
+        </View>
+        <View style={[styles.textContainer, styles.textContainerEven]}>{uppercaseTitle}</View>
+      </TouchableOpacity>
     );
   }
 }

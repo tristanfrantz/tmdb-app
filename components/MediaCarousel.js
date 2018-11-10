@@ -4,8 +4,7 @@ import Carousel from 'react-native-snap-carousel';
 import SliderEntry from './SliderEntry';
 import Loading from './Loading';
 
-const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
-const carouselHeight = viewportHeight * 0.45;
+const { width: viewportWidth } = Dimensions.get('window');
 
 function wp(percentage) {
   const value = (percentage * viewportWidth) / 100;
@@ -18,8 +17,7 @@ const itemWidth = slideWidth;
 
 const styles = StyleSheet.create({
   container: {
-    height: carouselHeight,
-    margin: 10,
+    flex: 1,
   },
   loading: {
     flex: 1,

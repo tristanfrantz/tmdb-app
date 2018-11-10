@@ -1,16 +1,12 @@
 import React from 'react';
 import {
-  StyleSheet, View, Text, TouchableOpacity, Dimensions,
+  StyleSheet, View, Text, TouchableOpacity,
 } from 'react-native';
 import Categories from '../constants/Categories';
 
-const { height: viewportHeight } = Dimensions.get('window');
-const tilesHeight = viewportHeight * 0.5;
-
 const styles = StyleSheet.create({
   container: {
-    height: tilesHeight,
-    margin: 10,
+    flex: 1,
   },
   rowContainer: {
     flex: 1,
