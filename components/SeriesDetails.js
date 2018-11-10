@@ -178,6 +178,7 @@ class SeriesDetails extends React.Component {
           media={series}
           extraInfo={{ whatType: 0, style: { backgroundColor: 'gray' } }}
         />
+        <SeasonsButton navigation={navigation} seasons={series.seasons} />
         <TouchableOpacity
           style={styles.plotContainer}
           onPress={() => navigation.push('Plot', series)}
@@ -189,7 +190,6 @@ class SeriesDetails extends React.Component {
             <Icon size={22} name="angle-right" />
           </View>
         </TouchableOpacity>
-        <SeasonsButton navigation={navigation} seasons={series.seasons} />
         <DetailsPanel
           navigation={navigation}
           title="Cast"

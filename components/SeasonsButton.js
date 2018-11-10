@@ -1,4 +1,6 @@
-import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
+import {
+  StyleSheet, TouchableOpacity, Text, View,
+} from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -19,7 +21,7 @@ const styles = StyleSheet.create({
   text: {
     flex: 8,
     fontSize: 16,
-    color: 'gray',
+    fontWeight: '500',
   },
   plotArrow: {
     flex: 1,

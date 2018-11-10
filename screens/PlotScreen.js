@@ -57,13 +57,8 @@ export default class PlotScreen extends React.Component {
 
   async componentDidMount() {
     const tmdbApiKey = '698a64988eda32cea2480262c47df2da';
-    const { item } = this.state;
-    const { id } = this.props.navigation.state.params;
-    let type = MEDIA_TYPES.MOVIE;
-
-    if (item) {
-      type = item.title ? MEDIA_TYPES.MOVIE : MEDIA_TYPES.SERIES;
-    }
+    const { id, title } = this.props.navigation.state.params;
+    const type = title ? MEDIA_TYPES.MOVIE : MEDIA_TYPES.SERIES;
 
     try {
       const response = await fetch(
