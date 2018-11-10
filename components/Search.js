@@ -12,19 +12,14 @@ import { SearchBar } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import { Bubbles } from 'react-native-loader';
-import { Constants } from 'expo';
-import { StackActions } from 'react-navigation';
-import MovieListItem from './MovieListItem';
-import SearchListItemSeperator from './SearchListItemSeperator';
+import SearchListItem from './SearchListItem';
+import ListItemSeperator from './ListItemSeperator';
 import { addRecentSearch, clearRecentSearch } from '../store/actions/media';
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: Constants.statusBarHeight,
     flex: 1,
     backgroundColor: '#fff',
-    paddingLeft: 8,
-    paddingRight: 8,
   },
   searchFieldContainer: {
     alignItems: 'center',
@@ -65,7 +60,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class MovieSearch extends React.Component {
+class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -77,7 +72,7 @@ class MovieSearch extends React.Component {
   }
 
   onPress = (item) => {
-    this.props.navigation.navigate('Details', item);
+    this.props.navigation.navigate('Movie', item);
   };
 
   onChangeText = (input) => {
@@ -106,7 +101,7 @@ class MovieSearch extends React.Component {
     this.setState({ loading: false });
   }
 
-  renderItem = ({ item }) => <MovieListItem item={item} navigation={this.props.navigation} />;
+  renderItem = ({ item }) => <SearchListItem item={item} navigation={this.props.navigation} />;
 
   renderRecentSearchItem = ({ item }) => (
     <TouchableOpacity
@@ -118,11 +113,6 @@ class MovieSearch extends React.Component {
     </TouchableOpacity>
   );
 
-  goBack() {
-    const popAction = StackActions.pop({ n: 1 });
-    this.props.navigation.dispatch(popAction);
-  }
-
   render() {
     const {
       results, input, loading, error,
@@ -131,42 +121,25 @@ class MovieSearch extends React.Component {
 
     return (
       <View style={styles.container}>
-        <View style={styles.searchFieldContainer}>
-          <Ionicons
-            {...Platform.select({
-              android: {
-                style: { paddingLeft: 10 },
-                name: 'md-arrow-back',
-                size: 24,
-              },
-              ios: {
-                name: 'ios-arrow-back',
-                color: '#007AFF',
-                size: 33,
-              },
-            })}
-            onPress={() => this.goBack()}
-          />
-          <SearchBar
-            autoFocus
-            value={input}
-            lightTheme
-            containerStyle={{ backgroundColor: 'white', width: '90%' }}
-            round
-            showLoading={loading}
-            onChangeText={i => this.onChangeText(i)}
-            placeholder="Search movies, series or actors..."
-            clearButtonMode="while-editing"
-            onSubmitEditing={() => {
-              this.props.dispatch(addRecentSearch(input));
-            }}
-            {...Platform.select({
-              android: {
-                clearIcon: { color: '#86939e', name: 'cancel' },
-              },
-            })}
-          />
-        </View>
+        <SearchBar
+          autoFocus
+          value={input}
+          lightTheme
+          containerStyle={{ backgroundColor: 'white' }}
+          round
+          showLoading={loading}
+          onChangeText={i => this.onChangeText(i)}
+          placeholder="Search movies, series or actors..."
+          clearButtonMode="while-editing"
+          onSubmitEditing={() => {
+            this.props.dispatch(addRecentSearch(input));
+          }}
+          {...Platform.select({
+            android: {
+              clearIcon: { color: '#86939e', name: 'cancel' },
+            },
+          })}
+        />
         {error && (
           <View>
             <Text>{`No results for ${input}`}</Text>
@@ -181,7 +154,7 @@ class MovieSearch extends React.Component {
                   <Text>Clear</Text>
                 </TouchableOpacity>
               </View>
-              <SearchListItemSeperator />
+              <ListItemSeperator />
             </View>
         )}
         {input.length === 0 ? (
@@ -189,7 +162,7 @@ class MovieSearch extends React.Component {
             <FlatList
               data={recentSearch}
               renderItem={this.renderRecentSearchItem}
-              ItemSeparatorComponent={() => <SearchListItemSeperator />}
+              ItemSeparatorComponent={() => <ListItemSeperator />}
             />
           </ScrollView>
         ) : (
@@ -197,7 +170,7 @@ class MovieSearch extends React.Component {
             <FlatList
               data={results}
               renderItem={this.renderItem}
-              ItemSeparatorComponent={() => <SearchListItemSeperator />}
+              ItemSeparatorComponent={() => <ListItemSeperator />}
             />
           </ScrollView>
         )}
@@ -212,4 +185,4 @@ class MovieSearch extends React.Component {
 }
 
 const mapStateToProps = state => ({ recentSearch: state.recentSearch });
-export default connect(mapStateToProps)(MovieSearch);
+export default connect(mapStateToProps)(Search);

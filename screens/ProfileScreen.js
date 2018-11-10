@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Platform } from 'react-native';
-import ActorDetails from '../components/ActorDetails';
+import PersonDetails from '../components/PersonDetails';
 
 const styles = StyleSheet.create({
   container: {
@@ -26,7 +26,7 @@ class ProfileScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ActorDetails navigation={this.props.navigation} />
+        <PersonDetails navigation={this.props.navigation} />
       </View>
     );
   }

@@ -3,7 +3,7 @@ import {
   StyleSheet, Image, View, Text,
 } from 'react-native';
 
-const imdbLogoPath = require('../assets/images/imdb-logo.png');
+const tmdbLogoPath = require('../assets/images/tmdb-logo.png');
 
 const styles = StyleSheet.create({
   container: {
@@ -13,9 +13,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingLeft: 5,
   },
-  imdbLogo: {
-    width: 40,
-    height: 20,
+  tmdbLogo: {
+    width: 20,
+    height: 23,
   },
   ratingText: {
     fontSize: 16,
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class ImdbRating extends React.Component {
+class TmdbRating extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -37,7 +37,7 @@ class ImdbRating extends React.Component {
     const { rating, votes } = this.props;
     return (
       <View style={styles.container}>
-        <Image style={styles.imdbLogo} source={imdbLogoPath} />
+        <Image style={styles.tmdbLogo} source={tmdbLogoPath} />
         <View>
           {rating !== 0 ? (
             <View style={styles.ratingContainer}>
@@ -53,4 +53,4 @@ class ImdbRating extends React.Component {
   }
 }
 
-export default ImdbRating;
+export default TmdbRating;

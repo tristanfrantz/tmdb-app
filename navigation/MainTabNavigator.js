@@ -1,17 +1,12 @@
 import React from 'react';
-import { Platform, View, StyleSheet } from 'react-native';
-import {
-  createStackNavigator,
-  createBottomTabNavigator,
-  NavigationActions,
-} from 'react-navigation';
+import { Platform } from 'react-native';
+import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
-import { SearchBar } from 'react-native-elements';
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import SearchScreen from '../screens/SearchScreen';
 import WatchlistScreen from '../screens/WatchlistScreen';
-import DetailsScreen from '../screens/DetailsScreen';
+import MovieScreen from '../screens/MovieScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import SeriesScreen from '../screens/SeriesScreen';
 import PlotScreen from '../screens/PlotScreen';
@@ -20,35 +15,10 @@ import RatingScreen from '../screens/RatingScreen';
 import SeasonsScreen from '../screens/SeasonsScreen';
 import CategoryScreen from '../screens/CategoryScreen';
 
-const styles = StyleSheet.create({
-  header: {
-    // paddingTop: Constants.statusBarHeight,
-    backgroundColor: '#e1e8ee',
-    width: '100%',
-  },
-});
-
 const HomeStack = createStackNavigator({
   Home: {
     screen: HomeScreen,
-    navigationOptions: ({ navigation }) => ({
-      headerTitle: (
-        <View style={styles.header}>
-          <SearchBar
-            lightTheme
-            onFocus={() => {
-              navigation.dispatch(NavigationActions.navigate({ routeName: 'Search' }));
-              this.searchFocus.blur();
-            }}
-            containerStyle={{ backgroundColor: 'white' }}
-            round
-            placeholder="Search movies, series or actors..."
-            ref={(s) => {
-              this.searchFocus = s;
-            }}
-          />
-        </View>
-      ),
+    navigationOptions: () => ({
       title: 'Home',
       headerTitleStyle: {
         ...Platform.select({
@@ -75,8 +45,8 @@ const HomeStack = createStackNavigator({
       headerBackTitle: 'Back',
     }),
   },
-  Details: {
-    screen: DetailsScreen,
+  Movie: {
+    screen: MovieScreen,
     navigationOptions: () => ({
       title: 'Movie',
       headerBackTitle: 'Back',
@@ -94,6 +64,12 @@ const HomeStack = createStackNavigator({
     navigationOptions: () => ({
       title: 'Series',
       headerBackTitle: 'Back',
+    }),
+  },
+  Seasons: {
+    screen: SeasonsScreen,
+    navigationOptions: () => ({
+      title: 'Seasons',
     }),
   },
   Plot: {
@@ -127,11 +103,7 @@ HomeStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-home${focused ? '' : '-outline'}`
-          : 'md-home'
-      }
+      name={Platform.OS === 'ios' ? `ios-home${focused ? '' : '-outline'}` : 'md-home'}
     />
   ),
 };
@@ -140,7 +112,7 @@ const SearchStack = createStackNavigator({
   Search: {
     screen: SearchScreen,
     navigationOptions: () => ({
-      header: null,
+      title: 'Search',
       headerTitleStyle: {
         ...Platform.select({
           android: {
@@ -151,8 +123,8 @@ const SearchStack = createStackNavigator({
       },
     }),
   },
-  Details: {
-    screen: DetailsScreen,
+  Movie: {
+    screen: MovieScreen,
     navigationOptions: () => ({
       title: 'Movie',
       headerBackTitle: 'Back',
@@ -170,6 +142,12 @@ const SearchStack = createStackNavigator({
     navigationOptions: () => ({
       title: 'Series',
       headerBackTitle: 'Back',
+    }),
+  },
+  Seasons: {
+    screen: SeasonsScreen,
+    navigationOptions: () => ({
+      title: 'Seasons',
     }),
   },
   Plot: {
@@ -190,12 +168,6 @@ const SearchStack = createStackNavigator({
       title: 'Rating',
     }),
   },
-  Seasons: {
-    screen: SeasonsScreen,
-    navigationOptions: () => ({
-      title: 'Seasons',
-    }),
-  },
 });
 
 SearchStack.navigationOptions = {
@@ -203,11 +175,7 @@ SearchStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-search${focused ? '' : '-outline'}`
-          : 'md-search'
-      }
+      name={Platform.OS === 'ios' ? `ios-search${focused ? '' : '-outline'}` : 'md-search'}
     />
   ),
 };
@@ -215,25 +183,17 @@ SearchStack.navigationOptions = {
 const WatchlistStack = createStackNavigator({
   Watchlist: {
     screen: WatchlistScreen,
-    navigationOptions: ({ navigation }) => ({
-      headerTitle: (
-        <View style={styles.header}>
-          <SearchBar
-            lightTheme
-            onFocus={() => {
-              navigation.dispatch(NavigationActions.navigate({ routeName: 'Search' }));
-              this.searchFocus.blur();
-            }}
-            containerStyle={{ backgroundColor: 'white' }}
-            round
-            placeholder="Search movies, series or actors..."
-            ref={(s) => {
-              this.searchFocus = s;
-            }}
-          />
-        </View>
-      ),
+    navigationOptions: () => ({
+      title: 'Watchlist',
     }),
+    headerTitleStyle: {
+      ...Platform.select({
+        android: {
+          marginLeft: 'auto',
+          marginRight: 'auto',
+        },
+      }),
+    },
   },
   Search: {
     screen: SearchScreen,
@@ -249,8 +209,8 @@ const WatchlistStack = createStackNavigator({
       },
     }),
   },
-  Details: {
-    screen: DetailsScreen,
+  Movie: {
+    screen: MovieScreen,
     navigationOptions: () => ({
       title: 'Movie',
       headerBackTitle: 'Back',
@@ -261,6 +221,12 @@ const WatchlistStack = createStackNavigator({
     navigationOptions: () => ({
       title: 'Series',
       headerBackTitle: 'Back',
+    }),
+  },
+  Seasons: {
+    screen: SeasonsScreen,
+    navigationOptions: () => ({
+      title: 'Seasons',
     }),
   },
   Profile: {
@@ -295,11 +261,7 @@ WatchlistStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-heart${focused ? '' : '-outline'}`
-          : 'md-heart'
-      }
+      name={Platform.OS === 'ios' ? `ios-heart${focused ? '' : '-outline'}` : 'md-heart'}
     />
   ),
 };

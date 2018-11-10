@@ -6,7 +6,7 @@ import {
   CollapseHeader,
   CollapseBody,
 } from 'accordion-collapse-react-native';
-import SearchListItemSeperator from './SearchListItemSeperator';
+import ListItemSeperator from './ListItemSeperator';
 
 const styles = StyleSheet.create({
   container: {
@@ -153,7 +153,7 @@ class Seasons extends React.Component {
     return (
       <View style={styles.container}>
         <FlatList
-          ItemSeparatorComponent={() => <SearchListItemSeperator />}
+          ItemSeparatorComponent={() => <ListItemSeperator />}
           data={seasons}
           renderItem={this.renderItem}
         />

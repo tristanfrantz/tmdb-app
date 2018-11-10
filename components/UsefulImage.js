@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, View } from 'react-native';
 
-const defualtIMG = require('../assets/images/robot-dev.png');
+const missingImage = require('../assets/images/missing-image.png');
 
 export default class UsefulImage extends React.Component {
   render() {
@@ -15,7 +15,7 @@ export default class UsefulImage extends React.Component {
             source={{ uri: `https://image.tmdb.org/t/p/w500/${imgPath}` }}
           />
         ) : (
-          <Image style={passedStyle} source={defualtIMG} />
+          <Image style={passedStyle} source={missingImage} />
         )}
       </View>
     );

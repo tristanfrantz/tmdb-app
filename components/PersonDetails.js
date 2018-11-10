@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Bubbles } from 'react-native-loader';
-import ProfileDetailsPanel from './ProfileDetailsPanel';
+import ProfileCreditsPanel from './ProfilePanel';
 import UsefulImage from './UsefulImage';
 
 const styles = StyleSheet.create({
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class ActorDetails extends React.Component {
+class PersonDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -156,7 +156,7 @@ class ActorDetails extends React.Component {
             </View>
           </TouchableOpacity>
 
-          <ProfileDetailsPanel
+          <ProfileCreditsPanel
             navigation={navigation}
             title="Known for"
             credits={actor.combined_credits.cast}
@@ -167,4 +167,4 @@ class ActorDetails extends React.Component {
   }
 }
 
-export default ActorDetails;
+export default PersonDetails;

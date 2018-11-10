@@ -23,6 +23,8 @@ const watchlist = (state = initialState, action) => {
               date: getDate(action.payload.media),
               type: getType(action.payload.media),
               poster: action.payload.media.poster_path,
+              rating: action.payload.media.vote_average,
+              votes: action.payload.media.vote_count,
             },
             key: action.payload.media.id,
           },

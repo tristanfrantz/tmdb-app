@@ -14,12 +14,9 @@ const MEDIA_TYPES = {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
-    padding: 8,
-  },
-  movieContainer: {
     flex: 1,
     flexDirection: 'row',
+    margin: 5,
   },
   poster: {
     height: 100,
@@ -49,7 +46,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class MovieListItem extends Component {
+class SearchListItem extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -66,19 +63,19 @@ class MovieListItem extends Component {
   };
 
   onMoviePress = (item) => {
-    this.props.navigation.push('Details', item);
+    this.props.navigation.push('Movie', item);
     this.props.dispatch(addRecentSearch(item.title));
   };
 
   renderRandomImage = () => <Image style={styles.poster} source={{ uri: '../../bragi' }} />;
 
-  renderItem = ({ item }) => <MovieListItem item={item} navigation={this.props.navigation} />;
+  renderItem = ({ item }) => <SearchListItem item={item} navigation={this.props.navigation} />;
 
   render() {
     const { item } = this.props;
     if (item.media_type === MEDIA_TYPES.MOVIE) {
       return (
-        <TouchableOpacity style={styles.movieContainer} onPress={() => this.onMoviePress(item)}>
+        <TouchableOpacity style={styles.container} onPress={() => this.onMoviePress(item)}>
           <UsefulImage passedStyle={styles.poster} imgPath={item.poster_path} />
           <View style={styles.details}>
             <Text style={styles.title}>{item.title}</Text>
@@ -90,7 +87,7 @@ class MovieListItem extends Component {
     }
     if (item.media_type === MEDIA_TYPES.SERIES) {
       return (
-        <TouchableOpacity style={styles.movieContainer} onPress={() => this.onSeriesPress(item)}>
+        <TouchableOpacity style={styles.container} onPress={() => this.onSeriesPress(item)}>
           <UsefulImage passedStyle={styles.poster} imgPath={item.poster_path} />
           <View style={styles.details}>
             <Text style={styles.title}>{item.name}</Text>
@@ -102,7 +99,7 @@ class MovieListItem extends Component {
     }
     // else (item.media_type === MEDIA_TYPES.PERSON) {
     return (
-      <TouchableOpacity style={styles.movieContainer} onPress={() => this.onPersonPress(item)}>
+      <TouchableOpacity style={styles.container} onPress={() => this.onPersonPress(item)}>
         <UsefulImage passedStyle={styles.poster} imgPath={item.profile_path} />
         <View style={styles.details}>
           <Text style={styles.title}>{item.name}</Text>
@@ -114,4 +111,4 @@ class MovieListItem extends Component {
   }
 }
 
-export default connect()(MovieListItem);
+export default connect()(SearchListItem);

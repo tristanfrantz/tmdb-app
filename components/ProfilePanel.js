@@ -34,43 +34,45 @@ const styles = StyleSheet.create({
     height: 120,
     width: 80,
   },
-  nameText: {
+  movieTitleText: {
     fontSize: 12,
     textAlign: 'center',
   },
-  characterText: {
+  dateText: {
     fontSize: 10,
     color: 'grey',
     textAlign: 'center',
   },
 });
 
-class DetailsPanel extends React.Component {
-  onPress = item => {
-    this.props.navigation.push('Profile', item);
+class ProfilePanel extends React.Component {
+  onPress = (item) => {
+    this.props.navigation.push('Movie', item);
   };
 
   renderItem = ({ item }) => (
     <TouchableOpacity style={styles.mediaContainer} onPress={() => this.onPress(item)}>
-      <UsefulImage passedStyle={styles.mediaImage} imgPath={item.profile_path} />
-      <Text style={styles.nameText}>{item.name}</Text>
-      <Text style={styles.characterText}>{item.character}</Text>
+      <UsefulImage passedStyle={styles.mediaImage} imgPath={item.poster_path} />
+      <Text style={styles.movieTitleText}>{item.title ? item.title : item.name}</Text>
+      <Text style={styles.dateText}>
+        {item.release_date ? item.release_date : item.first_air_date}
+      </Text>
     </TouchableOpacity>
   );
 
   render() {
-    const { title, people } = this.props;
-    const peopleList = people.map((c, i) => ({ ...c, key: `${i}` }));
+    const { title, credits } = this.props;
+    const creditsList = credits.map((c, i) => ({ ...c, key: `${i}` }));
 
     return (
       <View style={styles.container}>
         <Text style={styles.titleText}>{title}</Text>
         <ScrollView horizontal>
-          <FlatList horizontal data={peopleList} renderItem={this.renderItem} />
+          <FlatList horizontal data={creditsList} renderItem={this.renderItem} />
         </ScrollView>
       </View>
     );
   }
 }
 
-export default DetailsPanel;
+export default ProfilePanel;

@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet, View, Text, TouchableOpacity, Image,
+  StyleSheet, View, Text, TouchableOpacity,
 } from 'react-native';
-import ImdbRating from './ImdbRating';
+import TmdbRating from './TmdbRating';
+import UsefulImage from './UsefulImage';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    paddingVertical: 10,
-    paddingLeft: 10,
+    margin: 8,
   },
   poster: {
     height: 150,
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
   },
-  imdbRatingContainer: {
+  ratingContainer: {
     paddingTop: 5,
   },
   shadowText: {
@@ -43,7 +43,7 @@ class CategoryListItem extends Component {
 
   onPress = (media) => {
     if (media.title) {
-      this.props.navigation.push('Details', media);
+      this.props.navigation.push('Movie', media);
     } else {
       this.props.navigation.push('Series', media);
     }
@@ -57,16 +57,13 @@ class CategoryListItem extends Component {
 
     return (
       <TouchableOpacity style={styles.container} onPress={() => this.onPress(media)}>
-        <Image
-          style={styles.poster}
-          source={{ uri: `https://image.tmdb.org/t/p/w500/${media.poster_path}` }}
-        />
+        <UsefulImage passedStyle={styles.poster} imgPath={media.poster_path} />
         <View style={styles.details}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.text}>{date}</Text>
           <Text style={styles.shadowText}>{type}</Text>
-          <View style={styles.imdbRatingContainer}>
-            <ImdbRating rating={media.vote_average} votes={media.vote_count} />
+          <View style={styles.ratingContainer}>
+            <TmdbRating rating={media.vote_average} votes={media.vote_count} />
           </View>
         </View>
       </TouchableOpacity>

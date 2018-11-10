@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class DetailsScreen extends React.Component {
+class MovieScreen extends React.Component {
   static navigationOptions = {
     ...Platform.select({
       android: {
@@ -32,4 +32,4 @@ class DetailsScreen extends React.Component {
   }
 }
 
-export default DetailsScreen;
+export default MovieScreen;

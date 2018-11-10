@@ -70,7 +70,7 @@ class RatingScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      starCount: this.props.navigation.state.params.ratingItem.yourRating,
+      starCount: this.props.navigation.state.params.ratingItem.UserRating,
     };
   }
 
@@ -85,11 +85,11 @@ class RatingScreen extends React.Component {
     if (starCount === 0) {
       return;
     }
-    const { yourRating } = this.props.navigation.state.params.ratingItem;
+    const { UserRating } = this.props.navigation.state.params.ratingItem;
 
-    if (yourRating === 0) {
+    if (UserRating === 0) {
       this.props.dispatch(addRating(starCount, id));
-    } else if (starCount !== yourRating && yourRating !== 0) {
+    } else if (starCount !== UserRating && UserRating !== 0) {
       this.props.dispatch(updateRating(starCount, id));
     }
     const popAction = StackActions.pop({ n: 1 });
@@ -135,7 +135,7 @@ class RatingScreen extends React.Component {
         <TouchableOpacity style={styles.rateBtn} onPress={() => this.onSubmitRating(ratingItem.id)}>
           <Text style={styles.btnText}>RATE</Text>
         </TouchableOpacity>
-        {ratingItem.yourRating !== 0 && (
+        {ratingItem.UserRating !== 0 && (
           <TouchableOpacity
             style={[styles.rateBtn, { backgroundColor: '#3c3f42' }]}
             onPress={() => this.onRemoveRating(ratingItem.id)}

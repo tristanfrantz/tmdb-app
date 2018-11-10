@@ -2,44 +2,47 @@ import React, { Component } from 'react';
 import {
   StyleSheet, View, Text, TouchableOpacity,
 } from 'react-native';
-import AddWishlistButton from './AddWishlistButton';
+import RemoveWatchlistButton from './RemoveWatchlistButton';
 import UsefulImage from './UsefulImage';
+import TmdbRating from './TmdbRating';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
-    padding: 8,
-  },
-  mediaContainer: {
     flex: 1,
     flexDirection: 'row',
-    paddingBottom: 16,
+    margin: 8,
+  },
+  detailsContainer: {
+    flex: 1,
+    paddingLeft: 8,
+    flexDirection: 'column',
+  },
+  itemContainer: {
+    flex: 1,
+    justifyContent: 'flex-start',
   },
   poster: {
     height: 150,
     width: 100,
   },
-  details: {
-    flex: 1,
-    paddingLeft: 18,
-  },
   title: {
-    fontWeight: 'bold',
-    fontSize: 20,
+    fontWeight: '600',
+    fontSize: 18,
   },
   text: {
     fontSize: 16,
   },
-  watchlistBtn: {
-    width: '100%',
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',
-    bottom: 0,
+  ratingContainer: {
+    paddingTop: 5,
   },
   shadowText: {
     fontSize: 14,
     color: 'grey',
+  },
+  removeWatchlistButtonContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    width: '90%',
   },
 });
 
@@ -51,7 +54,7 @@ class WatchlistItem extends Component {
 
   onPress = (media) => {
     if (media.type === 'movie') {
-      this.props.navigation.push('Details', media);
+      this.props.navigation.push('Movie', media);
     }
     if (media.type === 'tv') {
       this.props.navigation.push('Series', media);
@@ -62,17 +65,21 @@ class WatchlistItem extends Component {
     const { media } = this.props;
     const type = media.type === 'movie' ? 'Movie' : 'Series';
     return (
-      <TouchableOpacity style={styles.mediaContainer} onPress={() => this.onPress(media)}>
+      <TouchableOpacity style={styles.container} onPress={() => this.onPress(media)}>
         <UsefulImage passedStyle={styles.poster} imgPath={media.poster} />
-        <View style={styles.details}>
-          <Text style={styles.title}>{media.title}</Text>
-          <Text style={styles.text}>{media.date}</Text>
-          <Text style={styles.shadowText}>{type}</Text>
-          <View style={styles.watchlistBtn}>
-            <AddWishlistButton
-              media={media}
-              extraInfo={{ whatType: 1, style: { backgroundColor: '#bc142a' } }}
-            />
+        <View style={styles.detailsContainer}>
+          <View style={styles.itemContainer}>
+            <Text style={styles.title}>{media.title}</Text>
+            <Text style={styles.text}>{media.date}</Text>
+            <Text style={styles.shadowText}>{type}</Text>
+            <View style={styles.ratingContainer}>
+              <TmdbRating rating={media.rating} votes={media.votes} />
+            </View>
+          </View>
+          <View style={styles.removeWatchlistButtonContainer}>
+            <View style={styles.removeWatchlistButton}>
+              <RemoveWatchlistButton media={media} />
+            </View>
           </View>
         </View>
       </TouchableOpacity>

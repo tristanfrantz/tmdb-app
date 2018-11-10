@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class YourRating extends React.Component {
+class UserRating extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -35,12 +35,12 @@ class YourRating extends React.Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={() => this.props.navigation.navigate('Rating', { ratingItem })}>
-          {ratingItem.yourRating !== 0 ? (
+          {ratingItem.UserRating !== 0 ? (
             <View style={styles.ratingContainer}>
               <Icon name="ios-star" size={23} color="#3d5f99" />
               <Text style={styles.ratingText}>
                 {' '}
-                {ratingItem.yourRating}
+                {ratingItem.UserRating}
               </Text>
               <Text style={styles.votesText}>/10</Text>
             </View>
@@ -56,4 +56,4 @@ class YourRating extends React.Component {
   }
 }
 
-export default YourRating;
+export default UserRating;

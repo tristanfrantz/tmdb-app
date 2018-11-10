@@ -9,10 +9,10 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 import { Bubbles } from 'react-native-loader';
-import ImdbRating from './ImdbRating';
-import YourRating from './YourRating';
-import AddWishlistButton from './AddWishlistButton';
-import DetailsPanel from './DetailsPanel';
+import TmdbRating from './TmdbRating';
+import UserRating from './UserRating';
+import AddWatchlistButton from './AddWatchlistButton';
+import CreditsPanel from './CreditsPanel';
 import SeasonsButton from './SeasonsButton';
 import UsefulImage from './UsefulImage';
 
@@ -128,7 +128,7 @@ class SeriesDetails extends React.Component {
       id: series.id,
       title: series.name,
       poster: `https://image.tmdb.org/t/p/w500/${series.poster_path}`,
-      yourRating: oldRating,
+      UserRating: oldRating,
     };
 
     const genres = series.genres ? this.getGenres(series) : 'N/A';
@@ -162,11 +162,11 @@ class SeriesDetails extends React.Component {
           <View style={styles.titleContainer}>
             <Text style={styles.titleText}>{series.name}</Text>
             <View style={styles.detailsContainer}>
-              <ImdbRating
+              <TmdbRating
                 rating={series.vote_average}
                 votes={series.vote_count}
               />
-              <YourRating navigation={navigation} ratingItem={ratingItem} />
+              <UserRating navigation={navigation} ratingItem={ratingItem} />
               <Text style={styles.text}>
                 {'Genres: '}
                 <Text style={styles.shadowText}>{genres}</Text>
@@ -174,7 +174,7 @@ class SeriesDetails extends React.Component {
             </View>
           </View>
         </View>
-        <AddWishlistButton
+        <AddWatchlistButton
           media={series}
           extraInfo={{ whatType: 0, style: { backgroundColor: 'gray' } }}
         />
@@ -190,7 +190,7 @@ class SeriesDetails extends React.Component {
             <Icon size={22} name="angle-right" />
           </View>
         </TouchableOpacity>
-        <DetailsPanel
+        <CreditsPanel
           navigation={navigation}
           title="Cast"
           people={series.credits.cast}

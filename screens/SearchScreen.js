@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import MovieSearch from '../components/MovieSearch';
+import Search from '../components/Search';
 
 const styles = StyleSheet.create({
   container: {
@@ -13,7 +13,7 @@ class SearchScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <MovieSearch navigation={this.props.navigation} />
+        <Search navigation={this.props.navigation} />
       </View>
     );
   }

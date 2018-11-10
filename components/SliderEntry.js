@@ -94,7 +94,7 @@ export default class SliderEntry extends React.Component {
         activeOpacity={0.6}
         style={styles.slideInnerContainer}
         onPress={() => {
-          this.props.navigation.push('Details', this.props.data);
+          this.props.navigation.push('Movie', this.props.data);
         }}
       >
         <View style={styles.shadow} />

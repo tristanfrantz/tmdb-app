@@ -26,10 +26,9 @@ const styles = StyleSheet.create({
   },
 });
 
-class AddWishlistButton extends React.Component {
+class AddWatchlistButton extends React.Component {
   render() {
     const media = this.props.medias.filter(m => m.key === this.props.media.id)[0];
-    const { extraInfo } = this.props;
 
     return (
       <View>
@@ -44,18 +43,12 @@ class AddWishlistButton extends React.Component {
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
-            style={[styles.button, extraInfo.style]}
+            style={[styles.button, styles.removeFromWatchlistBtn]}
             onPress={() => this.props.dispatch(removeFromWatchlist(media.key))}
           >
-            {extraInfo.whatType === 1 ? (
-              <Icon name="check" style={styles.addIcon}>
-                <Text style={styles.text}> REMOVE WATCHLIST</Text>
-              </Icon>
-            ) : (
-              <Icon name="check" style={styles.addIcon}>
-                <Text style={styles.text}> ADDED TO WATCHLIST</Text>
-              </Icon>
-            )}
+            <Icon name="check" style={styles.addIcon}>
+              <Text style={styles.text}> ADDED TO WATCHLIST</Text>
+            </Icon>
           </TouchableOpacity>
         )}
       </View>
@@ -64,4 +57,4 @@ class AddWishlistButton extends React.Component {
 }
 
 const mapStateToProps = state => ({ medias: state.watchlist });
-export default connect(mapStateToProps)(AddWishlistButton);
+export default connect(mapStateToProps)(AddWatchlistButton);

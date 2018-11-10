@@ -3,7 +3,7 @@ import {
   StyleSheet, View, ScrollView, FlatList, Text,
 } from 'react-native';
 import { Bubbles } from 'react-native-loader';
-import SearchListItemSeperator from './SearchListItemSeperator';
+import ListItemSeperator from './ListItemSeperator';
 import CategoryListItem from './CategoryListItem';
 
 const CATEGORY_TYPES = {
@@ -18,6 +18,10 @@ const NUMBER_OF_PAGES = 5;
 const RESULT_COUNT = 20;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
   loading: {
     flex: 1,
     justifyContent: 'center',
@@ -49,7 +53,7 @@ class CategoryList extends React.Component {
     } else if (category === CATEGORY_TYPES.TOP_SERIES) {
       apiCategory = 'tv/top_rated';
     } else if (category === CATEGORY_TYPES.UPCOMING_MOVIES) {
-        apiCategory = 'movie/upcoming';
+      apiCategory = 'movie/upcoming';
     }
 
     try {
@@ -96,11 +100,11 @@ class CategoryList extends React.Component {
     }
 
     return (
-      <ScrollView>
+      <ScrollView style={styles.container}>
         <FlatList
           data={results}
           renderItem={this.renderItem}
-          ItemSeparatorComponent={() => <SearchListItemSeperator />}
+          ItemSeparatorComponent={() => <ListItemSeperator />}
         />
       </ScrollView>
     );

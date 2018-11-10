@@ -5,10 +5,10 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 import { Bubbles } from 'react-native-loader';
-import ImdbRating from './ImdbRating';
-import YourRating from './YourRating';
-import AddWishlistButton from './AddWishlistButton';
-import DetailsPanel from './DetailsPanel';
+import TmdbRating from './TmdbRating';
+import UserRating from './UserRating';
+import AddWatchlistButton from './AddWatchlistButton';
+import CreditsPanel from './CreditsPanel';
 import UsefulImage from './UsefulImage';
 
 const styles = StyleSheet.create({
@@ -123,7 +123,7 @@ class MovieDetails extends React.Component {
       id: movie.id,
       title: movie.title,
       poster: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
-      yourRating: oldRating,
+      UserRating: oldRating,
     };
 
     const genres = movie.genres ? this.getMovieGenres(movie) : 'N/A';
@@ -164,8 +164,8 @@ class MovieDetails extends React.Component {
               </Text>
             </Text>
             <View style={styles.detailsContainer}>
-              <ImdbRating rating={movie.vote_average} votes={movie.vote_count} />
-              <YourRating navigation={navigation} ratingItem={ratingItem} />
+              <TmdbRating rating={movie.vote_average} votes={movie.vote_count} />
+              <UserRating navigation={navigation} ratingItem={ratingItem} />
               <Text style={styles.text}>
                 {'Genres: '}
                 <Text style={styles.shadowText}>{genres}</Text>
@@ -174,7 +174,7 @@ class MovieDetails extends React.Component {
             </View>
           </View>
         </View>
-        <AddWishlistButton
+        <AddWatchlistButton
           media={movie}
           extraInfo={{ whatType: 0, style: { backgroundColor: 'gray' } }}
         />
@@ -189,7 +189,7 @@ class MovieDetails extends React.Component {
             <Icon size={22} name="angle-right" />
           </View>
         </TouchableOpacity>
-        <DetailsPanel navigation={navigation} title="Cast" people={movie.credits.cast} />
+        <CreditsPanel navigation={navigation} title="Cast" people={movie.credits.cast} />
       </ScrollView>
     );
   }
