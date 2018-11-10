@@ -4,7 +4,8 @@ import Carousel from 'react-native-snap-carousel';
 import SliderEntry from './SliderEntry';
 import Loading from './Loading';
 
-const { width: viewportWidth } = Dimensions.get('window');
+const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
+const carouselHeight = viewportHeight * 0.45;
 
 function wp(percentage) {
   const value = (percentage * viewportWidth) / 100;
@@ -17,14 +18,8 @@ const itemWidth = slideWidth;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingBottom: 5,
-    paddingTop: 10,
-  },
-  titleText: {
-    textAlign: 'center',
-    fontSize: 18,
-    color: 'lightgrey',
+    height: carouselHeight,
+    margin: 10,
   },
   loading: {
     flex: 1,
@@ -40,26 +35,23 @@ export default class MediaCarousel extends Component {
 
   render() {
     const { data } = this.props;
-    // Loading
     if (!Array.isArray(data) || !data.length) {
       return <Loading />;
     }
     return (
       <View style={styles.container}>
-        <View style={{ flex: 1 }}>
-          <Carousel
-            ref={c => (this.ref = c)}
-            data={data}
-            renderItem={this.renderItem.bind(this)}
-            sliderWidth={sliderWidth}
-            itemWidth={itemWidth}
-            hasParallaxImages
-            inactiveSlideScale={0.94}
-            inactiveSlideOpacity={0.7}
-            loop
-            loopClonesPerSide={2}
-          />
-        </View>
+        <Carousel
+          ref={c => (this.ref = c)}
+          data={data}
+          renderItem={this.renderItem.bind(this)}
+          sliderWidth={sliderWidth}
+          itemWidth={itemWidth}
+          hasParallaxImages
+          inactiveSlideScale={0.94}
+          inactiveSlideOpacity={0.7}
+          loop
+          loopClonesPerSide={2}
+        />
       </View>
     );
   }

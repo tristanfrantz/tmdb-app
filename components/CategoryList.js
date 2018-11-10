@@ -4,17 +4,18 @@ import Loading from './Loading';
 import Error from './Error';
 import ListItemSeperator from './ListItemSeperator';
 import CategoryListItem from './CategoryListItem';
-
-const CATEGORY_TYPES = {
-  POPULAR_MOVIES: 'Popular Movies',
-  POPULAR_SERIES: 'Popular Series',
-  TOP_MOVIES: 'Top Rated Movies',
-  TOP_SERIES: 'Top Rated Series',
-  UPCOMING_MOVIES: 'Upcoming Movies',
-};
+import Categories from '../constants/Categories';
 
 const NUMBER_OF_PAGES = 5;
 const RESULT_COUNT = 20;
+
+const API_CATEGORIES = {
+  POPULAR_MOVIES: 'movie/popular',
+  POPULAR_SERIES: 'tv/popular',
+  TOP_MOVIES: 'movie/top_rated',
+  TOP_SERIES: 'tv/top_rated',
+  UPCOMING_MOVIES: 'movie/upcoming',
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -39,43 +40,51 @@ class CategoryList extends React.Component {
   }
 
   async componentDidMount() {
-    const category = this.props.navigation.state.params;
-    const apiKey = '698a64988eda32cea2480262c47df2da';
-    let apiCategory = 'movie/popular';
-
-    if (category === CATEGORY_TYPES.POPULAR_MOVIES) {
-      apiCategory = 'movie/popular';
-    } else if (category === CATEGORY_TYPES.POPULAR_SERIES) {
-      apiCategory = 'tv/popular';
-    } else if (category === CATEGORY_TYPES.TOP_MOVIES) {
-      apiCategory = 'movie/top_rated';
-    } else if (category === CATEGORY_TYPES.TOP_SERIES) {
-      apiCategory = 'tv/top_rated';
-    } else if (category === CATEGORY_TYPES.UPCOMING_MOVIES) {
-      apiCategory = 'movie/upcoming';
-    }
-
     try {
-      for (let i = 1; i < NUMBER_OF_PAGES + 1; i++) {
-        const response = await fetch(
-          `https://api.themoviedb.org/3/${apiCategory}?api_key=${apiKey}&language=en-US&page=${i}`,
-        );
-        const json = await response.json();
-        const res = await json.results.map((c, k) => ({
-          ...c,
-          key: `${k + (i - 1) * RESULT_COUNT}`,
-        }));
-
-        const newResults = this.state.results;
-        newResults.push(...res);
-
-        this.setState({ results: newResults });
-      }
+      const results = await this.fetchMedia();
+      this.setState({ results });
     } catch (e) {
       this.setState({ error: true });
     }
     this.setState({ loading: false });
   }
+
+  getApiCategory = () => {
+    const category = this.props.navigation.state.params;
+    let apiCategory = API_CATEGORIES.POPULAR_MOVIES;
+
+    if (category === Categories.POPULAR_MOVIES) {
+      apiCategory = API_CATEGORIES.POPULAR_MOVIES;
+    } else if (category === Categories.POPULAR_SERIES) {
+      apiCategory = API_CATEGORIES.POPULAR_SERIES;
+    } else if (category === Categories.TOP_MOVIES) {
+      apiCategory = API_CATEGORIES.TOP_MOVIES;
+    } else if (category === Categories.TOP_SERIES) {
+      apiCategory = API_CATEGORIES.TOP_SERIES;
+    } else if (category === Categories.UPCOMING_MOVIES) {
+      apiCategory = API_CATEGORIES.UPCOMING_MOVIES;
+    }
+    return apiCategory;
+  };
+
+  fetchMedia = async () => {
+    const apiKey = '698a64988eda32cea2480262c47df2da';
+    const apiCategory = this.getApiCategory();
+    const results = [];
+    /* eslint-disable no-await-in-loop */
+    for (let i = 1; i < NUMBER_OF_PAGES + 1; i += 1) {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/${apiCategory}?api_key=${apiKey}&language=en-US&page=${i}`,
+      );
+      const json = await response.json();
+      const res = await json.results.map((c, k) => ({
+        ...c,
+        key: `${k + (i - 1) * RESULT_COUNT}`,
+      }));
+      results.push(...res);
+    }
+    return results;
+  };
 
   renderItem = ({ item }) => <CategoryListItem media={item} navigation={this.props.navigation} />;
 
