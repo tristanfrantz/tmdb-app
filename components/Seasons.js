@@ -77,7 +77,11 @@ class Seasons extends React.Component {
         `https://api.themoviedb.org/3/tv/${id}/season/${seasonNumber}?api_key=${tmdbApiKey}&language=en-US`
       );
       const json = await response.json();
-      return json.episodes;
+      const results = json.episodes.map((c, i) => ({
+        ...c,
+        key: `${i}`,
+      }));
+      return results;
     } catch (e) {
       console.log('Not found');
     }
@@ -105,7 +109,9 @@ class Seasons extends React.Component {
           <FlatList
             data={item.episodes}
             renderItem={this.renderEpisode}
-            ListEmptyComponent={<Text>No episodes found</Text>}
+            ListEmptyComponent={
+              <Text style={styles.episodeText}>No episodes found</Text>
+            }
           />
         </CollapseBody>
       </Collapse>
@@ -114,8 +120,8 @@ class Seasons extends React.Component {
 
   renderEpisode = ({ item }) => {
     return (
-      <Text style={styles.episodeText} key={item.id}>
-        {item.name}
+      <Text style={styles.episodeText}>
+        {item.episode_number}: {item.name}
       </Text>
     );
   };
