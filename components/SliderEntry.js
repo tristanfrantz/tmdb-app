@@ -56,11 +56,11 @@ export default class SliderEntry extends React.Component {
   };
 
   render() {
-    const { title, backdrop_path } = this.props.data;
+    const { data } = this.props;
 
-    const uppercaseTitle = title ? (
+    const uppercaseTitle = data.title ? (
       <Text style={[styles.title, styles.titleEven]} numberOfLines={2}>
-        {title.toUpperCase()}
+        {data.title.toUpperCase()}
       </Text>
     ) : (
       false
@@ -70,11 +70,11 @@ export default class SliderEntry extends React.Component {
       <TouchableOpacity
         activeOpacity={0.6}
         style={styles.slideInnerContainer}
-        onPress={() => this.onPress(this.props.data)}
+        onPress={() => this.onPress(data)}
       >
         <View style={[styles.imageContainer, styles.imageContainerEven]}>
           <Image
-            source={{ uri: `https://image.tmdb.org/t/p/w500/${backdrop_path}` }}
+            source={{ uri: `https://image.tmdb.org/t/p/w500/${data.backdrop_path}` }}
             style={styles.image}
           />
         </View>
