@@ -31,6 +31,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
+  episodeText: {
+    textAlign: 'center',
+  },
 });
 
 class Seasons extends React.Component {
@@ -45,14 +48,41 @@ class Seasons extends React.Component {
 
   async componentDidMount() {
     try {
-      let s = this.props.navigation.state.params;
-      s = s.map((c, i) => ({ ...c, key: `${i}` }));
-      this.setState({ seasons: s });
+      const tmdbApiKey = '698a64988eda32cea2480262c47df2da';
+      let seasons = this.props.navigation.state.params;
+      seasons = seasons.map((c, i) => ({
+        ...c,
+        key: `${i}`,
+      }));
+      seasons = await Promise.all(
+        seasons.map(async season => {
+          season.episodes = await this.getEpisodes(
+            season.id,
+            season.season_number
+          );
+          return season;
+        })
+      );
+      this.setState({ seasons });
       this.setState({ loading: false });
     } catch (e) {
       this.setState({ error: true });
     }
   }
+
+  getEpisodes = async (id, seasonNumber) => {
+    const tmdbApiKey = '698a64988eda32cea2480262c47df2da';
+    try {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/tv/${id}/season/${seasonNumber}?api_key=${tmdbApiKey}&language=en-US`
+      );
+      const json = await response.json();
+      return json.episodes;
+    } catch (e) {
+      console.log('Not found');
+    }
+    return [];
+  };
 
   renderItem = ({ item }) => {
     return (
@@ -72,9 +102,21 @@ class Seasons extends React.Component {
           </View>
         </CollapseHeader>
         <CollapseBody>
-          <Text>Episodes</Text>
+          <FlatList
+            data={item.episodes}
+            renderItem={this.renderEpisode}
+            ListEmptyComponent={<Text>No episodes found</Text>}
+          />
         </CollapseBody>
       </Collapse>
+    );
+  };
+
+  renderEpisode = ({ item }) => {
+    return (
+      <Text style={styles.episodeText} key={item.id}>
+        {item.name}
+      </Text>
     );
   };
 
@@ -98,7 +140,6 @@ class Seasons extends React.Component {
       );
     }
 
-    console.log(seasons);
     return (
       <View style={styles.container}>
         <FlatList data={seasons} renderItem={this.renderItem} />
