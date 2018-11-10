@@ -32,12 +32,12 @@ const styles = StyleSheet.create({
 
 class SeasonsButton extends React.Component {
   render() {
-    const { navigation, seasons } = this.props;
+    const { navigation, seasonsDetails } = this.props;
     return (
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          navigation.push('Seasons', seasons);
+          navigation.push('Seasons', seasonsDetails);
         }}
       >
         <Text style={styles.text}>Seasons</Text>

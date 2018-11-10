@@ -39,7 +39,7 @@ class TmdbRating extends React.Component {
       <View style={styles.container}>
         <Image style={styles.tmdbLogo} source={tmdbLogoPath} />
         <View>
-          {rating !== 0 ? (
+          {rating !== 0 && rating !== 0.0 && rating !== undefined ? (
             <View style={styles.ratingContainer}>
               <Text style={styles.ratingText}>{rating}</Text>
               <Text style={styles.votesText}>{`/10 | ${votes}`}</Text>

@@ -15,7 +15,6 @@ const watchlist = (state = initialState, action) => {
       return {
         ...state,
         watchlist: [
-          ...state.watchlist,
           {
             details: {
               id: action.payload.media.id,
@@ -28,6 +27,7 @@ const watchlist = (state = initialState, action) => {
             },
             key: action.payload.media.id,
           },
+          ...state.watchlist,
         ],
       };
     case 'REMOVE_FROM_WATCHLIST':

@@ -1,10 +1,6 @@
 import React from 'react';
 import {
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-  View,
-  Text,
+  StyleSheet, TouchableOpacity, ScrollView, View, Text,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
@@ -16,6 +12,7 @@ import AddWatchlistButton from './AddWatchlistButton';
 import CreditsPanel from './CreditsPanel';
 import SeasonsButton from './SeasonsButton';
 import UsefulImage from './UsefulImage';
+import PlotContainer from './PlotContainer';
 
 const styles = StyleSheet.create({
   container: {
@@ -91,7 +88,7 @@ class SeriesDetails extends React.Component {
     const apiKey = '698a64988eda32cea2480262c47df2da';
     try {
       const response = await fetch(
-        `https://api.themoviedb.org/3/tv/${id}?api_key=${apiKey}&language=en-US&append_to_response=credits`
+        `https://api.themoviedb.org/3/tv/${id}?api_key=${apiKey}&language=en-US&append_to_response=credits`,
       );
       const json = await response.json();
       this.setState({ series: json });
@@ -101,7 +98,7 @@ class SeriesDetails extends React.Component {
     }
   }
 
-  getGenres = series => {
+  getGenres = (series) => {
     const genreString = series.genres.reduce((acc, genre) => {
       const { name } = genre;
       if (name) {
@@ -122,8 +119,7 @@ class SeriesDetails extends React.Component {
     if (!this.props.ratedMedia.filter(m => m.key === series.id)[0]) {
       oldRating = 0;
     } else {
-      oldRating = this.props.ratedMedia.filter(m => m.key === series.id)[0]
-        .rating;
+      oldRating = this.props.ratedMedia.filter(m => m.key === series.id)[0].rating;
     }
     const ratingItem = {
       id: series.id,
@@ -143,22 +139,13 @@ class SeriesDetails extends React.Component {
     }
 
     return (
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}
-      >
+      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <View style={styles.movieContainer}>
-          <UsefulImage
-            passedStyle={styles.poster}
-            imgPath={series.poster_path}
-          />
+          <UsefulImage passedStyle={styles.poster} imgPath={series.poster_path} />
           <View style={styles.titleContainer}>
             <Text style={styles.titleText}>{series.name}</Text>
             <View style={styles.detailsContainer}>
-              <TmdbRating
-                rating={series.vote_average}
-                votes={series.vote_count}
-              />
+              <TmdbRating rating={series.vote_average} votes={series.vote_count} />
               <UserRating navigation={navigation} ratingItem={ratingItem} />
               <Text style={styles.text}>
                 {'Genres: '}
@@ -171,23 +158,9 @@ class SeriesDetails extends React.Component {
           media={series}
           extraInfo={{ whatType: 0, style: { backgroundColor: 'gray' } }}
         />
-        <SeasonsButton navigation={navigation} seasons={series.seasons} />
-        <TouchableOpacity
-          style={styles.plotContainer}
-          onPress={() => navigation.push('Plot', series)}
-        >
-          <View style={styles.plotTextContainer}>
-            <Text numberOfLines={4}>{series.overview}</Text>
-          </View>
-          <View style={styles.plotArrow}>
-            <Icon size={22} name="angle-right" />
-          </View>
-        </TouchableOpacity>
-        <CreditsPanel
-          navigation={navigation}
-          title="Cast"
-          people={series.credits.cast}
-        />
+        <SeasonsButton navigation={navigation} seasonsDetails={series} />
+        <PlotContainer navigation={navigation} item={series} />
+        <CreditsPanel navigation={navigation} title="Cast" people={series.credits.cast} />
       </ScrollView>
     );
   }

@@ -195,20 +195,6 @@ const WatchlistStack = createStackNavigator({
       }),
     },
   },
-  Search: {
-    screen: SearchScreen,
-    navigationOptions: () => ({
-      header: null,
-      headerTitleStyle: {
-        ...Platform.select({
-          android: {
-            marginLeft: 'auto',
-            marginRight: 'auto',
-          },
-        }),
-      },
-    }),
-  },
   Movie: {
     screen: MovieScreen,
     navigationOptions: () => ({

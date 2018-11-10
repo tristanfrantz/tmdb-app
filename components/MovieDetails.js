@@ -1,8 +1,7 @@
 import React from 'react';
 import {
-  StyleSheet, TouchableOpacity, ScrollView, View, Text,
+  StyleSheet, ScrollView, View, Text,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 import Loading from './Loading';
 import Error from './Error';
@@ -11,6 +10,7 @@ import UserRating from './UserRating';
 import AddWatchlistButton from './AddWatchlistButton';
 import CreditsPanel from './CreditsPanel';
 import UsefulImage from './UsefulImage';
+import PlotContainer from './PlotContainer';
 
 const styles = StyleSheet.create({
   container: {
@@ -23,18 +23,6 @@ const styles = StyleSheet.create({
   movieContainer: {
     flexDirection: 'row',
     paddingBottom: 8,
-  },
-  plotContainer: {
-    paddingTop: 10,
-    flexDirection: 'row',
-  },
-  plotTextContainer: {
-    flex: 8,
-  },
-  plotArrow: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   poster: {
     height: 240,
@@ -171,17 +159,7 @@ class MovieDetails extends React.Component {
           media={movie}
           extraInfo={{ whatType: 0, style: { backgroundColor: 'gray' } }}
         />
-        <TouchableOpacity
-          style={styles.plotContainer}
-          onPress={() => navigation.push('Plot', movie)}
-        >
-          <View style={styles.plotTextContainer}>
-            <Text numberOfLines={4}>{movie.overview}</Text>
-          </View>
-          <View style={styles.plotArrow}>
-            <Icon size={22} name="angle-right" />
-          </View>
-        </TouchableOpacity>
+        <PlotContainer navigation={navigation} item={movie} />
         <CreditsPanel navigation={navigation} title="Cast" people={movie.credits.cast} />
       </ScrollView>
     );

@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 10,
     backgroundColor: '#bc142a',
+    justifyContent: 'center',
   },
   icon: {
     fontSize: 16,

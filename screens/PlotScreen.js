@@ -58,7 +58,12 @@ export default class PlotScreen extends React.Component {
 
   async componentDidMount() {
     const tmdbApiKey = '698a64988eda32cea2480262c47df2da';
-    const { id, title } = this.props.navigation.state.params;
+    const { id, title, season_number } = this.props.navigation.state.params;
+
+    if (season_number) {
+      this.setState({ item: this.props.navigation.state.params, loading: false });
+      return;
+    }
     const type = title ? MEDIA_TYPES.MOVIE : MEDIA_TYPES.SERIES;
 
     try {
@@ -66,8 +71,7 @@ export default class PlotScreen extends React.Component {
         `https://api.themoviedb.org/3/${type}/${id}?api_key=${tmdbApiKey}&language=en-US`,
       );
       const json = await response.json();
-      this.setState({ item: json });
-      this.setState({ loading: false });
+      this.setState({ item: json, loading: false });
     } catch (e) {
       this.setState({ error: true });
     }
