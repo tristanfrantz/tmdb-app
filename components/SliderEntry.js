@@ -12,19 +12,13 @@ const wp = (percentage) => {
 const itemHorizontalMargin = wp(0.5);
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    borderRadius: 75,
+  },
   slideInnerContainer: {
     flex: 1,
     paddingHorizontal: itemHorizontalMargin,
-  },
-  shadow: {
-    position: 'absolute',
-    top: 0,
-    left: itemHorizontalMargin,
-    right: itemHorizontalMargin,
-    bottom: 18,
-    shadowColor: '#1a1917',
-    shadowOpacity: 0.25,
-    shadowOffset: { width: 0, height: 10 },
   },
   imageContainer: {
     flex: 1,
@@ -57,6 +51,10 @@ const styles = StyleSheet.create({
 });
 
 export default class SliderEntry extends React.Component {
+  onPress = (media) => {
+    this.props.navigation.push('Movie', media);
+  };
+
   render() {
     const { title, backdrop_path } = this.props.data;
 
@@ -72,11 +70,8 @@ export default class SliderEntry extends React.Component {
       <TouchableOpacity
         activeOpacity={0.6}
         style={styles.slideInnerContainer}
-        onPress={() => {
-          this.props.navigation.push('Movie', this.props.data);
-        }}
+        onPress={() => this.onPress(this.props.data)}
       >
-        <View style={styles.shadow} />
         <View style={[styles.imageContainer, styles.imageContainerEven]}>
           <Image
             source={{ uri: `https://image.tmdb.org/t/p/w500/${backdrop_path}` }}
