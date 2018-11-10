@@ -6,33 +6,39 @@ import {
   CollapseHeader,
   CollapseBody,
 } from 'accordion-collapse-react-native';
-import { Col } from 'native-base';
+import SearchListItemSeperator from './SearchListItemSeperator';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
   },
   listItemContainer: {
     flex: 1,
     flexDirection: 'row',
-    padding: 5,
-    margin: 5,
+    paddingVertical: 10,
+    paddingLeft: 10,
   },
   poster: {
-    height: 100,
+    height: 150,
     width: 100,
     marginRight: 5,
   },
   textContainer: {
     flexDirection: 'column',
+    paddingLeft: 8,
   },
   textTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: '600',
+    fontSize: 18,
   },
   episodeText: {
     textAlign: 'center',
+    fontSize: 16,
+  },
+  loading: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
@@ -48,7 +54,6 @@ class Seasons extends React.Component {
 
   async componentDidMount() {
     try {
-      const tmdbApiKey = '698a64988eda32cea2480262c47df2da';
       let seasons = this.props.navigation.state.params;
       seasons = seasons.map((c, i) => ({
         ...c,
@@ -83,9 +88,8 @@ class Seasons extends React.Component {
       }));
       return results;
     } catch (e) {
-      console.log('Not found');
+      return [];
     }
-    return [];
   };
 
   renderItem = ({ item }) => {
@@ -148,7 +152,11 @@ class Seasons extends React.Component {
 
     return (
       <View style={styles.container}>
-        <FlatList data={seasons} renderItem={this.renderItem} />
+        <FlatList
+          ItemSeparatorComponent={() => <SearchListItemSeperator />}
+          data={seasons}
+          renderItem={this.renderItem}
+        />
       </View>
     );
   }
