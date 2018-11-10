@@ -52,7 +52,7 @@ class CategoryList extends React.Component {
   getApiCategory = () => {
     const category = this.props.navigation.state.params;
     let apiCategory = API_CATEGORIES.POPULAR_MOVIES;
-
+    console.log(category);
     if (category === Categories.POPULAR_MOVIES) {
       apiCategory = API_CATEGORIES.POPULAR_MOVIES;
     } else if (category === Categories.POPULAR_SERIES) {
@@ -64,6 +64,8 @@ class CategoryList extends React.Component {
     } else if (category === Categories.UPCOMING_MOVIES) {
       apiCategory = API_CATEGORIES.UPCOMING_MOVIES;
     }
+    console.log(apiCategory);
+
     return apiCategory;
   };
 

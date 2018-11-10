@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
 
 class CategoryTiles extends React.Component {
   onPress = (category) => {
-    this.props.navigation.navigate({ key: 'cat', routeName: 'Category', category });
+    this.props.navigation.navigate({ key: 'cat', routeName: 'Category', params: category });
   };
 
   render() {
