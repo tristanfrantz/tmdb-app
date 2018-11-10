@@ -5,7 +5,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Loading from './Loading';
 import Error from './Error';
-import ProfileCreditsPanel from './ProfilePanel';
+import ProfilePanel from './ProfilePanel';
 import UsefulImage from './UsefulImage';
 
 const styles = StyleSheet.create({
@@ -97,7 +97,6 @@ class PersonDetails extends React.Component {
     const { actor, loading, error } = this.state;
     const { navigation } = this.props;
 
-
     if (error) {
       return <Error message="The person could not be found." />;
     }
@@ -149,11 +148,14 @@ class PersonDetails extends React.Component {
             </View>
           </TouchableOpacity>
 
-          <ProfileCreditsPanel
-            navigation={navigation}
-            title="Known for"
-            credits={actor.combined_credits.cast}
-          />
+          {actor.combined_credits
+            && actor.combined_credits.cast && (
+              <ProfilePanel
+                navigation={navigation}
+                title="Known for"
+                credits={actor.combined_credits.cast}
+              />
+          )}
         </View>
       </ScrollView>
     );

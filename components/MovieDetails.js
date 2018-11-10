@@ -160,7 +160,9 @@ class MovieDetails extends React.Component {
           extraInfo={{ whatType: 0, style: { backgroundColor: 'gray' } }}
         />
         <PlotContainer navigation={navigation} item={movie} />
-        <CreditsPanel navigation={navigation} title="Cast" people={movie.credits.cast} />
+        {movie.credits && movie.credits.cast && (
+          <CreditsPanel navigation={navigation} title="Cast" people={movie.credits.cast} />
+        )}
       </ScrollView>
     );
   }
