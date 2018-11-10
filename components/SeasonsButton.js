@@ -37,7 +37,7 @@ class SeasonsButton extends React.Component {
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          navigation.push('Seasons', seasonsDetails);
+          navigation.navigate('Seasons', seasonsDetails);
         }}
       >
         <Text style={styles.text}>Seasons</Text>

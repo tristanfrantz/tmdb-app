@@ -53,21 +53,19 @@ class SearchListItem extends Component {
   }
 
   onSeriesPress = (item) => {
-    this.props.navigation.push('Series', item);
+    this.props.navigation.navigate('Series', item);
     this.props.dispatch(addRecentSearch(item.name));
   };
 
   onPersonPress = (item) => {
-    this.props.navigation.push('Profile', item);
+    this.props.navigation.navigate('Profile', item);
     this.props.dispatch(addRecentSearch(item.name));
   };
 
   onMoviePress = (item) => {
-    this.props.navigation.push('Movie', item);
+    this.props.navigation.navigate('Movie', item);
     this.props.dispatch(addRecentSearch(item.title));
   };
-
-  renderRandomImage = () => <Image style={styles.poster} source={{ uri: '../../bragi' }} />;
 
   renderItem = ({ item }) => <SearchListItem item={item} navigation={this.props.navigation} />;
 

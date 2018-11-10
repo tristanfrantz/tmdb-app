@@ -43,9 +43,9 @@ class CategoryListItem extends Component {
 
   onPress = (media) => {
     if (media.title) {
-      this.props.navigation.push('Movie', media);
+      this.props.navigation.navigate('Movie', media);
     } else {
-      this.props.navigation.push('Series', media);
+      this.props.navigation.navigate('Series', media);
     }
   };
 

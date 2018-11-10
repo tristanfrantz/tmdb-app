@@ -69,7 +69,7 @@ class MovieDetails extends React.Component {
     };
   }
 
-  async componentDidMount() {
+  async componentWillMount() {
     const { id } = this.props.navigation.state.params;
     const apiKey = '698a64988eda32cea2480262c47df2da';
 
@@ -79,10 +79,13 @@ class MovieDetails extends React.Component {
       );
       const json = await response.json();
       this.setState({ movie: json });
-      this.setState({ loading: false });
     } catch (e) {
       this.setState({ error: true });
     }
+  }
+
+  componentDidMount() {
+    this.setState({ loading: false });
   }
 
   getMovieGenres = (movie) => {
@@ -103,13 +106,13 @@ class MovieDetails extends React.Component {
     const { movie, loading, error } = this.state;
     const { navigation } = this.props;
     let oldRating = 0;
-    if (!this.props.ratedMedia.filter(m => m.key === movie.id)[0]) {
+    if (!this.props.ratedMedia.filter(m => m.key === `movie${movie.id}`)[0]) {
       oldRating = 0;
     } else {
-      oldRating = this.props.ratedMedia.filter(m => m.key === movie.id)[0].rating;
+      oldRating = this.props.ratedMedia.filter(m => m.key === `movie${movie.id}`)[0].rating;
     }
     const ratingItem = {
-      id: movie.id,
+      id: `movie${movie.id}`,
       title: movie.title,
       poster: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
       UserRating: oldRating,

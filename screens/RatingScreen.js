@@ -41,13 +41,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  counter: {
+  counterText: {
     fontSize: 130,
     textAlignVertical: 'center',
     color: '#3d5f99',
   },
   title: {
-    margin: '5%',
+    margin: '3%',
     fontSize: 25,
     textAlign: 'center',
   },
@@ -85,11 +85,12 @@ class RatingScreen extends React.Component {
     if (starCount === 0) {
       return;
     }
-    const { UserRating } = this.props.navigation.state.params.ratingItem;
+    const { ratingItem } = this.props.navigation.state.params;
+    console.log(this.props);
 
-    if (UserRating === 0) {
+    if (ratingItem.UserRating === 0) {
       this.props.dispatch(addRating(starCount, id));
-    } else if (starCount !== UserRating && UserRating !== 0) {
+    } else if (starCount !== ratingItem.UserRating && ratingItem.UserRating !== 0) {
       this.props.dispatch(updateRating(starCount, id));
     }
     const popAction = StackActions.pop({ n: 1 });
@@ -116,7 +117,7 @@ class RatingScreen extends React.Component {
           <Image style={styles.poster} source={{ uri: ratingItem.poster }} />
         ) : (
           <View style={styles.poster}>
-            <Text style={styles.counter}>{this.state.starCount}</Text>
+            <Text style={styles.counterText}>{this.state.starCount}</Text>
           </View>
         )}
         <Text style={styles.title}>{`How would you rate ${ratingItem.title}?`}</Text>

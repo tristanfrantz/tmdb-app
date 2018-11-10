@@ -139,7 +139,7 @@ class PersonDetails extends React.Component {
 
           <TouchableOpacity
             style={styles.plotContainer}
-            onPress={() => navigation.push('Biography', actor)}
+            onPress={() => navigation.navigate('Biography', actor)}
           >
             <View style={styles.plotTextContainer}>
               <Text numberOfLines={4}>{actor.biography}</Text>

@@ -27,7 +27,7 @@ class PlotContainer extends React.Component {
         {item.overview ? (
           <TouchableOpacity
             style={styles.plotContainer}
-            onPress={() => navigation.push('Plot', item)}
+            onPress={() => navigation.navigate('Plot', item)}
           >
             <View style={styles.plotTextContainer}>
               <Text numberOfLines={4}>{item.overview}</Text>

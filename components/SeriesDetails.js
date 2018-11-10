@@ -116,13 +116,13 @@ class SeriesDetails extends React.Component {
     const { series, loading, error } = this.state;
     const { navigation } = this.props;
     let oldRating = 0;
-    if (!this.props.ratedMedia.filter(m => m.key === series.id)[0]) {
+    if (!this.props.ratedMedia.filter(m => m.key === `tv${series.id}`)[0]) {
       oldRating = 0;
     } else {
-      oldRating = this.props.ratedMedia.filter(m => m.key === series.id)[0].rating;
+      oldRating = this.props.ratedMedia.filter(m => m.key === `tv${series.id}`)[0].rating;
     }
     const ratingItem = {
-      id: series.id,
+      id: `tv${series.id}`,
       title: series.name,
       poster: `https://image.tmdb.org/t/p/w500/${series.poster_path}`,
       UserRating: oldRating,

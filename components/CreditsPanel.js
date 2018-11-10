@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
 
 class CreditsPanel extends React.Component {
   onPress = (item) => {
-    this.props.navigation.push('Profile', item);
+    this.props.navigation.navigate('Profile', item);
   };
 
   renderItem = ({ item }) => (

@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
 
 class ProfilePanel extends React.Component {
   onPress = (item) => {
-    this.props.navigation.push('Movie', item);
+    this.props.navigation.navigate('Movie', item);
   };
 
   renderItem = ({ item }) => (
