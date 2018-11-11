@@ -133,7 +133,7 @@ class Search extends React.Component {
           placeholder="Search movies, series or actors..."
           clearButtonMode="while-editing"
           onSubmitEditing={() => {
-            this.props.dispatch(addRecentSearch(input));
+            if (input !== '') this.props.dispatch(addRecentSearch(input));
           }}
           {...Platform.select({
             android: {
