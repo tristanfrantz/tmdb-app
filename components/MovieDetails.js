@@ -69,7 +69,7 @@ class MovieDetails extends React.Component {
     };
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     const { id } = this.props.navigation.state.params;
     const apiKey = '698a64988eda32cea2480262c47df2da';
 
@@ -78,15 +78,15 @@ class MovieDetails extends React.Component {
         `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-US&append_to_response=credits`,
       );
       const json = await response.json();
-      this.setState({ movie: json });
+      this.setState({ movie: json, loading: false });
     } catch (e) {
       this.setState({ error: true });
     }
   }
 
-  componentDidMount() {
-    this.setState({ loading: false });
-  }
+  // componentDidMount() {
+  //   this.setState({ loading: false });
+  // }
 
   getMovieGenres = (movie) => {
     const genreString = movie.genres.reduce((acc, genre) => {
@@ -163,7 +163,10 @@ class MovieDetails extends React.Component {
           extraInfo={{ whatType: 0, style: { backgroundColor: 'gray' } }}
         />
         <PlotContainer navigation={navigation} item={movie} />
-        <CreditsPanel navigation={navigation} title="Cast" people={movie.credits.cast} />
+        {movie.credits
+          && movie.credits.cast && (
+            <CreditsPanel navigation={navigation} title="Cast" people={movie.credits.cast} />
+        )}
       </ScrollView>
     );
   }

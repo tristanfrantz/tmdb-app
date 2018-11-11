@@ -73,7 +73,7 @@ class Search extends React.Component {
   }
 
   onPress = (item) => {
-    this.props.navigation.navigate('Movie', item);
+    this.props.navigation.navigate({ key: `movie${item.id}`, routeName: 'Movie', params: item });
   };
 
   onChangeText = (input) => {
@@ -141,9 +141,7 @@ class Search extends React.Component {
             },
           })}
         />
-        {error && (
-          <Error message="No results." />
-        )}
+        {error && <Error message="No results." />}
         {recentSearch.length > 0
           && input.length === 0 && (
             <View>
@@ -173,9 +171,7 @@ class Search extends React.Component {
             />
           </ScrollView>
         )}
-        {loading && (
-          <Loading />
-        )}
+        {loading && <Loading />}
       </View>
     );
   }

@@ -160,7 +160,10 @@ class SeriesDetails extends React.Component {
         />
         <SeasonsButton navigation={navigation} seasonsDetails={series} />
         <PlotContainer navigation={navigation} item={series} />
-        <CreditsPanel navigation={navigation} title="Cast" people={series.credits.cast} />
+        {series.credits
+          && series.credits.cast && (
+            <CreditsPanel navigation={navigation} title="Cast" people={series.credits.cast} />
+        )}
       </ScrollView>
     );
   }

@@ -46,12 +46,21 @@ const styles = StyleSheet.create({
 });
 
 class ProfilePanel extends React.Component {
-  onPress = (item) => {
-    this.props.navigation.navigate('Movie', item);
+  onSeriesPress = (item) => {
+    this.props.navigation.navigate({ key: `tv${item.id}`, routeName: 'Series', params: item });
+  };
+
+  onMoviePress = (item) => {
+    this.props.navigation.navigate({ key: `movie${item.id}`, routeName: 'Movie', params: item });
   };
 
   renderItem = ({ item }) => (
-    <TouchableOpacity style={styles.mediaContainer} onPress={() => this.onPress(item)}>
+    <TouchableOpacity
+      style={styles.mediaContainer}
+      onPress={() => {
+        item.title ? this.onMoviePress(item) : this.onSeriesPress(item);
+      }}
+    >
       <UsefulImage passedStyle={styles.mediaImage} imgPath={item.poster_path} />
       <Text style={styles.movieTitleText}>{item.title ? item.title : item.name}</Text>
       <Text style={styles.dateText}>

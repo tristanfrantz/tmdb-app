@@ -53,17 +53,21 @@ class SearchListItem extends Component {
   }
 
   onSeriesPress = (item) => {
-    this.props.navigation.navigate('Series', item);
+    this.props.navigation.navigate({ key: `tv${item.id}`, routeName: 'Series', params: item });
     this.props.dispatch(addRecentSearch(item.name));
   };
 
   onPersonPress = (item) => {
-    this.props.navigation.navigate('Profile', item);
+    this.props.navigation.navigate({
+      key: `profile${item.id}${item.credit_id}`,
+      routeName: 'Profile',
+      params: item,
+    });
     this.props.dispatch(addRecentSearch(item.name));
   };
 
   onMoviePress = (item) => {
-    this.props.navigation.navigate('Movie', item);
+    this.props.navigation.navigate({ key: `movie${item.id}`, routeName: 'Movie', params: item });
     this.props.dispatch(addRecentSearch(item.title));
   };
 

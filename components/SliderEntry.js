@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
 
 export default class SliderEntry extends React.Component {
   onPress = (media) => {
-    this.props.navigation.navigate('Movie', media);
+    this.props.navigation.navigate({ key: `movie${media.id}`, routeName: 'Movie', params: media });
   };
 
   render() {

@@ -54,10 +54,14 @@ class WatchlistItem extends Component {
 
   onPress = (media) => {
     if (media.type === 'movie') {
-      this.props.navigation.navigate('Movie', media);
+      this.props.navigation.navigate({
+        key: `movie${media.id}`,
+        routeName: 'Movie',
+        params: media,
+      });
     }
     if (media.type === 'tv') {
-      this.props.navigation.navigate('Series', media);
+      this.props.navigation.navigate({ key: `tv${media.id}`, routeName: 'Series', params: media });
     }
   };
 
