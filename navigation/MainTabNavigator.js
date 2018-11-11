@@ -185,15 +185,15 @@ const WatchlistStack = createStackNavigator({
     screen: WatchlistScreen,
     navigationOptions: () => ({
       title: 'Watchlist',
+      headerTitleStyle: {
+        ...Platform.select({
+          android: {
+            marginLeft: 'auto',
+            marginRight: 'auto',
+          },
+        }),
+      },
     }),
-    headerTitleStyle: {
-      ...Platform.select({
-        android: {
-          marginLeft: 'auto',
-          marginRight: 'auto',
-        },
-      }),
-    },
   },
   Movie: {
     screen: MovieScreen,

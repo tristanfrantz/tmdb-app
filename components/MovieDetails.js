@@ -84,10 +84,6 @@ class MovieDetails extends React.Component {
     }
   }
 
-  // componentDidMount() {
-  //   this.setState({ loading: false });
-  // }
-
   getMovieGenres = (movie) => {
     const genreString = movie.genres.reduce((acc, genre) => {
       const { name } = genre;
@@ -129,7 +125,7 @@ class MovieDetails extends React.Component {
     }
     let runTime = movie.runtime;
     if (runTime > 60) {
-      runTime = `Runtime ${Math.floor(runTime / 60)} h ${runTime % 60}min`;
+      runTime = `Runtime ${Math.floor(runTime / 60)}h ${runTime % 60}min`;
     } else if (runTime) {
       runTime = `Runtime ${runTime % 60}min`;
     } else {
