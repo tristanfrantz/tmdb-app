@@ -22,15 +22,15 @@ export default class App extends React.Component {
     isLoadingComplete: false,
   };
 
-  _handleLoadingError = (error) => {
+  handleLoadingError = (error) => {
     console.warn(error);
   };
 
-  _handleFinishLoading = () => {
+  handleFinishLoading = () => {
     this.setState({ isLoadingComplete: true });
   };
 
-  _loadResourcesAsync = async () => Promise.all([
+  loadResourcesAsync = async () => Promise.all([
     Asset.loadAsync([
       require('./assets/images/missing-image.png'),
       require('./assets/images/tmdb-logo.png'),
@@ -44,9 +44,9 @@ export default class App extends React.Component {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
         <AppLoading
-          startAsync={this._loadResourcesAsync}
-          onError={this._handleLoadingError}
-          onFinish={this._handleFinishLoading}
+          startAsync={this.loadResourcesAsync}
+          onError={this.handleLoadingError}
+          onFinish={this.handleFinishLoading}
         />
       );
     }

@@ -1,13 +1,13 @@
 import React from 'react';
 import { StyleSheet, ScrollView, FlatList } from 'react-native';
-import Loading from './Loading';
-import Error from './Error';
-import ListItemSeperator from './ListItemSeperator';
+import Loading from '../Loading';
+import Error from '../Error';
+import ListItemSeperator from '../ListItemSeperator';
 import CategoryListItem from './CategoryListItem';
-import Categories from '../constants/Categories';
+import Categories from '../../constants/Categories';
 
-const NUMBER_OF_PAGES = 5;
-const RESULT_COUNT = 20;
+const NUMBER_OF_PAGES = 5; // Number of pages that will be fetched
+const RESULT_COUNT = 20; // How many results in each page
 
 const API_CATEGORIES = {
   POPULAR_MOVIES: 'movie/popular',
@@ -52,7 +52,7 @@ class CategoryList extends React.Component {
   getApiCategory = () => {
     const category = this.props.navigation.state.params;
     let apiCategory = API_CATEGORIES.POPULAR_MOVIES;
-    console.log(category);
+
     if (category === Categories.POPULAR_MOVIES) {
       apiCategory = API_CATEGORIES.POPULAR_MOVIES;
     } else if (category === Categories.POPULAR_SERIES) {
@@ -64,7 +64,6 @@ class CategoryList extends React.Component {
     } else if (category === Categories.UPCOMING_MOVIES) {
       apiCategory = API_CATEGORIES.UPCOMING_MOVIES;
     }
-    console.log(apiCategory);
 
     return apiCategory;
   };

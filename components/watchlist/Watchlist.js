@@ -2,7 +2,8 @@ import React from 'react';
 import { ScrollView, FlatList, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import WatchlistItem from './WatchlistItem';
-import ListItemSeperator from './ListItemSeperator';
+import ListItemSeperator from '../ListItemSeperator';
+import Error from '../Error';
 
 const styles = StyleSheet.create({
   container: {
@@ -23,6 +24,7 @@ class Watchlist extends React.Component {
           )}
           keyExtractor={item => `${item.details.id}`}
           ItemSeparatorComponent={() => <ListItemSeperator />}
+          ListEmptyComponent={() => <Error message="Your watchlist is empty. That's lame." />}
         />
       </ScrollView>
     );

@@ -5,6 +5,9 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   plotContainer: {
     paddingTop: 10,
     flexDirection: 'row',
@@ -23,7 +26,7 @@ class PlotContainer extends React.Component {
   render() {
     const { navigation, item } = this.props;
     return (
-      <View style={{ flex: 1 }}>
+      <View style={styles.container}>
         {item.overview ? (
           <TouchableOpacity
             style={styles.plotContainer}
@@ -37,7 +40,7 @@ class PlotContainer extends React.Component {
             </View>
           </TouchableOpacity>
         ) : (
-          <Text />
+          <View />
         )}
       </View>
     );

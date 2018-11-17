@@ -1,5 +1,5 @@
 import React from 'react';
-import Watchlist from '../components/Watchlist';
+import Watchlist from '../components/watchlist/Watchlist';
 
 class WatchlistScreen extends React.Component {
   render() {

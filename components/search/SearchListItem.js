@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet, View, Text, TouchableOpacity, Image,
+  StyleSheet, View, Text, TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { addRecentSearch } from '../store/actions/media';
-import UsefulImage from './UsefulImage';
+import { addRecentSearch } from '../../store/actions/media';
+import UsefulImage from '../UsefulImage';
 
 const MEDIA_TYPES = {
   MOVIE: 'movie',
@@ -71,8 +71,6 @@ class SearchListItem extends Component {
     this.props.dispatch(addRecentSearch(item.title));
   };
 
-  renderItem = ({ item }) => <SearchListItem item={item} navigation={this.props.navigation} />;
-
   render() {
     const { item } = this.props;
     if (item.media_type === MEDIA_TYPES.MOVIE) {
@@ -99,7 +97,7 @@ class SearchListItem extends Component {
         </TouchableOpacity>
       );
     }
-    // else (item.media_type === MEDIA_TYPES.PERSON) {
+    // else item.media_type === MEDIA_TYPES.PERSON
     return (
       <TouchableOpacity style={styles.container} onPress={() => this.onPersonPress(item)}>
         <UsefulImage passedStyle={styles.poster} imgPath={item.profile_path} />

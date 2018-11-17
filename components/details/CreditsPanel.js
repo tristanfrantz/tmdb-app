@@ -2,7 +2,7 @@ import React from 'react';
 import {
   StyleSheet, View, TouchableOpacity, Text, FlatList, ScrollView,
 } from 'react-native';
-import UsefulImage from './UsefulImage';
+import UsefulImage from '../UsefulImage';
 
 const styles = StyleSheet.create({
   container: {

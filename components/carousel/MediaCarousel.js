@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import SliderEntry from './SliderEntry';
-import Loading from './Loading';
+import Loading from '../Loading';
 
 const { width: viewportWidth } = Dimensions.get('window');
 

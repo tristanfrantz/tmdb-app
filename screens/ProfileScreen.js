@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Platform } from 'react-native';
-import PersonDetails from '../components/PersonDetails';
+import PersonDetails from '../components/details/person/PersonDetails';
 
 const styles = StyleSheet.create({
   container: {

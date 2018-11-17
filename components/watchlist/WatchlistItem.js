@@ -3,8 +3,8 @@ import {
   StyleSheet, View, Text, TouchableOpacity,
 } from 'react-native';
 import RemoveWatchlistButton from './RemoveWatchlistButton';
-import UsefulImage from './UsefulImage';
-import TmdbRating from './TmdbRating';
+import UsefulImage from '../UsefulImage';
+import TmdbRating from '../TmdbRating';
 
 const styles = StyleSheet.create({
   container: {

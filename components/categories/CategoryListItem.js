@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import {
   StyleSheet, View, Text, TouchableOpacity,
 } from 'react-native';
-import TmdbRating from './TmdbRating';
-import UsefulImage from './UsefulImage';
+import TmdbRating from '../TmdbRating';
+import UsefulImage from '../UsefulImage';
 
 const styles = StyleSheet.create({
   container: {

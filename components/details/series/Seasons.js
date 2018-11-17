@@ -1,13 +1,9 @@
 import React from 'react';
-import {
-  StyleSheet, View, Text, FlatList, Image,
-} from 'react-native';
-import { Collapse, CollapseHeader, CollapseBody } from 'accordion-collapse-react-native';
-import Loading from './Loading';
-import Error from './Error';
-import ListItemSeperator from './ListItemSeperator';
-import PlotContainer from './PlotContainer';
-import EpisodeListItem from './EpisodeListItem';
+import { StyleSheet, View, FlatList } from 'react-native';
+import Loading from '../../Loading';
+import Error from '../../Error';
+import ListItemSeperator from '../../ListItemSeperator';
+import SeasonsItem from './SeasonsItem';
 
 const styles = StyleSheet.create({
   container: {
@@ -36,11 +32,6 @@ const styles = StyleSheet.create({
   episodeText: {
     textAlign: 'center',
     fontSize: 16,
-  },
-  loading: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });
 
@@ -91,49 +82,13 @@ class Seasons extends React.Component {
     }
   };
 
-  renderEpisode = ({ item }) => <EpisodeListItem info={item} navigation={this.props.navigation} />;
-
-  renderItem = ({ item }) => {
-    const { navigation } = this.props;
-
-    return (
-      <Collapse>
-        <CollapseHeader>
-          <View style={styles.listItemContainer}>
-            <Image
-              style={styles.poster}
-              source={{
-                uri: `https://image.tmdb.org/t/p/w500/${item.poster_path}`,
-              }}
-            />
-            <View style={styles.textContainer}>
-              <Text style={styles.textTitle}>{item.name}</Text>
-              <Text style={{ fontStyle: 'italic' }}>{`Premiered ${item.air_date}`}</Text>
-              <Text>{`${item.episode_count} Episodes`}</Text>
-              <PlotContainer navigation={navigation} item={item} />
-            </View>
-          </View>
-        </CollapseHeader>
-        <CollapseBody>
-          <View style={{ paddingHorizontal: 10 }}>
-            <ListItemSeperator />
-            <FlatList
-              data={item.episodes}
-              renderItem={this.renderEpisode}
-              ListEmptyComponent={<Error message="No episodes could be found." />}
-              ItemSeparatorComponent={() => <ListItemSeperator />}
-            />
-          </View>
-        </CollapseBody>
-      </Collapse>
-    );
-  };
+  renderItem = ({ item }) => <SeasonsItem navigation={this.props.navigation} item={item} />;
 
   render() {
     const { loading, error, seasons } = this.state;
 
     if (error) {
-      return <Error message="The seasons could not be found." />;
+      return <Error message="Seasons could not be found." />;
     }
 
     if (loading) {

@@ -1,10 +1,11 @@
 import React from 'react';
 import {
-  StyleSheet, View, Text, Image, Dimensions,
+  StyleSheet, View, Text, Dimensions,
 } from 'react-native';
 import { Collapse, CollapseHeader, CollapseBody } from 'accordion-collapse-react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import TmdbRating from './TmdbRating';
+import TmdbRating from '../../TmdbRating';
+import UsefulImage from '../../UsefulImage';
 
 const ratio = Dimensions.get('window').width / 500;
 const styles = StyleSheet.create({
@@ -18,12 +19,21 @@ const styles = StyleSheet.create({
     color: 'grey',
     fontSize: 18,
   },
+  toggleContainer: {
+    paddingVertical: 5,
+    flexDirection: 'row',
+  },
   poster: {
     height: 280 * ratio,
     width: '100%',
   },
   detailsArrow: {
-    justifyContent: 'center',
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+  episodeContainer: {
+    justifyContent: 'flex-start',
+    flex: 12,
   },
 });
 
@@ -31,46 +41,44 @@ class EpisodeListItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      droppedDown: false,
+      isCollapsed: true,
     };
   }
 
+  toggle = () => {
+    const { isCollapsed } = this.state;
+    this.setState({ isCollapsed: !isCollapsed });
+  };
+
   render() {
     const { info } = this.props;
-    const { droppedDown } = this.state;
+    const { isCollapsed } = this.state;
 
     return (
       <View style={styles.container}>
-        <Collapse
-          isCollapsed={droppedDown}
-          onToggle={isCollapsed => this.setState({ droppedDown: isCollapsed })}
-        >
+        <Collapse isCollapsed={!isCollapsed} onToggle={() => this.toggle()}>
           <CollapseHeader>
-            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-              <View style={{ flex: 1 }}>
-                <Text style={{ fontWeight: 'bold' }}>{`${info.episode_number}. ${info.name}`}</Text>
-                <View style={{ marginLeft: 20 }}>
-                  <TmdbRating rating={info.vote_average.toPrecision(2)} votes={info.vote_count} />
-                </View>
+            <View style={styles.toggleContainer}>
+              <View style={styles.episodeContainer}>
+                <Text style={{ fontSize: 16 }}>
+                  <Text style={{ fontWeight: '600' }}>{`${info.episode_number}. `}</Text>
+                  {info.name}
+                </Text>
               </View>
 
               <View style={styles.detailsArrow}>
-                {!droppedDown ? (
-                  <Icon size={22} name="angle-right" />
-                ) : (
+                {isCollapsed ? (
                   <Icon size={22} name="angle-down" />
+                ) : (
+                  <Icon size={22} name="angle-up" />
                 )}
               </View>
             </View>
           </CollapseHeader>
           <CollapseBody>
+            <TmdbRating rating={info.vote_average.toPrecision(2)} votes={info.vote_count} />
+            <UsefulImage passedStyle={styles.poster} imgPath={info.still_path} />
             <Text>{info.overview}</Text>
-            <Image
-              style={styles.poster}
-              source={{
-                uri: `https://image.tmdb.org/t/p/w500/${info.still_path}`,
-              }}
-            />
           </CollapseBody>
         </Collapse>
       </View>

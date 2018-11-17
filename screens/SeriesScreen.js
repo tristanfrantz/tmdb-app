@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Platform } from 'react-native';
-import SeriesDetails from '../components/SeriesDetails';
+import SeriesDetails from '../components/details/series/SeriesDetails';
 
 const styles = StyleSheet.create({
   container: {

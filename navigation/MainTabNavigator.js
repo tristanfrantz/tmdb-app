@@ -2,7 +2,7 @@ import React from 'react';
 import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
-import TabBarIcon from '../components/TabBarIcon';
+import TabBarIcon from '../components/navigation/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import SearchScreen from '../screens/SearchScreen';
 import WatchlistScreen from '../screens/WatchlistScreen';
@@ -100,12 +100,7 @@ const HomeStack = createStackNavigator({
 
 HomeStack.navigationOptions = {
   tabBarLabel: 'Home',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? `ios-home${focused ? '' : '-outline'}` : 'md-home'}
-    />
-  ),
+  tabBarIcon: ({ focused }) => <TabBarIcon size={24} focused={focused} name="home" />,
 };
 
 const SearchStack = createStackNavigator({
@@ -172,12 +167,7 @@ const SearchStack = createStackNavigator({
 
 SearchStack.navigationOptions = {
   tabBarLabel: 'Search',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? `ios-search${focused ? '' : '-outline'}` : 'md-search'}
-    />
-  ),
+  tabBarIcon: ({ focused }) => <TabBarIcon size={22} focused={focused} name="search" />,
 };
 
 const WatchlistStack = createStackNavigator({
@@ -244,12 +234,7 @@ const WatchlistStack = createStackNavigator({
 
 WatchlistStack.navigationOptions = {
   tabBarLabel: 'Watchlist',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? `ios-heart${focused ? '' : '-outline'}` : 'md-heart'}
-    />
-  ),
+  tabBarIcon: ({ focused }) => <TabBarIcon size={22} focused={focused} name="list" />,
 };
 
 const MainTabNavigator = createBottomTabNavigator({

@@ -11,11 +11,11 @@ import {
 import { SearchBar } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
-import Loading from './Loading';
-import Error from './Error';
+import Loading from '../Loading';
+import Error from '../Error';
 import SearchListItem from './SearchListItem';
-import ListItemSeperator from './ListItemSeperator';
-import { addRecentSearch, clearRecentSearch } from '../store/actions/media';
+import ListItemSeperator from '../ListItemSeperator';
+import { addRecentSearch, clearRecentSearch } from '../../store/actions/media';
 
 const styles = StyleSheet.create({
   container: {
@@ -78,7 +78,9 @@ class Search extends React.Component {
 
   onChangeText = (input) => {
     this.setState({ error: false, input }, () => {
-      this.search();
+      setTimeout(() => {
+        this.search();
+      }, 50);
     });
   };
 

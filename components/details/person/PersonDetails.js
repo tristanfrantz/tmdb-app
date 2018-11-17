@@ -1,12 +1,12 @@
 import React from 'react';
 import {
-  StyleSheet, TouchableOpacity, ScrollView, View, Text,
+  StyleSheet, ScrollView, View, Text,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import Loading from './Loading';
-import Error from './Error';
+import Loading from '../../Loading';
+import Error from '../../Error';
 import ProfilePanel from './ProfilePanel';
-import UsefulImage from './UsefulImage';
+import UsefulImage from '../../UsefulImage';
+import BiographyContainer from './BiographyContainer';
 
 const styles = StyleSheet.create({
   container: {
@@ -136,17 +136,7 @@ class PersonDetails extends React.Component {
             </View>
           </View>
 
-          <TouchableOpacity
-            style={styles.plotContainer}
-            onPress={() => navigation.navigate('Biography', actor)}
-          >
-            <View style={styles.plotTextContainer}>
-              <Text numberOfLines={4}>{actor.biography}</Text>
-            </View>
-            <View style={styles.plotArrow}>
-              <Icon size={22} name="angle-right" />
-            </View>
-          </TouchableOpacity>
+          <BiographyContainer navigation={navigation} person={actor} />
 
           {actor.combined_credits
             && actor.combined_credits.cast && (

@@ -2,7 +2,7 @@ import React from 'react';
 import {
   StyleSheet, View, Text, TouchableOpacity,
 } from 'react-native';
-import Categories from '../constants/Categories';
+import Categories from '../../constants/Categories';
 
 const styles = StyleSheet.create({
   container: {
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     margin: 5,
     padding: 5,
     borderRadius: 10,
-    backgroundColor: '#323232', // ff9682
+    backgroundColor: '#323232',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -30,17 +30,33 @@ const styles = StyleSheet.create({
 });
 
 class CategoryTiles extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      disabled: false,
+    };
+  }
+
   onPress = (category) => {
-    this.props.navigation.navigate({ key: 'cat', routeName: 'Category', params: category });
+    this.setState({ disabled: true });
+    this.props.navigation.navigate('Category', category);
+    setTimeout(() => {
+      this.setState({
+        disabled: false,
+      });
+    }, 100);
   };
 
   render() {
+    // Prevents user double clicking too fast
+    const { disabled } = this.state;
     return (
       <View style={styles.container}>
         <View style={styles.rowContainer}>
           <TouchableOpacity
             style={styles.colContainer}
             onPress={() => this.onPress(Categories.UPCOMING_MOVIES)}
+            disabled={disabled}
           >
             <Text style={styles.tileText}>{Categories.UPCOMING_MOVIES}</Text>
           </TouchableOpacity>
@@ -49,12 +65,14 @@ class CategoryTiles extends React.Component {
           <TouchableOpacity
             style={styles.colContainer}
             onPress={() => this.onPress(Categories.POPULAR_MOVIES)}
+            disabled={disabled}
           >
             <Text style={styles.tileText}>{Categories.POPULAR_MOVIES}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.colContainer}
             onPress={() => this.onPress(Categories.POPULAR_SERIES)}
+            disabled={disabled}
           >
             <Text style={styles.tileText}>{Categories.POPULAR_SERIES}</Text>
           </TouchableOpacity>
@@ -63,12 +81,14 @@ class CategoryTiles extends React.Component {
           <TouchableOpacity
             style={styles.colContainer}
             onPress={() => this.onPress(Categories.TOP_MOVIES)}
+            disabled={disabled}
           >
             <Text style={styles.tileText}>{Categories.TOP_MOVIES}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.colContainer}
             onPress={() => this.onPress(Categories.TOP_SERIES)}
+            disabled={disabled}
           >
             <Text style={styles.tileText}>{Categories.TOP_SERIES}</Text>
           </TouchableOpacity>

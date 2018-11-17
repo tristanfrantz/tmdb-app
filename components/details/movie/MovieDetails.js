@@ -3,15 +3,14 @@ import {
   StyleSheet, ScrollView, View, Text,
 } from 'react-native';
 import { connect } from 'react-redux';
-import Loading from './Loading';
-import Error from './Error';
-import TmdbRating from './TmdbRating';
-import UserRating from './UserRating';
-import AddWatchlistButton from './AddWatchlistButton';
-import CreditsPanel from './CreditsPanel';
-import SeasonsButton from './SeasonsButton';
-import UsefulImage from './UsefulImage';
-import PlotContainer from './PlotContainer';
+import Loading from '../../Loading';
+import Error from '../../Error';
+import TmdbRating from '../../TmdbRating';
+import UserRating from '../../UserRating';
+import AddWatchlistButton from '../../watchlist/AddWatchlistButton';
+import CreditsPanel from '../CreditsPanel';
+import UsefulImage from '../../UsefulImage';
+import PlotContainer from '../PlotContainer';
 
 const styles = StyleSheet.create({
   container: {
@@ -24,18 +23,6 @@ const styles = StyleSheet.create({
   movieContainer: {
     flexDirection: 'row',
     paddingBottom: 8,
-  },
-  plotContainer: {
-    paddingTop: 10,
-    flexDirection: 'row',
-  },
-  plotTextContainer: {
-    flex: 8,
-  },
-  plotArrow: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   poster: {
     height: 240,
@@ -72,11 +59,11 @@ const styles = StyleSheet.create({
   },
 });
 
-class SeriesDetails extends React.Component {
+class MovieDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      series: {},
+      movie: {},
       loading: true,
       error: false,
     };
@@ -85,26 +72,25 @@ class SeriesDetails extends React.Component {
   async componentDidMount() {
     const { id } = this.props.navigation.state.params;
     const apiKey = '698a64988eda32cea2480262c47df2da';
+
     try {
       const response = await fetch(
-        `https://api.themoviedb.org/3/tv/${id}?api_key=${apiKey}&language=en-US&append_to_response=credits`,
+        `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-US&append_to_response=credits`,
       );
       const json = await response.json();
-      this.setState({ series: json });
-      this.setState({ loading: false });
+      this.setState({ movie: json, loading: false });
     } catch (e) {
       this.setState({ error: true });
     }
   }
 
-  getGenres = (series) => {
-    let a;
-    const genreString = series.genres.reduce((acc, genre) => {
+  getMovieGenres = (movie) => {
+    const genreString = movie.genres.reduce((acc, genre) => {
       const { name } = genre;
       if (name) {
-        a = `${acc}${name}, `;
+        acc += `${name}, `;
       }
-      return a;
+      return acc;
     }, '');
     if (genreString === '') {
       return 'N/A';
@@ -112,23 +98,33 @@ class SeriesDetails extends React.Component {
     return genreString.slice(0, genreString.length - 2);
   };
 
+  getMovieRuntime = (runtime) => {
+    let time = runtime;
+    if (time > 60) {
+      time = `Runtime ${Math.floor(time / 60)}h ${time % 60}min`;
+    } else if (time) {
+      time = `Runtime ${time % 60}min`;
+    } else {
+      time = 'N/A';
+    }
+    return time;
+  }
+
   render() {
-    const { series, loading, error } = this.state;
+    const { movie, loading, error } = this.state;
     const { navigation } = this.props;
     let oldRating = 0;
-    if (!this.props.ratedMedia.filter(m => m.key === `tv${series.id}`)[0]) {
+    if (!this.props.ratedMedia.filter(m => m.key === `movie${movie.id}`)[0]) {
       oldRating = 0;
     } else {
-      oldRating = this.props.ratedMedia.filter(m => m.key === `tv${series.id}`)[0].rating;
+      oldRating = this.props.ratedMedia.filter(m => m.key === `movie${movie.id}`)[0].rating;
     }
     const ratingItem = {
-      id: `tv${series.id}`,
-      title: series.name,
-      poster: `https://image.tmdb.org/t/p/w500/${series.poster_path}`,
+      id: `movie${movie.id}`,
+      title: movie.title,
+      poster: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
       UserRating: oldRating,
     };
-
-    const genres = series.genres ? this.getGenres(series) : 'N/A';
 
     if (error) {
       return <Error message="The movie could not be found." />;
@@ -137,32 +133,39 @@ class SeriesDetails extends React.Component {
     if (loading) {
       return <Loading />;
     }
+    const runTime = this.getMovieRuntime(movie.runtime);
+    const genres = movie.genres ? this.getMovieGenres(movie) : 'N/A';
 
     return (
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <View style={styles.movieContainer}>
-          <UsefulImage passedStyle={styles.poster} imgPath={series.poster_path} />
+          <UsefulImage passedStyle={styles.poster} imgPath={movie.poster_path} />
           <View style={styles.titleContainer}>
-            <Text style={styles.titleText}>{series.name}</Text>
+            <Text style={styles.titleText}>
+              {movie.title}
+              <Text style={styles.year}>
+                {movie.release_date ? ` (${movie.release_date})` : ''}
+              </Text>
+            </Text>
             <View style={styles.detailsContainer}>
-              <TmdbRating rating={series.vote_average} votes={series.vote_count} />
+              <TmdbRating rating={movie.vote_average} votes={movie.vote_count} />
               <UserRating navigation={navigation} ratingItem={ratingItem} />
               <Text style={styles.text}>
                 {'Genres: '}
                 <Text style={styles.shadowText}>{genres}</Text>
               </Text>
+              <Text style={styles.shadowText}>{runTime}</Text>
             </View>
           </View>
         </View>
         <AddWatchlistButton
-          media={series}
+          media={movie}
           extraInfo={{ whatType: 0, style: { backgroundColor: 'gray' } }}
         />
-        <SeasonsButton navigation={navigation} seasonsDetails={series} />
-        <PlotContainer navigation={navigation} item={series} />
-        {series.credits
-          && series.credits.cast && (
-            <CreditsPanel navigation={navigation} title="Cast" people={series.credits.cast} />
+        <PlotContainer navigation={navigation} item={movie} />
+        {movie.credits
+          && movie.credits.cast && (
+            <CreditsPanel navigation={navigation} title="Cast" people={movie.credits.cast} />
         )}
       </ScrollView>
     );
@@ -170,4 +173,4 @@ class SeriesDetails extends React.Component {
 }
 
 const mapStateToProps = state => ({ ratedMedia: state.ratedMedia });
-export default connect(mapStateToProps)(SeriesDetails);
+export default connect(mapStateToProps)(MovieDetails);

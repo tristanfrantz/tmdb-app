@@ -1,24 +1,18 @@
 import React from 'react';
-import {
-  ScrollView, View, StyleSheet, Dimensions,
-} from 'react-native';
-import MediaCarousel from '../components/MediaCarousel';
-import CategoryTiles from '../components/CategoryTiles';
-
-const { height: viewportHeight } = Dimensions.get('window');
-const tilesHeight = viewportHeight * 0.5;
-const carouselHeight = viewportHeight * 0.45;
+import { ScrollView, View, StyleSheet } from 'react-native';
+import MediaCarousel from '../components/carousel/MediaCarousel';
+import CategoryTiles from '../components/categories/CategoryTiles';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
   carouselContainer: {
-    height: carouselHeight,
-    margin: 10,
+    height: 290,
+    marginTop: 5,
   },
   tilesContainer: {
-    height: tilesHeight,
+    height: 300,
     margin: 10,
   },
 });

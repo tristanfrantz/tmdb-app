@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Platform } from 'react-native';
-import CategoryList from '../components/CategoryList';
+import CategoryList from '../components/categories/CategoryList';
 
 const styles = StyleSheet.create({
   container: {

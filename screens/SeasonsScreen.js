@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Platform } from 'react-native';
-import Seasons from '../components/Seasons';
+import Seasons from '../components/details/series/Seasons';
 
 const styles = StyleSheet.create({
   container: {

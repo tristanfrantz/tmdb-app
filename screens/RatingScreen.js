@@ -18,6 +18,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#fff',
+    width: '100%',
+    height: '100%',
   },
   rateBtn: {
     marginTop: '5%',
@@ -86,7 +88,6 @@ class RatingScreen extends React.Component {
       return;
     }
     const { ratingItem } = this.props.navigation.state.params;
-    console.log(this.props);
 
     if (ratingItem.UserRating === 0) {
       this.props.dispatch(addRating(starCount, id));
@@ -108,7 +109,7 @@ class RatingScreen extends React.Component {
     const { ratingItem } = this.props.navigation.state.params;
     return (
       <ImageBackground
-        style={[styles.container, { width: '100%', height: '100%' }]}
+        style={styles.container}
         blurRadius={4}
         opacity={0.5}
         source={{ uri: ratingItem.poster }}
