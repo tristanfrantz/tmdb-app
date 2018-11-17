@@ -84,6 +84,11 @@ class CategoryList extends React.Component {
       }));
       results.push(...res);
     }
+    const category = this.props.navigation.state.params;
+    if (category === Categories.UPCOMING_MOVIES) {
+      // Sort the movies by release date
+      results.sort((a, b) => b.release_date.localeCompare(a.release_date));
+    }
     return results;
   };
 
