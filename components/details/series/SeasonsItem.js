@@ -1,8 +1,9 @@
 import React from 'react';
 import {
-  StyleSheet, View, Text, FlatList,
+  StyleSheet, View, Text, FlatList, TouchableOpacity,
 } from 'react-native';
 import { Collapse, CollapseHeader, CollapseBody } from 'accordion-collapse-react-native';
+import Collapsible from 'react-native-collapsible';
 import UsefulImage from '../../UsefulImage';
 import PlotContainer from '../PlotContainer';
 import ListItemSeperator from '../../ListItemSeperator';
@@ -46,13 +47,26 @@ const styles = StyleSheet.create({
 });
 
 class SeasonsItem extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isCollapsed: true,
+    };
+  }
+
+  toggle = () => {
+    const { isCollapsed } = this.state;
+    this.setState({ isCollapsed: !isCollapsed });
+  };
+
   renderEpisode = ({ item }) => <EpisodeListItem info={item} navigation={this.props.navigation} />;
 
   render() {
     const { item, navigation } = this.props;
+    const { isCollapsed } = this.state;
     return (
-      <Collapse>
-        <CollapseHeader>
+      <View>
+        <TouchableOpacity onPress={() => this.toggle()}>
           <View style={styles.container}>
             <UsefulImage passedStyle={styles.poster} imgPath={item.poster_path} />
             <View style={styles.textContainer}>
@@ -62,8 +76,9 @@ class SeasonsItem extends React.Component {
               <PlotContainer navigation={navigation} item={item} />
             </View>
           </View>
-        </CollapseHeader>
-        <CollapseBody>
+        </TouchableOpacity>
+
+        <Collapsible collapsed={isCollapsed}>
           <View style={{ paddingHorizontal: 10 }}>
             <FlatList
               data={item.episodes}
@@ -72,8 +87,8 @@ class SeasonsItem extends React.Component {
               ItemSeparatorComponent={() => <ListItemSeperator />}
             />
           </View>
-        </CollapseBody>
-      </Collapse>
+        </Collapsible>
+      </View>
     );
   }
 }

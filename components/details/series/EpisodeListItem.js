@@ -10,7 +10,6 @@ import UsefulImage from '../../UsefulImage';
 const ratio = Dimensions.get('window').width / 500;
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     paddingVertical: 5,
     paddingHorizontal: 2,
   },
@@ -29,12 +28,11 @@ const styles = StyleSheet.create({
   },
   detailsArrow: {
     flex: 1,
-    justifyContent: 'flex-end',
   },
   episodeContainer: {
-    justifyContent: 'flex-start',
     flex: 12,
   },
+  shadowText: {},
 });
 
 class EpisodeListItem extends React.Component {
