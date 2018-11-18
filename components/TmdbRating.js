@@ -17,6 +17,10 @@ const styles = StyleSheet.create({
     width: 20,
     height: 23,
   },
+  tmdbLogoSmall: {
+    width: 16,
+    height: 18,
+  },
   ratingText: {
     fontSize: 16,
   },
@@ -24,6 +28,15 @@ const styles = StyleSheet.create({
     color: 'grey',
     paddingTop: 2,
     fontSize: 14,
+  },
+  ratingTextSmall: {
+    fontSize: 14,
+    color: '#fff',
+  },
+  votesTextSmall: {
+    color: 'grey',
+    paddingTop: 2,
+    fontSize: 12,
   },
 });
 
@@ -34,18 +47,22 @@ class TmdbRating extends React.Component {
   }
 
   render() {
-    const { rating, votes } = this.props;
+    const { rating, votes, small } = this.props;
     return (
       <View style={styles.container}>
-        <Image style={styles.tmdbLogo} source={tmdbLogoPath} />
+        <Image style={small ? styles.tmdbLogoSmall : styles.tmdbLogo} source={tmdbLogoPath} />
         <View>
           {rating !== 0 && rating !== 0.0 && rating !== undefined ? (
             <View style={styles.ratingContainer}>
-              <Text style={styles.ratingText}>{rating}</Text>
-              <Text style={styles.votesText}>{`/10 | ${votes}`}</Text>
+              <Text style={small ? styles.ratingTextSmall : styles.ratingText}>{rating}</Text>
+              <Text style={small ? styles.votesTextSmall : styles.votesText}>
+                {`/10 | ${votes}`}
+              </Text>
             </View>
           ) : (
-            <Text style={[styles.votesText, { paddingLeft: 5 }]}>N/A</Text>
+            <Text style={[small ? styles.votesTextSmall : styles.votesText, { paddingLeft: 5 }]}>
+              N/A
+            </Text>
           )}
         </View>
       </View>

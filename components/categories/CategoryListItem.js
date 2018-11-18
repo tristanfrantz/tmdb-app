@@ -61,7 +61,7 @@ class CategoryListItem extends Component {
 
     return (
       <TouchableOpacity style={styles.container} onPress={() => this.onPress(media)}>
-        <UsefulImage passedStyle={styles.poster} imgPath={media.poster_path} />
+        <UsefulImage style={styles.poster} imgPath={media.poster_path} />
         <View style={styles.details}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.text}>{date}</Text>

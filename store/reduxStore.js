@@ -3,14 +3,14 @@ import { logger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import movies from './reducers/media';
+import watchlist from './reducers/media';
 
 const persistConfig = {
   key: 'root',
   storage,
 };
 
-const persistedReducer = persistReducer(persistConfig, movies);
+const persistedReducer = persistReducer(persistConfig, watchlist);
 
 export const store = createStore(persistedReducer, applyMiddleware(logger, thunk));
 export const persistor = persistStore(store);

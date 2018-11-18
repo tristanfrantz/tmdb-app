@@ -100,7 +100,6 @@ class PersonDetails extends React.Component {
     if (error) {
       return <Error message="The person could not be found." />;
     }
-
     if (loading) {
       return <Loading />;
     }
@@ -108,7 +107,7 @@ class PersonDetails extends React.Component {
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <View>
           <View style={styles.movieContainer}>
-            <UsefulImage passedStyle={styles.poster} imgPath={actor.profile_path} />
+            <UsefulImage style={styles.poster} imgPath={actor.profile_path} />
             <View style={styles.titleContainer}>
               <Text style={styles.titleText}>{actor.name}</Text>
               <View style={styles.detailsContainer}>
@@ -135,11 +134,10 @@ class PersonDetails extends React.Component {
               </View>
             </View>
           </View>
-
           <BiographyContainer navigation={navigation} person={actor} />
-
           {actor.combined_credits
-            && actor.combined_credits.cast && (
+            && actor.combined_credits.cast
+            && actor.combined_credits.cast.length && (
               <ProfilePanel
                 navigation={navigation}
                 title="Known for"

@@ -54,10 +54,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: 15,
   },
-  loading: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+  recentSearchText: {
+    fontSize: 15,
   },
 });
 
@@ -80,7 +78,7 @@ class Search extends React.Component {
     this.setState({ error: false, input }, () => {
       setTimeout(() => {
         this.search();
-      }, 50);
+      }, 100);
     });
   };
 
@@ -98,7 +96,6 @@ class Search extends React.Component {
       }
       this.setState({ results: json.results.map((c, i) => ({ ...c, key: `${i}` })) });
     } catch (e) {
-      console.log(e);
       this.setState({ results: [] });
     }
     this.setState({ loading: false });
@@ -111,7 +108,7 @@ class Search extends React.Component {
       style={styles.recentSearch}
       onPress={() => this.onChangeText(item.searchString)}
     >
-      <Text style={{ fontSize: 15 }}>{item.searchString}</Text>
+      <Text style={styles.recentSearchText}>{item.searchString}</Text>
       <Ionicons name="ios-arrow-forward" size={25} color="#6f7277" />
     </TouchableOpacity>
   );
@@ -131,7 +128,7 @@ class Search extends React.Component {
           containerStyle={{ backgroundColor: 'white' }}
           round
           showLoading={loading}
-          onChangeText={i => this.onChangeText(i)}
+          onChangeText={text => this.onChangeText(text)}
           placeholder="Search movies, series or actors..."
           clearButtonMode="while-editing"
           onSubmitEditing={() => {

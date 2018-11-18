@@ -76,7 +76,7 @@ class SearchListItem extends Component {
     if (item.media_type === MEDIA_TYPES.MOVIE) {
       return (
         <TouchableOpacity style={styles.container} onPress={() => this.onMoviePress(item)}>
-          <UsefulImage passedStyle={styles.poster} imgPath={item.poster_path} />
+          <UsefulImage style={styles.poster} imgPath={item.poster_path} />
           <View style={styles.details}>
             <Text style={styles.title}>{item.title}</Text>
             <Text style={styles.text}>{item.release_date}</Text>
@@ -88,7 +88,7 @@ class SearchListItem extends Component {
     if (item.media_type === MEDIA_TYPES.SERIES) {
       return (
         <TouchableOpacity style={styles.container} onPress={() => this.onSeriesPress(item)}>
-          <UsefulImage passedStyle={styles.poster} imgPath={item.poster_path} />
+          <UsefulImage style={styles.poster} imgPath={item.poster_path} />
           <View style={styles.details}>
             <Text style={styles.title}>{item.name}</Text>
             <Text style={styles.text}>{item.first_air_date}</Text>
@@ -100,11 +100,11 @@ class SearchListItem extends Component {
     // else item.media_type === MEDIA_TYPES.PERSON
     return (
       <TouchableOpacity style={styles.container} onPress={() => this.onPersonPress(item)}>
-        <UsefulImage passedStyle={styles.poster} imgPath={item.profile_path} />
+        <UsefulImage style={styles.poster} imgPath={item.profile_path} />
         <View style={styles.details}>
           <Text style={styles.title}>{item.name}</Text>
           <Text style={styles.text}>{item.first_air_date}</Text>
-          <Text style={styles.shadowText}>Actor</Text>
+          <Text style={styles.shadowText}>Person</Text>
         </View>
       </TouchableOpacity>
     );

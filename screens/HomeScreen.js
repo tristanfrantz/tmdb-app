@@ -6,10 +6,10 @@ import CategoryTiles from '../components/categories/CategoryTiles';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
   },
   carouselContainer: {
     height: 290,
-    marginTop: 5,
   },
   tilesContainer: {
     height: 300,
@@ -28,13 +28,12 @@ export default class HomeScreen extends React.Component {
   componentDidMount() {
     const apiKey = '698a64988eda32cea2480262c47df2da';
 
-    fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=en-US`)
+    fetch(`https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}&language=en-US`)
       .then(res => res.json())
       .then(res => this.setState({
         results: res.results.map((c, i) => ({ ...c, key: `${i}` })),
       }))
-      .catch((err) => {
-        console.error(err);
+      .catch(() => {
         this.setState({ results: [] });
       });
   }

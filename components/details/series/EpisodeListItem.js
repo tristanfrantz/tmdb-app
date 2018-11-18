@@ -75,7 +75,7 @@ class EpisodeListItem extends React.Component {
           </CollapseHeader>
           <CollapseBody>
             <TmdbRating rating={info.vote_average.toPrecision(2)} votes={info.vote_count} />
-            <UsefulImage passedStyle={styles.poster} imgPath={info.still_path} />
+            <UsefulImage style={styles.poster} imgPath={info.still_path} />
             <Text>{info.overview}</Text>
           </CollapseBody>
         </Collapse>

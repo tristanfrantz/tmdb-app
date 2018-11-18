@@ -2,7 +2,6 @@ import React from 'react';
 import {
   StyleSheet, View, Text, FlatList, TouchableOpacity,
 } from 'react-native';
-import { Collapse, CollapseHeader, CollapseBody } from 'accordion-collapse-react-native';
 import Collapsible from 'react-native-collapsible';
 import UsefulImage from '../../UsefulImage';
 import PlotContainer from '../PlotContainer';
@@ -68,7 +67,7 @@ class SeasonsItem extends React.Component {
       <View>
         <TouchableOpacity onPress={() => this.toggle()}>
           <View style={styles.container}>
-            <UsefulImage passedStyle={styles.poster} imgPath={item.poster_path} />
+            <UsefulImage style={styles.poster} imgPath={item.poster_path} />
             <View style={styles.textContainer}>
               <Text style={styles.textTitle}>{item.name}</Text>
               <Text style={{ fontStyle: 'italic' }}>{`Premiered ${item.air_date}`}</Text>

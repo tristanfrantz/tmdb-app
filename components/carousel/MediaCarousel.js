@@ -6,23 +6,14 @@ import Loading from '../Loading';
 
 const { width: viewportWidth } = Dimensions.get('window');
 
-function wp(percentage) {
-  const value = (percentage * viewportWidth) / 100;
-  return Math.round(value);
-}
-const slideWidth = wp(86);
-
 const sliderWidth = viewportWidth;
-const itemWidth = slideWidth;
+const itemWidth = viewportWidth;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  loading: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    borderBottomWidth: '2',
+    borderBottomColor: '#444444',
   },
 });
 
@@ -44,9 +35,8 @@ export default class MediaCarousel extends Component {
           renderItem={this.renderItem.bind(this)}
           sliderWidth={sliderWidth}
           itemWidth={itemWidth}
-          hasParallaxImages
-          inactiveSlideScale={0.94}
-          inactiveSlideOpacity={0.7}
+          inactiveSlideScale={1}
+          inactiveSlideOpacity={1}
           loop
           loopClonesPerSide={2}
         />

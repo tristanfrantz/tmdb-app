@@ -88,7 +88,7 @@ class Seasons extends React.Component {
     const { loading, error, seasons } = this.state;
 
     if (error) {
-      return <Error message="Seasons could not be found." />;
+      return <Error />;
     }
 
     if (loading) {
@@ -101,6 +101,7 @@ class Seasons extends React.Component {
           ItemSeparatorComponent={() => <ListItemSeperator />}
           data={seasons}
           renderItem={this.renderItem}
+          ListEmptyComponent={() => <Error message="No seasons found." />}
         />
       </View>
     );

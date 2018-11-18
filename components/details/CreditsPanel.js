@@ -56,7 +56,7 @@ class CreditsPanel extends React.Component {
 
   renderItem = ({ item }) => (
     <TouchableOpacity style={styles.mediaContainer} onPress={() => this.onPress(item)}>
-      <UsefulImage passedStyle={styles.mediaImage} imgPath={item.profile_path} />
+      <UsefulImage style={styles.mediaImage} imgPath={item.profile_path} />
       <Text style={styles.nameText}>{item.name}</Text>
       <Text style={styles.characterText}>{item.character}</Text>
     </TouchableOpacity>

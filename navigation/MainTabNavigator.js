@@ -14,6 +14,7 @@ import BiographyScreen from '../screens/BiographyScreen';
 import RatingScreen from '../screens/RatingScreen';
 import SeasonsScreen from '../screens/SeasonsScreen';
 import CategoryScreen from '../screens/CategoryScreen';
+import Colors from '../constants/Colors';
 
 const HomeStack = createStackNavigator({
   Home: {
@@ -175,14 +176,7 @@ const WatchlistStack = createStackNavigator({
     screen: WatchlistScreen,
     navigationOptions: () => ({
       title: 'Watchlist',
-      headerTitleStyle: {
-        ...Platform.select({
-          android: {
-            marginLeft: 'auto',
-            marginRight: 'auto',
-          },
-        }),
-      },
+      headerBackTitle: 'Watchlist',
     }),
   },
   Movie: {
@@ -237,10 +231,18 @@ WatchlistStack.navigationOptions = {
   tabBarIcon: ({ focused }) => <TabBarIcon size={22} focused={focused} name="list" />,
 };
 
-const MainTabNavigator = createBottomTabNavigator({
-  HomeStack,
-  SearchStack,
-  WatchlistStack,
-});
+const MainTabNavigator = createBottomTabNavigator(
+  {
+    HomeStack,
+    SearchStack,
+    WatchlistStack,
+  },
+  // {
+  //   tabBarOptions: {
+  //     inactiveTintColor: 'lightgrey',
+  //     activeTintColor: '#01d277',
+  //   },
+  // },
+);
 
 export default MainTabNavigator;

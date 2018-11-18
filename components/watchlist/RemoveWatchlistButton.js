@@ -34,8 +34,8 @@ class RemoveWatchlistButton extends React.Component {
           onPress={() => this.props.dispatch(removeFromWatchlist(media.id))}
         >
           <Text style={styles.text}>
-            <Icon name="times" style={styles.icon} />
-            <Text style={styles.text}>REMOVE FROM WATCHLIST</Text>
+            <Icon name="trash" style={styles.icon} />
+            <Text style={styles.text}> REMOVE FROM WATCHLIST</Text>
           </Text>
         </TouchableOpacity>
       </View>

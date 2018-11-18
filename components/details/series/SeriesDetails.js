@@ -129,7 +129,7 @@ class SeriesDetails extends React.Component {
     return (
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <View style={styles.seriesContainer}>
-          <UsefulImage passedStyle={styles.poster} imgPath={series.poster_path} />
+          <UsefulImage style={styles.poster} imgPath={series.poster_path} />
           <View style={styles.titleContainer}>
             <Text style={styles.titleText}>{series.name}</Text>
             <View style={styles.detailsContainer}>
@@ -142,14 +142,12 @@ class SeriesDetails extends React.Component {
             </View>
           </View>
         </View>
-        <AddWatchlistButton
-          media={series}
-          extraInfo={{ whatType: 0, style: { backgroundColor: 'gray' } }}
-        />
+        <AddWatchlistButton media={series} />
         <SeasonsButton navigation={navigation} seasonsDetails={series} />
         <PlotContainer navigation={navigation} item={series} />
         {series.credits
-          && series.credits.cast && (
+          && series.credits.cast
+          && series.credits.cast.length && (
             <CreditsPanel navigation={navigation} title="Cast" people={series.credits.cast} />
         )}
       </ScrollView>

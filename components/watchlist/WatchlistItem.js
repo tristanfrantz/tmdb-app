@@ -70,7 +70,7 @@ class WatchlistItem extends Component {
     const type = media.type === 'movie' ? 'Movie' : 'Series';
     return (
       <TouchableOpacity style={styles.container} onPress={() => this.onPress(media)}>
-        <UsefulImage passedStyle={styles.poster} imgPath={media.poster} />
+        <UsefulImage style={styles.poster} imgPath={media.poster} />
         <View style={styles.detailsContainer}>
           <View style={styles.itemContainer}>
             <Text style={styles.title}>{media.title}</Text>

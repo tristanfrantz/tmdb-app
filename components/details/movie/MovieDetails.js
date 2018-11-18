@@ -139,7 +139,7 @@ class MovieDetails extends React.Component {
     return (
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <View style={styles.movieContainer}>
-          <UsefulImage passedStyle={styles.poster} imgPath={movie.poster_path} />
+          <UsefulImage style={styles.poster} imgPath={movie.poster_path} />
           <View style={styles.titleContainer}>
             <Text style={styles.titleText}>
               {movie.title}
@@ -158,13 +158,10 @@ class MovieDetails extends React.Component {
             </View>
           </View>
         </View>
-        <AddWatchlistButton
-          media={movie}
-          extraInfo={{ whatType: 0, style: { backgroundColor: 'gray' } }}
-        />
+        <AddWatchlistButton media={movie} />
         <PlotContainer navigation={navigation} item={movie} />
         {movie.credits
-          && movie.credits.cast && (
+          && movie.credits.cast && movie.credits.cast.length && (
             <CreditsPanel navigation={navigation} title="Cast" people={movie.credits.cast} />
         )}
       </ScrollView>

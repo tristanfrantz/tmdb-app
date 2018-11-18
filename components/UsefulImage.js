@@ -5,17 +5,17 @@ const missingImage = require('../assets/images/missing-image.png');
 
 export default class UsefulImage extends React.Component {
   render() {
-    const { passedStyle, imgPath } = this.props;
+    const { style, imgPath } = this.props;
 
     return (
       <View>
         {imgPath !== null ? (
           <Image
-            style={passedStyle}
+            style={style}
             source={{ uri: `https://image.tmdb.org/t/p/w500/${imgPath}` }}
           />
         ) : (
-          <Image style={passedStyle} source={missingImage} />
+          <Image style={style} source={missingImage} />
         )}
       </View>
     );

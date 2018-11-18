@@ -1,52 +1,45 @@
 import React from 'react';
 import {
-  View, Text, Image, TouchableOpacity, StyleSheet, Dimensions,
+  View, Text, Image, TouchableOpacity, StyleSheet,
 } from 'react-native';
-
-const { width: viewportWidth } = Dimensions.get('window');
-
-const wp = (percentage) => {
-  const value = (percentage * viewportWidth) / 100;
-  return Math.round(value);
-};
-const itemHorizontalMargin = wp(0.5);
+import UsefulImage from '../UsefulImage';
+import TmdbRating from '../TmdbRating';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    borderRadius: 75,
   },
   slideInnerContainer: {
     flex: 1,
-    paddingHorizontal: itemHorizontalMargin,
   },
-  imageContainer: {
+  backdropContainer: {
+    flex: 4,
+    backgroundColor: '#081c24',
+    resizeMode: 'stretch',
+  },
+  panelContainer: {
     flex: 1,
-    backgroundColor: '#323232',
+    flexDirection: 'row',
+    backgroundColor: '#081c24',
   },
-  image: {
-    ...StyleSheet.absoluteFillObject,
-    resizeMode: 'cover',
-  },
-
-  textContainer: {
-    justifyContent: 'center',
-    paddingTop: 20,
-    paddingBottom: 20,
-    paddingHorizontal: 16,
-    backgroundColor: '#1a1917',
+  infoContainer: {
+    marginLeft: 135,
+    marginBottom: 8,
+    justifyContent: 'flex-end',
   },
   title: {
-    fontSize: 13,
-    fontWeight: 'bold',
+    fontSize: 16,
+    fontWeight: '600',
     letterSpacing: 0.5,
     color: 'white',
   },
-  subtitle: {
-    marginTop: 6,
-    color: 'rgba(255, 255, 255, 0.7)',
-    fontSize: 12,
-    fontStyle: 'italic',
+  poster: {
+    flex: 2,
+    height: 180,
+    width: 120,
+    position: 'absolute',
+    bottom: 10,
+    left: 10,
   },
 });
 
@@ -58,27 +51,23 @@ export default class SliderEntry extends React.Component {
   render() {
     const { data } = this.props;
 
-    const uppercaseTitle = data.title ? (
-      <Text style={[styles.title, styles.titleEven]} numberOfLines={2}>
-        {data.title.toUpperCase()}
-      </Text>
-    ) : (
-      false
-    );
-
     return (
-      <TouchableOpacity
-        activeOpacity={0.6}
-        style={styles.slideInnerContainer}
-        onPress={() => this.onPress(data)}
-      >
-        <View style={[styles.imageContainer, styles.imageContainerEven]}>
-          <Image
-            source={{ uri: `https://image.tmdb.org/t/p/w500/${data.backdrop_path}` }}
-            style={styles.image}
-          />
+      <TouchableOpacity activeOpacity={1} onPress={() => this.onPress(data)} style={{ flex: 1 }}>
+        <Image
+          source={{ uri: `https://image.tmdb.org/t/p/w500/${data.backdrop_path}` }}
+          style={styles.backdropContainer}
+        />
+        <View style={styles.panelContainer}>
+          <View style={styles.infoContainer}>
+            <View style={{ paddingBottom: 3 }}>
+              <TmdbRating small rating={data.vote_average} votes={data.vote_count} />
+            </View>
+            <Text numberOfLines={1} style={styles.title}>
+              {data.title}
+            </Text>
+          </View>
         </View>
-        <View style={[styles.textContainer, styles.textContainerEven]}>{uppercaseTitle}</View>
+        <UsefulImage style={styles.poster} imgPath={data.poster_path} />
       </TouchableOpacity>
     );
   }

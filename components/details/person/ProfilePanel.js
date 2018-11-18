@@ -61,7 +61,7 @@ class ProfilePanel extends React.Component {
         item.title ? this.onMoviePress(item) : this.onSeriesPress(item);
       }}
     >
-      <UsefulImage passedStyle={styles.mediaImage} imgPath={item.poster_path} />
+      <UsefulImage style={styles.mediaImage} imgPath={item.poster_path} />
       <Text style={styles.movieTitleText}>{item.title ? item.title : item.name}</Text>
       <Text style={styles.dateText}>
         {item.release_date ? item.release_date : item.first_air_date}
