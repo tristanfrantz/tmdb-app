@@ -1,18 +1,17 @@
 import { createStore, applyMiddleware } from 'redux';
 import { logger } from 'redux-logger';
-import thunk from 'redux-thunk';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import watchlist from './reducers/media';
+import rootReducer from './reducer';
 
 const persistConfig = {
   key: 'root',
   storage,
 };
 
-const persistedReducer = persistReducer(persistConfig, watchlist);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-export const store = createStore(persistedReducer, applyMiddleware(logger, thunk));
+export const store = createStore(persistedReducer, applyMiddleware(logger));
 export const persistor = persistStore(store);
-// to clean the store
+// to clean the peristed store
 // export const persistor = persistStore(store).purge();

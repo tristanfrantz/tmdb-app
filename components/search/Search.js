@@ -15,7 +15,7 @@ import Loading from '../Loading';
 import Error from '../Error';
 import SearchListItem from './SearchListItem';
 import ListItemSeperator from '../ListItemSeperator';
-import { addRecentSearch, clearRecentSearch } from '../../store/actions/media';
+import { addRecentSearch, clearRecentSearch } from '../../store/actions/recentSearch';
 
 const styles = StyleSheet.create({
   container: {

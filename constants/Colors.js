@@ -4,6 +4,8 @@ export default {
   themeBlack: '#191919',
   themeDarkGrey: '#232323',
   themeLightGrey: '#343434',
+  themeNavy: '#081c24',
+  themeGreen: '#01d277',
   tintColor,
   tabIconDefault: '#ccc',
   tabIconSelected: tintColor,

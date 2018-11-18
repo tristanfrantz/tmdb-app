@@ -10,10 +10,7 @@ export default class UsefulImage extends React.Component {
     return (
       <View>
         {imgPath !== null ? (
-          <Image
-            style={style}
-            source={{ uri: `https://image.tmdb.org/t/p/w500/${imgPath}` }}
-          />
+          <Image style={style} source={{ uri: `https://image.tmdb.org/t/p/w500/${imgPath}` }} />
         ) : (
           <Image style={style} source={missingImage} />
         )}

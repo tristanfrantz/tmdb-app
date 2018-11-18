@@ -11,7 +11,7 @@ import {
 import StarRating from 'react-native-star-rating';
 import { connect } from 'react-redux';
 import { StackActions } from 'react-navigation';
-import { addRating, removeRating, updateRating } from '../store/actions/media';
+import { addRating, removeRating, updateRating } from '../store/actions/ratings';
 
 const styles = StyleSheet.create({
   container: {

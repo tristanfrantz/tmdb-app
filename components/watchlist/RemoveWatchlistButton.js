@@ -4,7 +4,7 @@ import {
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
-import { removeFromWatchlist } from '../../store/actions/media';
+import { removeFromWatchlist } from '../../store/actions/watchlist';
 
 const styles = StyleSheet.create({
   button: {

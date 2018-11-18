@@ -3,7 +3,7 @@ import {
   StyleSheet, View, Text, TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { addRecentSearch } from '../../store/actions/media';
+import { addRecentSearch } from '../../store/actions/recentSearch';
 import UsefulImage from '../UsefulImage';
 
 const MEDIA_TYPES = {

@@ -9,7 +9,7 @@ const getTitle = media => (media.title ? media.title : media.name);
 const getType = media => (media.title ? 'movie' : 'tv');
 const getDate = media => (media.title ? media.release_date : media.first_air_date);
 
-const watchlist = (state = initialState, action) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_TO_WATCHLIST':
       return {
@@ -86,4 +86,4 @@ const watchlist = (state = initialState, action) => {
   }
 };
 
-export default watchlist;
+export default reducer;
