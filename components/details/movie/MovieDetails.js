@@ -91,6 +91,7 @@ class MovieDetails extends React.Component {
     const genreString = movie.genres.reduce((acc, genre) => {
       const { name } = genre;
       if (name) {
+        /* eslint-disable no-param-reassign */
         acc += `${name}, `;
       }
       return acc;

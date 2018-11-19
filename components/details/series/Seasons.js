@@ -57,6 +57,7 @@ class Seasons extends React.Component {
       }));
       seasons = await Promise.all(
         seasons.map(async (season) => {
+          /* eslint-disable no-param-reassign */
           season.episodes = await this.getEpisodes(episodeDetails.id, season.season_number);
           return season;
         }),

@@ -60,6 +60,7 @@ class ProfilePanel extends React.Component {
     <TouchableOpacity
       style={styles.mediaContainer}
       onPress={() => {
+        /* eslint-disable no-unused-expressions */
         item.title ? this.onMoviePress(item) : this.onSeriesPress(item);
       }}
     >
