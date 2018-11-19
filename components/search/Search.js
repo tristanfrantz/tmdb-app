@@ -138,10 +138,9 @@ class Search extends React.Component {
           autoFocus
           value={input}
           darkTheme
-          round
           showLoading={loading}
           onChangeText={text => this.onChangeText(text)}
-          placeholder="Search movies, series or actors..."
+          placeholder="Search movies, series or people..."
           clearButtonMode="while-editing"
           onSubmitEditing={() => {
             if (input !== '') this.props.dispatch(addRecentSearch(input));
@@ -158,7 +157,7 @@ class Search extends React.Component {
               <Loading />
             </View>
         )}
-        {input.length > 0 && results !== [] && error && !loading && <Error message="No results." />}
+        {input.length > 0 && results.length === 0 && error && !loading && <Error message="No results." />}
         {recentSearch.length > 0
           && input.length === 0 && (
             <View>
