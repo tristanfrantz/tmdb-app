@@ -109,7 +109,7 @@ class Search extends React.Component {
     // Prevents re-rendering to often
     setTimeout(() => {
       this.setState({ loading: false });
-    }, 10);
+    }, 100);
   }
 
   renderItem = ({ item }) => <SearchListItem item={item} navigation={this.props.navigation} />;
