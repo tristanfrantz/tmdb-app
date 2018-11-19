@@ -12,12 +12,13 @@ import StarRating from 'react-native-star-rating';
 import { connect } from 'react-redux';
 import { StackActions } from 'react-navigation';
 import { addRating, removeRating, updateRating } from '../store/actions/ratings';
+import Colors from '../constants/Colors';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: Colors.themeDarkGrey,
     width: '100%',
     height: '100%',
   },
@@ -46,12 +47,13 @@ const styles = StyleSheet.create({
   counterText: {
     fontSize: 130,
     textAlignVertical: 'center',
-    color: '#3d5f99',
+    color: 'white',
   },
   title: {
     margin: '3%',
     fontSize: 25,
     textAlign: 'center',
+    color: 'white',
   },
 });
 
@@ -124,8 +126,8 @@ class RatingScreen extends React.Component {
         <Text style={styles.title}>{`How would you rate ${ratingItem.title}?`}</Text>
         <StarRating
           disabled={false}
-          emptyStar="ios-star-outline"
-          emptyStarColor="#302c2c"
+          emptyStar="ios-star"
+          emptyStarColor="#7c7e82"
           fullStar="ios-star"
           fullStarColor="#3d5f99"
           iconSet="Ionicons"
