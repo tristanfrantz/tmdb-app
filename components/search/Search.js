@@ -64,6 +64,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#fff',
   },
+  loadingContainer: {
+    height: 50,
+  },
 });
 
 class Search extends React.Component {
@@ -83,9 +86,7 @@ class Search extends React.Component {
 
   onChangeText = (input) => {
     this.setState({ error: false, input }, () => {
-      setTimeout(() => {
-        this.search();
-      }, 100);
+      this.search();
     });
   };
 
@@ -105,7 +106,10 @@ class Search extends React.Component {
     } catch (e) {
       this.setState({ results: [] });
     }
-    this.setState({ loading: false });
+    // Prevents re-rendering to often
+    setTimeout(() => {
+      this.setState({ loading: false });
+    }, 100);
   }
 
   renderItem = ({ item }) => <SearchListItem item={item} navigation={this.props.navigation} />;
@@ -146,28 +150,34 @@ class Search extends React.Component {
             },
           })}
         />
-        {error && <Error message="No results." />}
+        {input.length && loading && (
+          <View style={styles.loadingContainer}>
+            <Loading />
+          </View>
+        )}
+        {input.length && !results.length && error && !loading && (
+          <Error message="No results." />
+        )}
         {recentSearch.length > 0
-          && input.length === 0 && (
+          && !input.length && (
             <View>
               <View style={styles.recentSearch}>
                 <Text style={styles.recentSearchTitle}>Recent Searches</Text>
                 <TouchableOpacity onPress={() => this.props.dispatch(clearRecentSearch())}>
-                  <Text style={{color: '#fff'}}>Clear</Text>
+                  <Text style={{ color: '#fff' }}>Clear</Text>
                 </TouchableOpacity>
               </View>
               <ListItemSeperator />
+              <ScrollView>
+                <FlatList
+                  data={recentSearch}
+                  renderItem={this.renderRecentSearchItem}
+                  ItemSeparatorComponent={() => <ListItemSeperator />}
+                />
+              </ScrollView>
             </View>
         )}
-        {input.length === 0 ? (
-          <ScrollView>
-            <FlatList
-              data={recentSearch}
-              renderItem={this.renderRecentSearchItem}
-              ItemSeparatorComponent={() => <ListItemSeperator />}
-            />
-          </ScrollView>
-        ) : (
+        {input.length && !loading && (
           <ScrollView>
             <FlatList
               data={results}
@@ -176,7 +186,6 @@ class Search extends React.Component {
             />
           </ScrollView>
         )}
-        {loading && <Loading />}
       </View>
     );
   }

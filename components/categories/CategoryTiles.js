@@ -45,7 +45,7 @@ class CategoryTiles extends React.Component {
       this.setState({
         disabled: false,
       });
-    }, 100);
+    }, 1000);
   };
 
   render() {

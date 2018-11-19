@@ -38,7 +38,7 @@ class UserRating extends React.Component {
         <TouchableOpacity onPress={() => this.props.navigation.navigate('Rating', { ratingItem })}>
           {ratingItem.UserRating !== 0 ? (
             <View style={styles.ratingContainer}>
-              <Icon name="ios-star" size={23} color="#4a75ba" />
+              <Icon name="ios-star" size={23} color="#5892e2" />
               <Text style={styles.ratingText}>
                 {' '}
                 {ratingItem.UserRating}

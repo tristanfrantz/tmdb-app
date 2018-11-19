@@ -127,9 +127,9 @@ class RatingScreen extends React.Component {
         <StarRating
           disabled={false}
           emptyStar="ios-star"
-          emptyStarColor="#7c7e82"
+          emptyStarColor="#8a8c91"
           fullStar="ios-star"
-          fullStarColor="#3d5f99"
+          fullStarColor="#5487d3"
           iconSet="Ionicons"
           maxStars={10}
           rating={this.state.starCount}
