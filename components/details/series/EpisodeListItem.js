@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
   poster: {
     height: 280 * ratio,
     width: '100%',
+    marginTop: 5,
   },
   detailsArrow: {
     flex: 1,
@@ -32,7 +33,14 @@ const styles = StyleSheet.create({
   episodeContainer: {
     flex: 12,
   },
-  shadowText: {},
+  episodeText: {
+    fontSize: 16,
+    color: '#fff',
+  },
+  contentText: {
+    color: '#ccc',
+    paddingVertical: 5,
+  },
 });
 
 class EpisodeListItem extends React.Component {
@@ -58,7 +66,7 @@ class EpisodeListItem extends React.Component {
           <CollapseHeader>
             <View style={styles.toggleContainer}>
               <View style={styles.episodeContainer}>
-                <Text style={{ fontSize: 16 }}>
+                <Text style={styles.episodeText}>
                   <Text style={{ fontWeight: '600' }}>{`${info.episode_number}. `}</Text>
                   {info.name}
                 </Text>
@@ -66,9 +74,9 @@ class EpisodeListItem extends React.Component {
 
               <View style={styles.detailsArrow}>
                 {isCollapsed ? (
-                  <Icon size={22} name="angle-down" />
+                  <Icon color="#ccc" size={22} name="angle-down" />
                 ) : (
-                  <Icon size={22} name="angle-up" />
+                  <Icon color="#ccc" size={22} name="angle-up" />
                 )}
               </View>
             </View>
@@ -76,7 +84,7 @@ class EpisodeListItem extends React.Component {
           <CollapseBody>
             <TmdbRating rating={info.vote_average.toPrecision(2)} votes={info.vote_count} />
             <UsefulImage style={styles.poster} imgPath={info.still_path} />
-            <Text>{info.overview}</Text>
+            <Text style={styles.contentText}>{info.overview}</Text>
           </CollapseBody>
         </Collapse>
       </View>

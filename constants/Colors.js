@@ -1,19 +1,16 @@
-const tintColor = '#2f95dc';
+const navy = '#081c24';
+const green = '#01d277';
 
 export default {
+  textColor: '#fff',
   themeBlack: '#191919',
-  themeDarkGrey: '#232323',
-  themeLightGrey: '#343434',
-  themeNavy: '#081c24',
-  themeGreen: '#01d277',
-  tintColor,
+  themeDarkGrey: '#2b2b2b',
+  themeLightGrey: '#4f4f4f',
+  themeGreen: green,
+  themeNavy: navy,
   tabIconDefault: '#ccc',
-  tabIconSelected: tintColor,
-  tabBar: '#fefefe',
-  errorBackground: 'red',
-  errorText: '#fff',
-  warningBackground: '#EAEB5E',
-  warningText: '#666804',
-  noticeBackground: tintColor,
-  noticeText: '#fff',
+  tabIconSelected: green,
+  tabBarBackgroundColor: navy,
+  navigationHeaderColor: navy,
+  addWatchListButton: '#0081e6',
 };

@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 import WatchlistItem from './WatchlistItem';
 import ListItemSeperator from '../ListItemSeperator';
 import Error from '../Error';
+import Colors from '../../constants/Colors';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.themeDarkGrey,
   },
 });
 

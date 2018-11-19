@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import Loading from '../components/Loading';
 import Error from '../components/Error';
+import Colors from '../constants/Colors';
 
 const MEDIA_TYPES = {
   MOVIE: 'movie',
@@ -14,7 +15,7 @@ const MEDIA_TYPES = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.themeDarkGrey,
   },
   textContainer: {
     padding: 15,
@@ -22,9 +23,11 @@ const styles = StyleSheet.create({
   titleText: {
     fontWeight: '600',
     fontSize: 22,
+    color: '#fff',
   },
   text: {
     fontSize: 18,
+    color: '#ccc',
   },
   loading: {
     flex: 1,

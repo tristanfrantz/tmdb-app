@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
   },
   ratingText: {
     fontSize: 16,
+    color: '#fff',
   },
   votesText: {
     color: 'grey',

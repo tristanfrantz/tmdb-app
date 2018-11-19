@@ -35,13 +35,19 @@ const styles = StyleSheet.create({
     width: 100,
     marginRight: 5,
   },
-  textTitle: {
+  titleText: {
     fontWeight: '600',
     fontSize: 18,
+    color: '#fff',
   },
   episodeText: {
-    textAlign: 'center',
-    fontSize: 16,
+    color: '#ccc',
+    fontSize: 14,
+  },
+  premieredText: {
+    color: '#ccc',
+    fontStyle: 'italic',
+    fontSize: 14,
   },
 });
 
@@ -69,9 +75,9 @@ class SeasonsItem extends React.Component {
           <View style={styles.container}>
             <UsefulImage style={styles.poster} imgPath={item.poster_path} />
             <View style={styles.textContainer}>
-              <Text style={styles.textTitle}>{item.name}</Text>
-              <Text style={{ fontStyle: 'italic' }}>{`Premiered ${item.air_date}`}</Text>
-              <Text>{`${item.episode_count} Episodes`}</Text>
+              <Text style={styles.titleText}>{item.name}</Text>
+              <Text style={styles.premieredText}>{`Premiered ${item.air_date}`}</Text>
+              <Text style={styles.episodeText}>{`${item.episode_count} Episodes`}</Text>
               <PlotContainer navigation={navigation} item={item} />
             </View>
           </View>

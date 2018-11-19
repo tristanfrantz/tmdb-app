@@ -2,11 +2,12 @@ import React from 'react';
 import { ScrollView, View, StyleSheet } from 'react-native';
 import MediaCarousel from '../components/carousel/MediaCarousel';
 import CategoryTiles from '../components/categories/CategoryTiles';
+import Colors from '../constants/Colors';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.themeDarkGrey,
   },
   carouselContainer: {
     height: 290,

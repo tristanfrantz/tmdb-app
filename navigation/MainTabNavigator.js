@@ -2,6 +2,7 @@ import React from 'react';
 import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
+import { Col } from 'native-base';
 import TabBarIcon from '../components/navigation/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import SearchScreen from '../screens/SearchScreen';
@@ -16,215 +17,264 @@ import SeasonsScreen from '../screens/SeasonsScreen';
 import CategoryScreen from '../screens/CategoryScreen';
 import Colors from '../constants/Colors';
 
-const HomeStack = createStackNavigator({
-  Home: {
-    screen: HomeScreen,
-    navigationOptions: () => ({
-      title: 'Home',
+const HomeStack = createStackNavigator(
+  {
+    Home: {
+      screen: HomeScreen,
+      navigationOptions: () => ({
+        title: 'Home',
+        headerTitleStyle: {
+          color: '#fff',
+          ...Platform.select({
+            android: {
+              marginLeft: 'auto',
+              marginRight: 'auto',
+            },
+          }),
+        },
+      }),
+    },
+    Search: {
+      screen: SearchScreen,
+      navigationOptions: () => ({
+        header: null,
+        headerTitleStyle: {
+          ...Platform.select({
+            android: {
+              marginLeft: 'auto',
+              marginRight: 'auto',
+            },
+          }),
+        },
+        headerBackTitle: 'Back',
+      }),
+    },
+    Movie: {
+      screen: MovieScreen,
+      navigationOptions: () => ({
+        title: 'Movie',
+        headerBackTitle: 'Back',
+      }),
+    },
+    Profile: {
+      screen: ProfileScreen,
+      navigationOptions: () => ({
+        title: 'Profile',
+        headerBackTitle: 'Back',
+      }),
+    },
+    Series: {
+      screen: SeriesScreen,
+      navigationOptions: () => ({
+        title: 'Series',
+        headerBackTitle: 'Back',
+      }),
+    },
+    Seasons: {
+      screen: SeasonsScreen,
+      navigationOptions: () => ({
+        title: 'Seasons',
+      }),
+    },
+    Plot: {
+      screen: PlotScreen,
+      navigationOptions: () => ({
+        title: 'Plot',
+      }),
+    },
+    Biography: {
+      screen: BiographyScreen,
+      navigationOptions: () => ({
+        title: 'Biography',
+      }),
+    },
+    Rating: {
+      screen: RatingScreen,
+      navigationOptions: () => ({
+        title: 'Rating',
+      }),
+    },
+    Category: {
+      screen: CategoryScreen,
+      navigationOptions: () => ({
+        headerBackTitle: 'Back',
+      }),
+    },
+  },
+  {
+    navigationOptions: {
+      headerTintColor: 'white',
       headerTitleStyle: {
-        ...Platform.select({
-          android: {
-            marginLeft: 'auto',
-            marginRight: 'auto',
-          },
-        }),
+        color: 'white',
       },
-    }),
-  },
-  Search: {
-    screen: SearchScreen,
-    navigationOptions: () => ({
-      header: null,
-      headerTitleStyle: {
-        ...Platform.select({
-          android: {
-            marginLeft: 'auto',
-            marginRight: 'auto',
-          },
-        }),
+      headerBackTitleStyle: {
+        color: 'white',
       },
-      headerBackTitle: 'Back',
-    }),
+      headerStyle: {
+        backgroundColor: Colors.themeNavy,
+      },
+    },
   },
-  Movie: {
-    screen: MovieScreen,
-    navigationOptions: () => ({
-      title: 'Movie',
-      headerBackTitle: 'Back',
-    }),
-  },
-  Profile: {
-    screen: ProfileScreen,
-    navigationOptions: () => ({
-      title: 'Profile',
-      headerBackTitle: 'Back',
-    }),
-  },
-  Series: {
-    screen: SeriesScreen,
-    navigationOptions: () => ({
-      title: 'Series',
-      headerBackTitle: 'Back',
-    }),
-  },
-  Seasons: {
-    screen: SeasonsScreen,
-    navigationOptions: () => ({
-      title: 'Seasons',
-    }),
-  },
-  Plot: {
-    screen: PlotScreen,
-    navigationOptions: () => ({
-      title: 'Plot',
-    }),
-  },
-  Biography: {
-    screen: BiographyScreen,
-    navigationOptions: () => ({
-      title: 'Biography',
-    }),
-  },
-  Rating: {
-    screen: RatingScreen,
-    navigationOptions: () => ({
-      title: 'Rating',
-    }),
-  },
-  Category: {
-    screen: CategoryScreen,
-    navigationOptions: () => ({
-      headerBackTitle: 'Back',
-    }),
-  },
-});
+);
 
 HomeStack.navigationOptions = {
   tabBarLabel: 'Home',
   tabBarIcon: ({ focused }) => <TabBarIcon size={24} focused={focused} name="home" />,
 };
 
-const SearchStack = createStackNavigator({
-  Search: {
-    screen: SearchScreen,
-    navigationOptions: () => ({
-      title: 'Search',
+const SearchStack = createStackNavigator(
+  {
+    Search: {
+      screen: SearchScreen,
+      navigationOptions: () => ({
+        title: 'Search',
+        headerTitleStyle: {
+          ...Platform.select({
+            android: {
+              marginLeft: 'auto',
+              marginRight: 'auto',
+            },
+          }),
+        },
+      }),
+    },
+    Movie: {
+      screen: MovieScreen,
+      navigationOptions: () => ({
+        title: 'Movie',
+        headerBackTitle: 'Back',
+      }),
+    },
+    Profile: {
+      screen: ProfileScreen,
+      navigationOptions: () => ({
+        title: 'Profile',
+        headerBackTitle: 'Back',
+      }),
+    },
+    Series: {
+      screen: SeriesScreen,
+      navigationOptions: () => ({
+        title: 'Series',
+        headerBackTitle: 'Back',
+      }),
+    },
+    Seasons: {
+      screen: SeasonsScreen,
+      navigationOptions: () => ({
+        title: 'Seasons',
+      }),
+    },
+    Plot: {
+      screen: PlotScreen,
+      navigationOptions: () => ({
+        title: 'Plot',
+      }),
+    },
+    Biography: {
+      screen: BiographyScreen,
+      navigationOptions: () => ({
+        title: 'Biography',
+      }),
+    },
+    Rating: {
+      screen: RatingScreen,
+      navigationOptions: () => ({
+        title: 'Rating',
+      }),
+    },
+  },
+  {
+    navigationOptions: {
+      headerTintColor: 'white',
       headerTitleStyle: {
-        ...Platform.select({
-          android: {
-            marginLeft: 'auto',
-            marginRight: 'auto',
-          },
-        }),
+        color: 'white',
       },
-    }),
+      headerBackTitleStyle: {
+        color: 'white',
+      },
+      headerStyle: {
+        backgroundColor: Colors.themeNavy,
+      },
+    },
   },
-  Movie: {
-    screen: MovieScreen,
-    navigationOptions: () => ({
-      title: 'Movie',
-      headerBackTitle: 'Back',
-    }),
-  },
-  Profile: {
-    screen: ProfileScreen,
-    navigationOptions: () => ({
-      title: 'Profile',
-      headerBackTitle: 'Back',
-    }),
-  },
-  Series: {
-    screen: SeriesScreen,
-    navigationOptions: () => ({
-      title: 'Series',
-      headerBackTitle: 'Back',
-    }),
-  },
-  Seasons: {
-    screen: SeasonsScreen,
-    navigationOptions: () => ({
-      title: 'Seasons',
-    }),
-  },
-  Plot: {
-    screen: PlotScreen,
-    navigationOptions: () => ({
-      title: 'Plot',
-    }),
-  },
-  Biography: {
-    screen: BiographyScreen,
-    navigationOptions: () => ({
-      title: 'Biography',
-    }),
-  },
-  Rating: {
-    screen: RatingScreen,
-    navigationOptions: () => ({
-      title: 'Rating',
-    }),
-  },
-});
+);
 
 SearchStack.navigationOptions = {
   tabBarLabel: 'Search',
   tabBarIcon: ({ focused }) => <TabBarIcon size={22} focused={focused} name="search" />,
 };
 
-const WatchlistStack = createStackNavigator({
-  Watchlist: {
-    screen: WatchlistScreen,
-    navigationOptions: () => ({
-      title: 'Watchlist',
-      headerBackTitle: 'Watchlist',
-    }),
+const WatchlistStack = createStackNavigator(
+  {
+    Watchlist: {
+      screen: WatchlistScreen,
+      navigationOptions: () => ({
+        title: 'Watchlist',
+        headerBackTitle: 'Watchlist',
+      }),
+    },
+    Movie: {
+      screen: MovieScreen,
+      navigationOptions: () => ({
+        title: 'Movie',
+        headerBackTitle: 'Back',
+      }),
+    },
+    Series: {
+      screen: SeriesScreen,
+      navigationOptions: () => ({
+        title: 'Series',
+        headerBackTitle: 'Back',
+      }),
+    },
+    Seasons: {
+      screen: SeasonsScreen,
+      navigationOptions: () => ({
+        title: 'Seasons',
+      }),
+    },
+    Profile: {
+      screen: ProfileScreen,
+      navigationOptions: () => ({
+        title: 'Profile',
+        headerBackTitle: 'Back',
+      }),
+    },
+    Plot: {
+      screen: PlotScreen,
+      navigationOptions: () => ({
+        title: 'Plot',
+      }),
+    },
+    Biography: {
+      screen: BiographyScreen,
+      navigationOptions: () => ({
+        title: 'Biography',
+      }),
+    },
+    Rating: {
+      screen: RatingScreen,
+      navigationOptions: () => ({
+        title: 'Rating',
+      }),
+    },
   },
-  Movie: {
-    screen: MovieScreen,
-    navigationOptions: () => ({
-      title: 'Movie',
-      headerBackTitle: 'Back',
-    }),
+  {
+    navigationOptions: {
+      headerTintColor: 'white',
+      headerTitleStyle: {
+        color: 'white',
+      },
+      headerBackTitleStyle: {
+        color: 'white',
+      },
+      headerStyle: {
+        backgroundColor: Colors.themeNavy,
+      },
+    },
   },
-  Series: {
-    screen: SeriesScreen,
-    navigationOptions: () => ({
-      title: 'Series',
-      headerBackTitle: 'Back',
-    }),
-  },
-  Seasons: {
-    screen: SeasonsScreen,
-    navigationOptions: () => ({
-      title: 'Seasons',
-    }),
-  },
-  Profile: {
-    screen: ProfileScreen,
-    navigationOptions: () => ({
-      title: 'Profile',
-      headerBackTitle: 'Back',
-    }),
-  },
-  Plot: {
-    screen: PlotScreen,
-    navigationOptions: () => ({
-      title: 'Plot',
-    }),
-  },
-  Biography: {
-    screen: BiographyScreen,
-    navigationOptions: () => ({
-      title: 'Biography',
-    }),
-  },
-  Rating: {
-    screen: RatingScreen,
-    navigationOptions: () => ({
-      title: 'Rating',
-    }),
-  },
-});
+);
 
 WatchlistStack.navigationOptions = {
   tabBarLabel: 'Watchlist',
@@ -237,12 +287,15 @@ const MainTabNavigator = createBottomTabNavigator(
     SearchStack,
     WatchlistStack,
   },
-  // {
-  //   tabBarOptions: {
-  //     inactiveTintColor: 'lightgrey',
-  //     activeTintColor: '#01d277',
-  //   },
-  // },
+  {
+    tabBarOptions: {
+      style: {
+        backgroundColor: Colors.themeNavy,
+      },
+      inactiveTintColor: 'lightgrey',
+      activeTintColor: Colors.themeGreen,
+    },
+  },
 );
 
 export default MainTabNavigator;

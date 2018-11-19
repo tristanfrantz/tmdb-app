@@ -15,6 +15,9 @@ const styles = StyleSheet.create({
   bioTextContainer: {
     flex: 8,
   },
+  bioText: {
+    color: '#fff',
+  },
   plotArrow: {
     flex: 1,
     justifyContent: 'center',
@@ -33,10 +36,12 @@ class PlotContainer extends React.Component {
             onPress={() => navigation.navigate('Biography', person)}
           >
             <View style={styles.bioTextContainer}>
-              <Text numberOfLines={4}>{person.biography}</Text>
+              <Text style={styles.bioText} numberOfLines={4}>
+                {person.biography}
+              </Text>
             </View>
             <View style={styles.plotArrow}>
-              <Icon size={22} name="angle-right" />
+              <Icon color="gray" size={22} name="angle-right" />
             </View>
           </TouchableOpacity>
         ) : (

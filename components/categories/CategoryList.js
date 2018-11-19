@@ -5,6 +5,7 @@ import Error from '../Error';
 import ListItemSeperator from '../ListItemSeperator';
 import CategoryListItem from './CategoryListItem';
 import Categories from '../../constants/Categories';
+import Colors from '../../constants/Colors';
 
 const NUMBER_OF_PAGES = 5; // Number of pages that will be fetched
 const RESULT_COUNT = 20; // How many results in each page
@@ -20,12 +21,7 @@ const API_CATEGORIES = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-  },
-  loading: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: Colors.themeDarkGrey,
   },
 });
 

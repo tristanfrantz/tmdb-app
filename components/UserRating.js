@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
   },
   ratingText: {
     fontSize: 16,
+    color: '#fff',
   },
   votesText: {
     color: 'grey',
@@ -37,7 +38,7 @@ class UserRating extends React.Component {
         <TouchableOpacity onPress={() => this.props.navigation.navigate('Rating', { ratingItem })}>
           {ratingItem.UserRating !== 0 ? (
             <View style={styles.ratingContainer}>
-              <Icon name="ios-star" size={23} color="#3d5f99" />
+              <Icon name="ios-star" size={23} color="#4a75ba" />
               <Text style={styles.ratingText}>
                 {' '}
                 {ratingItem.UserRating}
@@ -46,8 +47,11 @@ class UserRating extends React.Component {
             </View>
           ) : (
             <View style={styles.ratingContainer}>
-              <Icon name="ios-star-outline" size={25} color="#6f7277" />
-              <Text style={{ fontSize: 14, textAlignVertical: 'center' }}> RATE THIS</Text>
+              <Icon name="ios-star-outline" size={25} color="gray" />
+              <Text style={{ fontSize: 14, color: '#fff', textAlignVertical: 'center' }}>
+                {' '}
+                RATE THIS
+              </Text>
             </View>
           )}
         </TouchableOpacity>

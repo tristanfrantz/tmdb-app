@@ -29,9 +29,11 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: '600',
     fontSize: 20,
+    color: 'lightgray',
   },
   text: {
     fontSize: 16,
+    color: 'lightgray',
   },
   watchlistBtn: {
     width: '100%',

@@ -7,11 +7,12 @@ import Error from '../../Error';
 import ProfilePanel from './ProfilePanel';
 import UsefulImage from '../../UsefulImage';
 import BiographyContainer from './BiographyContainer';
+import Colors from '../../../constants/Colors';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.themeDarkGrey,
   },
   contentContainer: {
     padding: 8,
@@ -43,10 +44,11 @@ const styles = StyleSheet.create({
   titleText: {
     fontWeight: '600',
     fontSize: 20,
+    color: '#fff',
   },
   year: {
     fontWeight: 'normal',
-    color: 'grey',
+    color: '#ccc',
     fontSize: 18,
   },
   detailsContainer: {
@@ -55,10 +57,11 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
+    color: '#fff',
   },
   shadowText: {
     fontSize: 14,
-    color: 'grey',
+    color: '#ccc',
   },
   loading: {
     flex: 1,

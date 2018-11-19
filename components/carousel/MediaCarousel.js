@@ -12,8 +12,8 @@ const itemWidth = viewportWidth;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    borderBottomWidth: '2',
-    borderBottomColor: '#444444',
+    borderBottomWidth: '0.5',
+    borderBottomColor: 'grey',
   },
 });
 

@@ -5,6 +5,7 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 import { addToWatchlist, removeFromWatchlist } from '../../store/actions/watchlist';
+import Colors from '../../constants/Colors';
 
 const styles = StyleSheet.create({
   button: {
@@ -14,7 +15,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   addToWatchlistBtn: {
-    backgroundColor: '#0081e6',
+    backgroundColor: Colors.addWatchListButton,
   },
   removeFromWatchlistBtn: {
     backgroundColor: 'gray',

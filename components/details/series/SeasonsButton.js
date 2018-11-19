@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
     flex: 8,
     fontSize: 16,
     fontWeight: '500',
+    color: '#fff',
   },
   plotArrow: {
     flex: 1,
@@ -46,7 +47,7 @@ class SeasonsButton extends React.Component {
       >
         <Text style={styles.text}>Seasons</Text>
         <View style={styles.plotArrow}>
-          <Icon size={22} name="angle-right" />
+          <Icon color="gray" size={22} name="angle-right" />
         </View>
       </TouchableOpacity>
     );

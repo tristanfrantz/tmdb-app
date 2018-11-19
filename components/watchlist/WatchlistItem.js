@@ -28,9 +28,11 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: '600',
     fontSize: 18,
+    color: '#fff',
   },
   text: {
     fontSize: 16,
+    color: 'lightgrey',
   },
   ratingContainer: {
     paddingTop: 5,

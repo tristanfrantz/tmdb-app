@@ -4,10 +4,12 @@ import Loading from '../../Loading';
 import Error from '../../Error';
 import ListItemSeperator from '../../ListItemSeperator';
 import SeasonsItem from './SeasonsItem';
+import Colors from '../../../constants/Colors';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: Colors.themeDarkGrey,
   },
   listItemContainer: {
     flex: 1,

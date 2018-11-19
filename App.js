@@ -35,9 +35,6 @@ export default class App extends React.Component {
       require('./assets/images/missing-image.png'),
       require('./assets/images/tmdb-logo.png'),
     ]),
-    Font.loadAsync({
-      ...Icon.Ionicons.font,
-    }),
   ]);
 
   render() {
@@ -54,7 +51,7 @@ export default class App extends React.Component {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <View style={styles.container}>
-            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+            {Platform.OS === 'ios' && <StatusBar barStyle="light-content" />}
             <AppNavigator />
           </View>
         </PersistGate>

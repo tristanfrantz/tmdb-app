@@ -3,6 +3,7 @@ import {
   StyleSheet, View, Text, TouchableOpacity,
 } from 'react-native';
 import Categories from '../../constants/Categories';
+import Colors from '../../constants/Colors';
 
 const styles = StyleSheet.create({
   container: {
@@ -17,7 +18,7 @@ const styles = StyleSheet.create({
     margin: 5,
     padding: 5,
     borderRadius: 10,
-    backgroundColor: '#081c24',
+    backgroundColor: Colors.themeBlack,
     justifyContent: 'center',
     alignItems: 'center',
   },

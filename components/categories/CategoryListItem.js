@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import TmdbRating from '../TmdbRating';
 import UsefulImage from '../UsefulImage';
+import Colors from '../../constants/Colors';
 
 const styles = StyleSheet.create({
   container: {
@@ -22,9 +23,11 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: '600',
     fontSize: 18,
+    color: Colors.textColor,
   },
-  text: {
+  date: {
     fontSize: 16,
+    color: '#ccc',
   },
   ratingContainer: {
     paddingTop: 5,
@@ -64,7 +67,7 @@ class CategoryListItem extends Component {
         <UsefulImage style={styles.poster} imgPath={media.poster_path} />
         <View style={styles.details}>
           <Text style={styles.title}>{title}</Text>
-          <Text style={styles.text}>{date}</Text>
+          <Text style={styles.date}>{date}</Text>
           <Text style={styles.shadowText}>{type}</Text>
           <View style={styles.ratingContainer}>
             <TmdbRating rating={media.vote_average} votes={media.vote_count} />

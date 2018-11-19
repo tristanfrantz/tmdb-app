@@ -11,11 +11,12 @@ import AddWatchlistButton from '../../watchlist/AddWatchlistButton';
 import CreditsPanel from '../CreditsPanel';
 import UsefulImage from '../../UsefulImage';
 import PlotContainer from '../PlotContainer';
+import Colors from '../../../constants/Colors';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.themeDarkGrey,
   },
   contentContainer: {
     padding: 8,
@@ -35,10 +36,11 @@ const styles = StyleSheet.create({
   titleText: {
     fontWeight: '600',
     fontSize: 20,
+    color: '#fff',
   },
   year: {
     fontWeight: 'normal',
-    color: 'grey',
+    color: 'lightgray',
     fontSize: 18,
   },
   detailsContainer: {
@@ -47,10 +49,11 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
+    color: '#fff',
   },
   shadowText: {
     fontSize: 14,
-    color: 'grey',
+    color: 'lightgray',
   },
   loading: {
     flex: 1,
@@ -150,10 +153,7 @@ class MovieDetails extends React.Component {
             <View style={styles.detailsContainer}>
               <TmdbRating rating={movie.vote_average} votes={movie.vote_count} />
               <UserRating navigation={navigation} ratingItem={ratingItem} />
-              <Text style={styles.text}>
-                {'Genres: '}
-                <Text style={styles.shadowText}>{genres}</Text>
-              </Text>
+              <Text style={styles.shadowText}>{genres}</Text>
               <Text style={styles.shadowText}>{runTime}</Text>
             </View>
           </View>

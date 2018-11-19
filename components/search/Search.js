@@ -16,11 +16,12 @@ import Error from '../Error';
 import SearchListItem from './SearchListItem';
 import ListItemSeperator from '../ListItemSeperator';
 import { addRecentSearch, clearRecentSearch } from '../../store/actions/recentSearch';
+import Colors from '../../constants/Colors';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.themeDarkGrey,
   },
   searchFieldContainer: {
     alignItems: 'center',
@@ -56,6 +57,12 @@ const styles = StyleSheet.create({
   },
   recentSearchText: {
     fontSize: 15,
+    maxWidth: '92%',
+    color: '#fff',
+  },
+  recentSearchTitle: {
+    fontSize: 20,
+    color: '#fff',
   },
 });
 
@@ -108,8 +115,8 @@ class Search extends React.Component {
       style={styles.recentSearch}
       onPress={() => this.onChangeText(item.searchString)}
     >
-      <Text style={styles.recentSearchText}>{item.searchString}</Text>
-      <Ionicons name="ios-arrow-forward" size={25} color="#6f7277" />
+      <Text numberOfLines={1} style={styles.recentSearchText}>{item.searchString}</Text>
+      <Ionicons name="ios-arrow-forward" size={25} color="lightgray" />
     </TouchableOpacity>
   );
 
@@ -124,8 +131,7 @@ class Search extends React.Component {
         <SearchBar
           autoFocus
           value={input}
-          lightTheme
-          containerStyle={{ backgroundColor: 'white' }}
+          darkTheme
           round
           showLoading={loading}
           onChangeText={text => this.onChangeText(text)}
@@ -145,9 +151,9 @@ class Search extends React.Component {
           && input.length === 0 && (
             <View>
               <View style={styles.recentSearch}>
-                <Text style={{ fontSize: 20 }}>Recent Searches</Text>
+                <Text style={styles.recentSearchTitle}>Recent Searches</Text>
                 <TouchableOpacity onPress={() => this.props.dispatch(clearRecentSearch())}>
-                  <Text>Clear</Text>
+                  <Text style={{color: '#fff'}}>Clear</Text>
                 </TouchableOpacity>
               </View>
               <ListItemSeperator />

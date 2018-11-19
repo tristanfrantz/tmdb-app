@@ -4,11 +4,12 @@ import {
 } from 'react-native';
 import Loading from '../components/Loading';
 import Error from '../components/Error';
+import Colors from '../constants/Colors';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.themeDarkGrey,
   },
   textContainer: {
     padding: 15,
@@ -16,14 +17,11 @@ const styles = StyleSheet.create({
   nameText: {
     fontWeight: '600',
     fontSize: 22,
+    color: '#fff',
   },
   text: {
     fontSize: 18,
-  },
-  loading: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    color: '#ccc',
   },
 });
 

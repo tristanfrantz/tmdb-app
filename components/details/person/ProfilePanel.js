@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: 18,
     fontWeight: '600',
+    color: '#ccc',
   },
   iconContainer: {
     paddingRight: 8,
@@ -37,6 +38,7 @@ const styles = StyleSheet.create({
   movieTitleText: {
     fontSize: 12,
     textAlign: 'center',
+    color: '#fff',
   },
   dateText: {
     fontSize: 10,

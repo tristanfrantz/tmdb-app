@@ -20,6 +20,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  plotText: {
+    color: '#fff',
+  },
 });
 
 class PlotContainer extends React.Component {
@@ -33,10 +36,12 @@ class PlotContainer extends React.Component {
             onPress={() => navigation.navigate('Plot', item)}
           >
             <View style={styles.plotTextContainer}>
-              <Text numberOfLines={4}>{item.overview}</Text>
+              <Text style={styles.plotText} numberOfLines={4}>
+                {item.overview}
+              </Text>
             </View>
             <View style={styles.plotArrow}>
-              <Icon size={22} name="angle-right" />
+              <Icon color="gray" size={22} name="angle-right" />
             </View>
           </TouchableOpacity>
         ) : (

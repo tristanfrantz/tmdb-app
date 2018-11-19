@@ -12,11 +12,12 @@ import CreditsPanel from '../CreditsPanel';
 import SeasonsButton from './SeasonsButton';
 import UsefulImage from '../../UsefulImage';
 import PlotContainer from '../PlotContainer';
+import Colors from '../../../constants/Colors';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.themeDarkGrey,
   },
   contentContainer: {
     padding: 8,
@@ -36,6 +37,7 @@ const styles = StyleSheet.create({
   titleText: {
     fontWeight: '600',
     fontSize: 20,
+    color: '#fff',
   },
   year: {
     fontWeight: 'normal',
@@ -51,7 +53,7 @@ const styles = StyleSheet.create({
   },
   shadowText: {
     fontSize: 14,
-    color: 'grey',
+    color: 'lightgray',
   },
   loading: {
     flex: 1,
@@ -136,7 +138,6 @@ class SeriesDetails extends React.Component {
               <TmdbRating rating={series.vote_average} votes={series.vote_count} />
               <UserRating navigation={navigation} ratingItem={ratingItem} />
               <Text style={styles.text}>
-                {'Genres: '}
                 <Text style={styles.shadowText}>{genres}</Text>
               </Text>
             </View>
