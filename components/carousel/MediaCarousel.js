@@ -18,9 +18,7 @@ const styles = StyleSheet.create({
 });
 
 export default class MediaCarousel extends Component {
-  renderItem({ item }) {
-    return <SliderEntry navigation={this.props.navigation} data={item} />;
-  }
+  renderItem = ({ item }) => <SliderEntry navigation={this.props.navigation} data={item} />;
 
   render() {
     const { data } = this.props;
@@ -30,9 +28,11 @@ export default class MediaCarousel extends Component {
     return (
       <View style={styles.container}>
         <Carousel
-          ref={c => (this.ref = c)}
+          ref={(c) => {
+            this.ref = c;
+          }}
           data={data}
-          renderItem={this.renderItem.bind(this)}
+          renderItem={this.renderItem}
           sliderWidth={sliderWidth}
           itemWidth={itemWidth}
           inactiveSlideScale={1}
