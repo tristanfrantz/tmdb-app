@@ -119,7 +119,9 @@ class Search extends React.Component {
       style={styles.recentSearch}
       onPress={() => this.onChangeText(item.searchString)}
     >
-      <Text numberOfLines={1} style={styles.recentSearchText}>{item.searchString}</Text>
+      <Text numberOfLines={1} style={styles.recentSearchText}>
+        {item.searchString}
+      </Text>
       <Ionicons name="ios-arrow-forward" size={25} color="lightgray" />
     </TouchableOpacity>
   );
@@ -150,16 +152,15 @@ class Search extends React.Component {
             },
           })}
         />
-        {input.length && loading && (
-          <View style={styles.loadingContainer}>
-            <Loading />
-          </View>
+        {input.length > 0
+          && loading && (
+            <View style={styles.loadingContainer}>
+              <Loading />
+            </View>
         )}
-        {input.length && !results.length && error && !loading && (
-          <Error message="No results." />
-        )}
+        {input.length > 0 && results !== [] && error && !loading && <Error message="No results." />}
         {recentSearch.length > 0
-          && !input.length && (
+          && input.length === 0 && (
             <View>
               <View style={styles.recentSearch}>
                 <Text style={styles.recentSearchTitle}>Recent Searches</Text>
@@ -177,14 +178,15 @@ class Search extends React.Component {
               </ScrollView>
             </View>
         )}
-        {input.length && !loading && (
-          <ScrollView>
-            <FlatList
-              data={results}
-              renderItem={this.renderItem}
-              ItemSeparatorComponent={() => <ListItemSeperator />}
-            />
-          </ScrollView>
+        {input.length > 0
+          && !loading && (
+            <ScrollView>
+              <FlatList
+                data={results}
+                renderItem={this.renderItem}
+                ItemSeparatorComponent={() => <ListItemSeperator />}
+              />
+            </ScrollView>
         )}
       </View>
     );

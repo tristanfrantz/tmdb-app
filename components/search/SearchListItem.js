@@ -99,7 +99,6 @@ class SearchListItem extends Component {
         </TouchableOpacity>
       );
     }
-    // else item.media_type === MEDIA_TYPES.PERSON
     return (
       <TouchableOpacity style={styles.container} onPress={() => this.onPersonPress(item)}>
         <UsefulImage style={styles.poster} imgPath={item.profile_path} />
