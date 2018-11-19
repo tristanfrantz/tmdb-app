@@ -1,8 +1,6 @@
 import React from 'react';
 import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
-
-import { Col } from 'native-base';
 import TabBarIcon from '../components/navigation/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import SearchScreen from '../screens/SearchScreen';
